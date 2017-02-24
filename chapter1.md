@@ -45,7 +45,11 @@ Si has inicaido sesión usando Ubuntu, probablemente no necesitaras esto, ya que
 
 Primero, asegurate de que `sudo` esté instalado. Nuestro usuario de trabajo lo necesitará. Si se inició sesión como `root`, ejecuta los siguientes comandos:
 
+```
+# apt-get update && apt-get upgrade  # Install system updates
+# apt-get install sudo  # Make sure 'sudo' is installed
 
+```
 
 
 El siguiente set de comandos creará un usuario `odoo`:
