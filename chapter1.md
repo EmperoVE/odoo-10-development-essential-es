@@ -54,7 +54,12 @@ Primero, asegurate de que `sudo` esté instalado. Nuestro usuario de trabajo lo 
 
 El siguiente set de comandos creará un usuario `odoo`:
 
+```
+# useradd -m -g sudo -s /bin/bash odoo  # Create an 'odoo' user with sudo powers
 
+# passwd odoo  # Ask and set a password for the new user
+
+```
 Puedes cambiar el nombre de usuario  `odoo` al que tu quieras. La opción `-m`asegura que su directorio de inicio sea creado. La opción `-g sudo` 
 
 
@@ -74,6 +79,94 @@ Para mantener las cosas ordenadas, vamos a trabajar en un directorio `/odoo-dev`
 A lo largo del libro, asumiremos que `/odoo-dev` es el directorio donde tu servidor de Odoo está instalado.
 
 Primero, asegúrate de haber iniciado sesión como el usuario creado ahora o durante el proceso de instalación, no como el usuario `root`. Asumiendo que tu usuario es `odoo`, confírmalo con el siguiente comando:
+
+```
+odoo
+
+$ echo $HOME
+
+/home/odoo
+$ whoami
+
+odoo
+
+$ echo $HOME
+
+/home/odoo
+```
+
+Ahora podemos utilizar este script. Nos muestra cómo instalar Odoo desde la fuente a un sistema Debian/Ubuntu.
+
+Primero, intala las dependencias básicas para comenzar:
+
+```
+$ sudo apt-get update && sudo apt-get upgrade  #Install system updates
+
+$ sudo apt-get install git  # Install Git
+
+$ sudo apt-get install npm  # Install NodeJs and its package manager
+
+$ sudo ln -s /usr/bin/nodejs /usr/bin/node  # call node runs nodejs
+
+$ sudo npm install -g less less-plugin-clean-css  #Install less compiler
+
+```
+
+ Partiendo de la versión 9.0, el cliente web de Odoo requiere que el preprocesador `less` CSS esté instalado en el sistema para que las páginas web puedan ser renderizadas correctamente. Para instalar esto, necesitamos Node.js y npm.
+
+Luego, necesitamos obtener el código fuente Odoo e instalar sus dependencias. El código fuente Odoo incluye un script de utilidades, dentro del directorio `odoo/setup/`, para ayudarnos a instalar las dependencias requeridas en un sistema Debian/Ubuntu:
+ 
+```
+$ mkdir ~/odoo-dev  # Create a directory to work in
+
+$ cd ~/odoo-dev  # Go into our work directory
+
+$ git clone https://github.com/odoo/odoo.git -b 10.0 --depth=1  # Get Odoo source code
+
+$ ./odoo/setup/setup_dev.py setup_deps  # Installs Odoo system dependencies 
+
+$ ./odoo/setup/setup_dev.py setup_pg  # Installs PostgreSQL & db superuser for unix user
+```
+
+Al final, Odoo debería estar listo para utilizarse. El símbolo ~ es n atajo para nuestro directorio `home` (por ejemplo,  `/home/odoo`).
+La opción `git -b 10.0` indíca a Git que descargue específicamente la rama 10.0 de Odoo. Al tiempo de la escritura, esto es redundante ya que 10.0 es la rama por defecto; sin embargo, esto puede cambiar, entonces, puede hacer el script a prueba del futuro. La opción `--depth=1` indica a Git que descargue sólo la última revisión, en vez del último historial de cambio completo, haciendo la descarga más pequeña y más veloz.
+
+Para iniciar un servidor Odoo, solo ejecuta:
+
+```
+$ ~/odoo-dev/odoo/odoo-bin
+```
+
+###Tip
+
+En Odoo 10, el script `odoo.py`, utilizado en versiones previas para iniciar el servidor, fue reemplazado con `odoo-bin`.
+
+De forma predeterminada, las instancias Odoo escuchan en el puerto 8069, por lo que si apuntamos un navegador a `http: // <dirección-servidor>: 8069`, llegaremos a estas instancias. Cuando lo accedemos por primera vez, nos muestra un asistente para crear una nueva base de datos, como se muestra en la siguiente captura de pantalla:
+
+AQUI VA UNA IMAGEN
+
+Como desarrolladores, necesitaremos trabajar con varias bases de datos, así que es más convenientes más conveniente crearlos desde la línea de comandos, así que aprenderemos cómo hacerlo. Ahora presione ***Ctrl + C*** en el terminal para detener el servidor Odoo y volver al prompt de comando.
+
+##Inicializando una nueva database Odoo
+
+Para ser capaces de crear una nueva database, tu usuario debe ser un super usuario PostgreSQL. El sigiente comando crea un superusuario PostgreSQL para el usuario actual Unix.
+
+```
+$ sudo createuser --superuser $(whoami)
+```
+Para crear una nueva database, usa el comando `createdb`. Creeamos una database `demo`:
+
+```
+$ createdb demo
+```
+
+Para inicializar esta database con el esquema de datos Odoo, debemos ejecutar Odoo en la database vacía, usando la opción `-d`:
+
+```
+$ ~/odoo-dev/odoo/odoo-bin -d demo
+```
+
+
 
 
 
