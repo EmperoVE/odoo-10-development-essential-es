@@ -1,3 +1,5 @@
-# My Awesome Book
+# A quién va dirigido este libro 
 
-This file file serves as your book's preface, a great place to describe your book's content and ideas.
+Este libro esta dirigido a desarrolladoras y desarrolladores con experiencia en la creación de aplicaciones de negocio con la disposición de convertirse en personas productivas con Odoo.
+
+Se espera que cuente con conocimientos en el diseño de aplicaciones MVC y programación con lenguaje Python.
