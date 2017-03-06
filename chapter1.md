@@ -1,6 +1,6 @@
 #odoo essentials
 
-##Capítulo 1. Iniciando con desarrollo en Odoo
+##Capítulo 1. Iniciando con desarrollo Odoo
 
 Antes de sumergirnos en el desarrollo en Odoo, necesitamos armar nuestro ambiente de desarrollo y aprender las tareas de administraciión básicas para ello.
 
@@ -318,3 +318,74 @@ De forma predeterminada, la salida del registro se dirige a la salida estándar 
 
 Finalmente, la opción `--dev=all` mostrará el depurador de Python (`pdb`) cuando se genera una excepción. Es útil hacer un análisis post-mortem de un error de servidor. Ten en cuenta que no tiene ningún efecto en la verbosidad del registrador. Puedes encontrar más detalles sobre los comandos del depurador de Python en https://docs.python.org/2/library/pdb.html#debugger-commands.
 
+
+###Desarrollando desde tu estación de trabajo
+Puedes estar ejecutando Odoo con un sistema Debian / Ubuntu en una máquina virtual local o en un servidor a través de la red. Pero puede que prefieras hacer el trabajo de desarrollo en tu estación de trabajo personal, utilizando tu editor de texto favorito o IDE. Este suele ser el caso de los desarrolladores que trabajan desde estaciones de trabajo Windows. Pero también puede ser el caso de los usuarios de Linux que necesitan trabajar en un servidor Odoo a través de la red local.
+
+Una solución para esto es para permitir el uso compartido de archivos en el huesped Odoo para que los archivos sean fáciles de editar desde nuestra estación de trabajo. Para las operaciones del servidor Odoo, como un reinicio del servidor, podemos usar un shell SSH (como PuTTY en Windows) junto con nuestro editor favorito.
+
+####Usando un editor de texto Linux
+Tarde o temprano, necesitaremos editar archivos desde la línea de comandos del shell. En muchos sistemas Debian, el editor de texto predeterminado es vi. Si no te sientes cómodo con él, probablemente podrías usar una alternativa más amigable. En los sistemas Ubuntu, el editor de texto predeterminado es nano. Es posible que prefieras este, ya que es más fácil de usar. En caso de que no esté disponible en tu servidor, se puede instalar con:
+
+```
+$ sudo apt-get install nano
+```
+
+En las siguientes secciones, asumiremos nano como el editor preferido. Si prefieres cualquier otro editor, siéntete libre de adaptar los comandos en consecuencia.
+
+###Instalando y configurando Samba
+El servicio Samba ayuda a que los servicios de compartición de archivos de Linux sean compatibles con los sistemas Microsoft Windows. Podemos instalarlo en nuestro servidor Debian / Ubuntu con este comando:
+
+
+```
+
+$ Sudo apt-get instalar samba samba-common-bin
+
+```
+
+
+
+El paquete `samba` instala los servicios de intercambio de archivos y el paquete `samba-common-bin` es necesario para la herramienta `smbpasswd`. De forma predeterminada, los usuarios autorizados a acceder a archivos compartidos deben registrarse con él. Necesitamos registrar a nuestro usuario, `odoo` por ejemplo, y establecer una contraseña para su acceso a compartir archivos:
+```
+
+
+$ Sudo smbpasswd -a odoo
+```
+
+
+
+
+
+Después de esto, se nos pedirá una contraseña para usar para acceder al directorio compartido, y el usuario `odoo` podrá acceder a los archivos compartidos para su directorio personal, aunque será de sólo lectura. Queremos tener acceso de escritura, por lo que necesitamos editar el archivo de configuración de Samba para cambiarlo de la siguiente manera:
+
+```
+
+
+$ Sudo nano /etc/samba/smb.conf
+
+```
+
+En el archivo de configuración, busque la sección `[homes]`. Edita sus líneas de configuración para que coincidan con la configuración de la siguiente manera:
+```
+
+
+[homes] 
+    comment = Home Directories 
+    browseable = yes 
+    read only = no 
+    create mask = 0640 
+    directory mask = 0750
+    ```
+
+Para que los cambios de configuración tengan efecto, reinicia el servicio:
+
+```
+$ sudo /etc/init.d/smbd restart
+```
+####Dato
+#####Descargando el código ejemplo
+
+Puedes descargar los archivos de códigos de ejemplo para todos los libros Packt que hayas comprado desde tu cuenta en http://www.packtpub.com. Si compraste este libro en algun otro sitio, puedes entrar a http://www.packtpub.com/support y registrate para que te envien los archivos directamente por correo electrónico.
+
+Para acceder a los archivos desde Windows, podemos asignar una unidad de red para la ruta `\\ <my-server-name>\odoo`
+utilizando el nombre de usuario y la contraseña específicos definidos con `smbpasswd` Al intentar iniciar sesión con el usuario `odoo`, podría encontrar problemas con Windows agregando el dominio del equipo al nombre de usuario (por ejemplo, `MYPC \ odoo`). Para evitar esto, utilice un dominio vacío añadiendo un caracter`\` al inicio de sesión (por ejemplo, `\ odoo`):
