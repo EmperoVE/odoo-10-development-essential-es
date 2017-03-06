@@ -389,3 +389,15 @@ Puedes descargar los archivos de códigos de ejemplo para todos los libros Packt
 
 Para acceder a los archivos desde Windows, podemos asignar una unidad de red para la ruta `\\ <my-server-name>\odoo`
 utilizando el nombre de usuario y la contraseña específicos definidos con `smbpasswd` Al intentar iniciar sesión con el usuario `odoo`, podría encontrar problemas con Windows agregando el dominio del equipo al nombre de usuario (por ejemplo, `MYPC \ odoo`). Para evitar esto, utilice un dominio vacío añadiendo un caracter`\` al inicio de sesión (por ejemplo, `\ odoo`):
+
+AQUI VA UNA IMAGEN
+
+
+Si ahora abrimos la unidad asignada con el Explorador de Windows, podremos acceder y editar el contenido del directorio home del usuario `odoo`:
+
+AQUI VA OTRA IMAGEN
+
+Odoo incluye un par de herramientas que son muy útiles para los desarrolladores, y vamos a hacer uso de ellAs a lo largo del libro. Son características técnicas y el modo de desarrollo. Estos están desactivados por defecto, por lo que este es un buen momento para aprender a habilitarlos.
+
+###Activación de las herramientas de desarrollo
+Las herramientas de desarrollo proporcionan una configuración y funciones avanzadas de servidor. Estos incluyen un menú de depuración en la barra de menú superior junto con opciones de menú adicionales en el menú ***AJUSTES** (****),
