@@ -276,13 +276,15 @@ class TestTodo(TransactionCase):
 ```
 Esto agrega un caso simple de prueba para crear una nueva tarea y verifica que el campo ** Is Done?** Tiene el valor predeterminado correcto.
 
-Ahora queremos hacer nuestras pruebas. Esto se hace agregando la opción --test-enable durante la instalación del módulo:
+Ahora queremos hacer nuestras pruebas. Esto se hace agregando la opción `--test-enable` durante la instalación del módulo:
 
+```
 
 $ ./odoo-bin -d todo -i todo_app --test-enable
 
+```
 
 
 
-El servidor Odoo buscará una prueba / subdirectorio en los módulos actualizados y los ejecutará. Si alguna de las pruebas falla, el registro del servidor mostrará eso.
+El servidor Odoo buscará un subdirectorio tests/ en los módulos actualizados y los ejecutará. Si alguna de las pruebas falla, el registro del servidor te mostrará eso.
 
