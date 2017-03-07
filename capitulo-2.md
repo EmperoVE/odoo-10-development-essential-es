@@ -55,3 +55,15 @@ Odoo incluye un comando `scaffold` para crear automáticamente un nuevo director
 $ ~/odoo-dev/odoo/odoo-bin scaffold --help
 ```
 
+Es posible que desees tener esto en cuenta cuando empieces a trabajar en tu próximo módulo, pero no lo usaremos ahora, ya que preferiremos crear manualmente toda la estructura de nuestro módulo.
+
+Un módulo addon Odoo es un directorio que contiene un archivo descriptor `__manifest__.py`.
+
+####Nota
+En versiones anteriores, este archivo descriptor se denominó `__openerp__.py`. Este nombre aún se admite pero está obsoleto.
+
+También necesita ser Python importable, por lo que también debe tener un archivo `__init__.py`.
+
+El nombre del directorio del módulo es su nombre técnico. Usaremos `todo_app` para ello. El nombre técnico debe ser un identificador Python válido: debe comenzar con una letra y sólo puede contener letras, números y el carácter de subrayado.
+
+Los siguientes comandos crearán el directorio del módulo y crearán un archivo`__init__.py ` vacío en él, `~ / odoo-dev / custom-addons / todo_app / __ init__.py`.
