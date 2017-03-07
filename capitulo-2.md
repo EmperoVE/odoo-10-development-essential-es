@@ -13,19 +13,19 @@ Odoo sigue una arquitectura similar a MVC, y pasaremos por las capas durante nue
 
 A continuación, aprenderemos cómo configurar la seguridad de control de acceso y, finalmente, agregaremos información sobre la descripción y la marca al módulo.
 
-###Nota
+####Nota
 Ten en cuenta que el concepto del término controlador mencionado aquí es diferente de los controladores de desarrollo web Odoo. Estos son puntos finales del programa que las páginas web pueden llamar para realizar acciones.
 
 Con este enfoque, podrás aprender gradualmente sobre los bloques básicos de construcción que conforman una aplicación y experimentar el proceso iterativo de construir un módulo Odoo desde cero.
 
 ##Conceptos esenciales
-Es probable que estés empezando con Odoo, así que ahora es obviamente un buen momento para explicar Odoo Módulos y cómo se utilizan en un desarrollo Odoo.
+Es probable que estés empezando con Odoo, así que ahora es obviamente un buen momento para explicar los módulos de Odoo y cómo se utilizan en un desarrollo Odoo.
 
-Descripción de aplicaciones y módulos
+###Descripción de aplicaciones y módulos
 Es común oír hablar de los módulos y aplicaciones Odoo. Pero, ¿cuál es exactamente la diferencia entre ellos?
 
-Los complementos de módulos son los componentes básicos para las aplicaciones Odoo. Un módulo puede agregar nuevas características a Odoo, o modificar las existentes. Es un directorio que contiene un manifiesto, o archivo descriptor, llamado __manifest__.py, más los archivos restantes que implementan sus características.
+Los **Complementos de Módulos** son los componentes básicos para las aplicaciones Odoo. Un módulo puede agregar nuevas características a Odoo, o modificar las existentes. Es un directorio que contiene un manifiesto, o archivo descriptor, llamado __manifest__.py, más los archivos restantes que implementan sus características.
 
-Las aplicaciones son la forma en que se añaden las principales características a Odoo. Proporcionan los elementos básicos para un área funcional, como Contabilidad o HR, en función de qué módulos complementarios adicionales modifican o amplían características. Debido a esto, se destacan en el menú Odoo Apps.
+Las **Aplicaciones** son la forma en que se añaden las principales características a Odoo. Proporcionan los elementos básicos para un área funcional, como Contabilidad o RH, en función de qué características de módulos complementarios modifican o amplían. Debido a esto, se destacan en el menú **Apps** de Odoo.
 
-Si su módulo es complejo y agrega funcionalidad nueva o mayor a Odoo, podría considerar su creación
+Si su módulo es complejo y agrega funcionalidad nueva o mayor a Odoo, podrías considerar su crearo como una aplicación.
