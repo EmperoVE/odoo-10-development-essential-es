@@ -189,5 +189,29 @@ Esto permite que algunas características prácticas aceleren nuestro ciclo de d
 
 La opción `--dev` acepta una lista de opciones separadas por comas, aunque la opción `all` será adecuada la mayor parte del tiempo. También podemos especificar el depurador que preferimos usar. De forma predeterminada, se utiliza el depurador Python, `pdb`. Algunas personas pueden preferir instalar y usar depuradores alternativos. Aquí también se admiten `ipdb` y `pudb`.
 
+##La capa modelo
+Ahora que Odoo conoce nuestro nuevo módulo, comencemos agregándole un modelo simple.
 
+Los modelos describen objetos de negocio, como una oportunidad, ordenes de clientes o socios (cliente, proveedor, etc.). Un modelo tiene una lista de atributos y también puede definir su negocio específico.
+
+Los modelos se implementan utilizando una clase Python derivada de una clase de plantilla Odoo. Se traducen directamente a objetos de base de datos, y Odoo se encarga de esto automáticamente al instalar o actualizar el módulo. El mecanismo responsable de esto es el **Modelo Relacional de Objetos (ORM)**.
+
+Nuestro módulo será una aplicación muy simple para mantener las tareas pendientes. Estas tareas tendrán un solo campo de texto para la descripción y una casilla de verificación para marcarlas como completas. Más adelante deberíamos añadir un botón para limpiar la lista de tareas de las tareas completas.
+
+###Creando el modelo de datos
+Las directrices de desarrollo de Odoo establecen que los archivos Python para los modelos deben colocarse dentro de un subdirectorio `models`. Para simplificar, no lo seguiremos aquí, así que vamos a crar un archivo `todo_model.py` en el directorio principal del módulo `todo_app`.
+
+Añade el siguiente contenido:
+
+``` 
+# -*- coding: utf-8 -*- 
+from odoo import models, fields 
+class TodoTask(models.Model): 
+    _name = 'todo.task' 
+    _description = 'To-do Task'
+    name = fields.Char('Description', required=True) 
+    is_done = fields.Boolean('Done?') 
+    active = fields.Boolean('Active?', default=True)
+
+```
 
