@@ -412,3 +412,19 @@ AQUI VA OTRA IMAGEN
 
 ####Tip
 La opción **Technical** del menú nos permite inspeccionar y editar todas las configuraciones Odoo almacenadas en la base de datos, desde la interfaz de usuario hasta la seguridad y otros parámetros del sistema. Aprenderás más sobre muchos de estos a lo largo del libro.
+
+##Instalación de módulos de terceros
+Hacer nuevos módulos disponibles en una instancia Odoo para que puedan instalarse es algo que los recién llegados a Odoo suelen encontrar confuso. Pero no tiene que ser así, así que vamos a desmitificarlo.
+
+###Encontrar módulos comunitarios
+Hay muchos módulos Odoo disponibles en Internet. La tienda de aplicaciones de Odoo en apps.odoo.com es un catálogo de módulos que se pueden descargar e instalar en su sistema. La **Odoo Community Association (OCA)** coordina las contribuciones de la comunidad y mantiene bastantes repositorios de módulos en GitHub en https://github.com/OCA/.
+
+Para agregar un módulo a una instalación de Odoo, podríamos copiarlo en el directorio `addons` junto con los módulos oficiales. En nuestro caso, el directorio `addons` está en `~ / odoo-dev / odoo / addons /`. Esto podría no ser la mejor opción para nosotros, ya que nuestra instalación de Odoo se basa en un repositorio de código controlado por versiones, y queremos mantenerlo sincronizado con el repositorio de GitHub.
+
+Afortunadamente, podemos usar ubicaciones adicionales para los módulos para que podamos mantener nuestros módulos personalizados en un directorio diferente, sin tenerlos mezclados con los oficiales.
+
+Como ejemplo, vamos a descargar el código de este libro, disponible en GitHub, y hacer disponíbles esos módulos addon en nuestra instalación de Odoo.
+
+Para obtener el código fuente de GitHub, ejecute los siguientes comandos:
+
+
