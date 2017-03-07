@@ -427,4 +427,21 @@ Como ejemplo, vamos a descargar el código de este libro, disponible en GitHub, 
 
 Para obtener el código fuente de GitHub, ejecute los siguientes comandos:
 
+```
+$ cd ~/odoo-dev
 
+$ git clone https://github.com/dreispt/todo_app.git -b 10.0
+```
+Usamos la opción `-b` para asegurarnos de que estamos escargando los módulos para la versión 10.0.
+
+Después de esto, tendremos un directorio nuevo `/ todo_app` junto al directorio `/ odoo`, que contiene los módulos. Ahora debemos informar a Odoo sobre este nuevo directorio de módulos.
+
+###Configurandola ruta addons
+El servidor Odoo tiene una opción de configuración llamada `addons_path` para establecer dónde el servidor debe buscar módulos. De forma predeterminada, esto apunta al directorio `/ addons`, donde se ejecuta el servidor Odoo.
+
+Podemos proporcionar no sólo una, sino una lista de directorios donde se pueden encontrar módulos. Esto nos permite mantener nuestros módulos personalizados en un directorio diferente, sin tenerlos mezclados con los addons oficiales.
+
+Vamos a iniciar el servidor con una ruta addons que incluye nuestro nuevo directorio de módulos:
+```
+$ cd ~/odoo-dev/odoo
+```
