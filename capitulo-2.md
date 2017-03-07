@@ -28,4 +28,13 @@ Los **Complementos de Módulos** son los componentes básicos para las aplicacio
 
 Las **Aplicaciones** son la forma en que se añaden las principales características a Odoo. Proporcionan los elementos básicos para un área funcional, como Contabilidad o RH, en función de qué características de módulos complementarios modifican o amplían. Debido a esto, se destacan en el menú **Apps** de Odoo.
 
-Si su módulo es complejo y agrega funcionalidad nueva o mayor a Odoo, podrías considerar su crearo como una aplicación.
+Si su módulo es complejo y agrega funcionalidad nueva o mayor a Odoo, podrías considerar crearlo como una aplicación. Si tu módulo sólo hace cambios a la funcionalidad existente en Odoo, es probable que no sea una aplicación.
+
+Si un módulo es una aplicación o no, se define en el manifiesto. Técnicamente no tiene ningún efecto particular sobre cómo se comporta el módulo addon. Sólo se utiliza para resaltar en la lista de **Aplicaciones**.
+
+###Modificando y extendiendo módulos
+En el ejemplo que vamos a seguir, crearemos un nuevo módulo con el menor número posible de dependencias.
+
+Sin embargo, este no será el caso típico. Principalmente, modificaremos o extenderemos un módulo ya existente.
+
+Como regla general, se considera una mala práctica modificar los módulos existentes al cambiar su código fuente directamente. Esto es especialmente cierto para los módulos oficiales proporcionados por Odoo. Hacerlo no te permite tener una separación clara entre el
