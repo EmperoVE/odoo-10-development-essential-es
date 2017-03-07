@@ -226,4 +226,40 @@ Observa que esta y las siguientes líneas tienen sangría. Si no estás familiar
 
 Luego, tenemos el atributo modelo `_description `. No es obligatorio, pero proporciona un nombre fácil de usar para los registros del modelo, que puede utilizarse para mejores mensajes de usuario.
 
-Las tres últimas líneas definen los campos del modelo. Vale la pena señalar que `name` y `active` son nombres de campos especiales. De forma predeterminada, Odoo usará el campo de `name` como el título del registro al referenciarlo de otros modelos. El campo `active` se utiliza para inactivar los registros y, por defecto, sólo los registros activos serán mostrados.
+Las tres últimas líneas definen los campos del modelo. Vale la pena señalar que `name` y `active` son nombres de campos especiales. De forma predeterminada, Odoo usará el campo de `name` como el título del registro al referenciarlo de otros modelos. El campo `active` se utiliza para inactivar los registros y, por defecto, sólo los registros activos serán mostrados. Lo utilizaremos para borrar las tareas completadas sin eliminarlas de la base de datos.
+
+En este momento, este archivo aún no es utilizado por el módulo. Debemos decirle a Python que lo cargue con el módulo en el archivo `__init__.py`. Vamos a editarlo para agregar la siguiente línea:
+```
+from . Importar todo_modelo
+```
+¡Eso es! Para que nuestros cambios de código de Python entren en vigor, la instancia de servidor debe reiniciarse (a menos que esté utilizando el modo `--dev`).
+
+No veremos ninguna opción de menú para acceder a este nuevo modelo ya que no los hemos añadido aún. Sin embargo, podemos inspeccionar el modelo recién creado usando el menú **Technical**. En el menú superior **Settings**, ve a **Technical | Database Structure | Models**, busca el modelo `todo.task` en la lista y haz clic en él para ver su definición:
+
+AQUI VA UNA IMAGEN
+
+Si todo va bien, se confirma que el modelo y los campos fueron creados. Si no puedes verlos aquí, intenta reiniciar el servidor con una actualización de módulo, como se describió anteriormente.
+
+También podemos ver algunos campos adicionales que no declaramos. Estos son campos reservados que Odoo agrega automáticamente a cada modelo nuevo. Estos son los siguientes:
+
++ `id` es un identificador numérico único para cada registro del modelo.
++ `create_date` y `create_uid` especifican cuándo se creó el registro y quién lo creó respectivamente.
++ `write_date` y `write_uid` confirman cuándo el registro fue modificado por última vez y quien lo modificó respectivamente.
++  `__last_update` es un ayudante que en realidad no se almacena en la base de datos. Se utiliza para verificaciones de concurrencia.
+
+###Añadiendo pruebas automatizadas
+Las mejores prácticas de programación incluyen tener pruebas automatizadas para tu código. Esto es aún más importante para lenguajes dinámicos como Python. Como no hay ningún paso de compilación, no puede estar seguro de que no haya errores sintácticos hasta que el intérprete realmente  ejecute el código. Un buen editor puede ayudarnos a detectar estos problemas con antelación, pero no puede ayudarnos a asegurar que el código se ejecute como lo desean las pruebas automatizadas.
+
+Odoo soporta dos formas de describir las pruebas: ya sea utilizando archivos de datos YAML o utilizando código Python, basado en la biblioteca `Unittest2`. Las pruebas YAML son un legado de versiones anteriores, y no se recomiendan. Preferiremos usar pruebas de Python y añadiremos un caso básico de prueba a nuestro módulo.
+
+
+
+
+
+
+
+
+
+
+
+
