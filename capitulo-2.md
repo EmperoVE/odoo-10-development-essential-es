@@ -146,4 +146,22 @@ Recuerda incluir también cualquier otro directorio de complementos que puedas e
 Ahora necesitamos la instancia Odoo para reconocer el nuevo módulo que acabamos de agregar.
 
 ###Instalando el nuevo módulo
-En el menú superior de **Aplicaciones**, seleccione la opción **Actualizar Lista de Aplicaciones**. Esto actualizará la lista de módulos, añadiendo los módulos que se hayan agregado desde la última actualización a la lista. Recuerda que necesitamos activar el modo desarrollador para que esta opción sea visible
+En el menú superior de **Aplicaciones**, seleccione la opción **Actualizar Lista de Aplicaciones**. Esto actualizará la lista de módulos, añadiendo los módulos que se hayan agregado desde la última actualización a la lista. Recuerda que necesitamos activar el modo desarrollador para que esta opción sea visible. Esto se hace en el panel de **Configuración**, en el enlace de abajo a la derecha, debajo de la información del número de versión de Odoo.
+
+####Tip
+Asegúrate de que tu sesión de cliente web está funcionando con la base de datos correcta. Puedes comprobarlo en la parte superior derecha: el nombre de la base de datos se muestra entre paréntesis, justo después del nombre de usuario. Una manera de aplicar la base de datos correcta es iniciar la instancia del servidor con la opción adicional `--db-filter = ^ MYDB $`.
+
+La opción **Aplicaciones** nos muestra la lista de módulos disponibles. De forma predeterminada, muestra sólo los módulos de aplicación. Ya que hemos creado un módulo de aplicación, no necesitamos eliminar ese filtro para verlo. Escribe `todo` en la búsqueda y debes ver nuestro nuevo módulo, listo para ser instalado:
+
+IMAGEN
+
+Ahora haZ clic en el botón **Instalar** del módulo y ¡estamos listos!
+
+###Actualizando un módulo
+El desarrollo de un módulo es un proceso iterativo, y querrás que los cambios hechos en los archivos fuente sean aplicados y hechos visibles en Odoo.
+
+En muchos casos, esto se realiza actualizando el módulo: busca el módulo en la lista de **Aplicaciones** y una vez que ya esté instalado, tendrás disponible un botón de **Actualización**.
+
+Sin embargo, cuando los cambios son sólo en código Python, la actualización puede no tener un efecto. En lugar de una actualización de módulo, es necesario reiniciar el servidor de aplicaciones. Dado que Odoo carga el código Python sólo una vez, cualquier cambio posterior en el código requiere que se aplique un reinicio del servidor.
+
+En algunos casos, si los cambios de módulo estuvieran en los archivos de datos y en el código de Python, es posible que necesites ambas operaciones. Esta es una fuente común de confusión para los nuevos desarrolladores Odoo.
