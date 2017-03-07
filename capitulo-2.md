@@ -111,12 +111,24 @@ Estas otras teclas descriptoras también están disponibles:
 + `installable` es por defecto `True` pero se puede establecer como `False` para deshabilitar un módulo.
 + `Auto_install` si se establece en `True`, este módulo se instalará automáticamente, siempre que todas sus dependencias ya estén instaladas. Se utiliza para los módulos de pegamento.
 
-Desde Odoo 8.0, en lugar de la clave de descripción, podemos utilizar un archivo README.rst o README.md en el directorio superior del módulo.
+Desde Odoo 8.0, en lugar de la clave de `description`, podemos utilizar un archivo `README.rst` o `README.md` en el directorio superior del módulo.
 
-Una palabra sobre las licencias
-Elegir una licencia para su trabajo es muy importante, y usted debe considerar cuidadosamente cuál es la mejor opción para usted, y sus implicaciones. Las licencias más utilizadas para los módulos Odoo son la Licencia Pública General Menor de GNU (LGLP) y la Licencia Pública General de Affero (AGPL). La LGPL es más permisiva y permite el trabajo derivado comercial, sin la necesidad de compartir el código fuente correspondiente. La AGPL es una licencia de código abierto más fuerte, y requiere trabajo derivado y alojamiento de servicio para compartir su código fuente. Obtenga más información acerca de las licencias GNU en https://www.gnu.org/licenses/.
+###Una palabra sobre las licencias
+Elegir una licencia para tu trabajo es muy importante, y debes considerar cuidadosamente cuál es la mejor opción para tí y sus implicaciones. Las licencias más utilizadas para los módulos Odoo son la **Licencia Pública General Menor de GNU (LGLP¨** y la **Licencia Pública General de Affero (AGPL)**. La LGPL es más permisiva y permite el trabajo derivado comercial, sin la necesidad de compartir el código fuente correspondiente. La AGPL es una licencia de código abierto más fuerte, y requiere trabajo derivado y alojamiento de servicio para compartir su código fuente. Obten más información acerca de las licencias GNU en https://www.gnu.org/licenses/.
 
-Añadiendo a la ruta addons
+###Añadiendo a la ruta addons
 Ahora que tenemos un nuevo módulo minimalista, queremos ponerlo a disposición de la instancia de Odoo.
 
-Para ello, debemos asegurarnos de que el directorio que contiene el módulo está en la ruta addons, entonces
+Para ello, debemos asegurarnos de que el directorio que contiene el módulo está en la ruta addons, entonces actualiza la lista de módulos Odoo.
+
+Ambas acciones se han explicado en detalle en el capítulo anterior, pero aquí, continuaremos con un breve resumen de lo que se necesita.
+
+Posicionaremos en nuestro directorio de trabajo e iniciaremos el servidor con la configuración de ruta de addons apropiada:
+
+```
+$ cd ~/odoo-dev
+
+
+$ ./odoo/odoo-bin -d todo --addons-path="custom-addons,odoo/addons" --save
+```
+La opción `--save` guarda las opciones que utilizaste en un archivo de configuración. Esto nos evita repetirlas cada vez que reiniciamos el servidor: solo se ejecuta `./odoo-bin` y se utilizará la última opción guardada.
