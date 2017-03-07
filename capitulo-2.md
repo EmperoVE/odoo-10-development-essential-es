@@ -37,4 +37,12 @@ En el ejemplo que vamos a seguir, crearemos un nuevo módulo con el menor númer
 
 Sin embargo, este no será el caso típico. Principalmente, modificaremos o extenderemos un módulo ya existente.
 
-Como regla general, se considera una mala práctica modificar los módulos existentes al cambiar su código fuente directamente. Esto es especialmente cierto para los módulos oficiales proporcionados por Odoo. Hacerlo no te permite tener una separación clara entre el
+Como regla general, se considera una mala práctica modificar los módulos existentes al cambiar su código fuente directamente. Esto es especialmente cierto para los módulos oficiales proporcionados por Odoo. Hacerlo no te permite tener una separación clara entre el código del módulo original y las modificaciones, y esto hace que sea difícil aplicar actualizaciones ya que sobrescribirían las modificaciones.
+
+En su lugar, debemos crear los módulos de extensión que se instalarán junto a los módulos que queremos modificar, implementando los cambios que necesitamos. De hecho, uno de los principales puntos fuertes de Odoo es el mecanismo de **herencia**, que permite módulos personalizados para extender los módulos existentes, ya sea oficialmente o desde la comunidad. La herencia es posible en todos los niveles: modelos de datos, lógica empresarial y capas de interfaz de usuario.
+
+En este capítulo, crearemos un módulo completamente nuevo, sin extender ningún módulo existente, para enfocarnos en las diferentes partes y pasos involucrados en la creación del módulo. Vamos a tener sólo una breve mirada a cada parte ya que cada uno de ellos será estudiado con más detalle en los capítulos posteriores.
+
+Una vez que estemos cómodos con la creación de un nuevo módulo, podemos sumergirnos en el mecanismo de herencia, que será introducido en el Capítulo 3, *Herencia - Extendiendo Aplicaciones Existentes*.
+
+Para obtener desarrollo productivo para Odoo debemos
