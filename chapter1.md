@@ -453,6 +453,10 @@ Si miras más de cerca el registro del servidor, notarás una línea que informa
 ###Actualizando la lista de aplicaciones
 Todavía necesitamos pedirle a Odoo que actualice su lista de módulos antes de que estos nuevos módulos estén disponibles para la instalación.
 
-Para ello, necesitamos activar el modo desarrollador, ya que proporciona la opción de menú **Actualizar Lista de Aplicaciones**. Se puede encontrar en el menú superior de **Apps**.
+Para ello, necesitamos activar el modo desarrollador, ya que proporciona la opción de menú **Actualizar Lista de Aplicaciones**. Se puede encontrar en el menú superior de **Aplicaciones**.
 
-Después de actualizar la lista de módulos, podemos confirmar que los nuevos módulos están disponibles para la instalación. Utilice la opción de menú Aplicaciones para ver la lista de módulos locales. Busca `todo` y deberías ver los nuevos módulos disponibles.
+Después de actualizar la lista de módulos, podemos confirmar que los nuevos módulos están disponibles para la instalación. Utilice la opción de menú **Aplicaciones** para ver la lista de módulos locales. Busca `todo` y deberías ver los nuevos módulos disponibles.
+
+Ten en cuenta que la segunda opción de menú **App Store** muestra la lista de módulos del almacén de aplicaciones Odoo en lugar de los módulos locales:
+
+AQUI VA UNA IMAGEN
