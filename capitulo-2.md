@@ -177,7 +177,17 @@ $ ./odoo-bin -d todo -u todo_app
 
 La opción `-u` (o `--update` en el forma larga) requiere la opción `-d` y acepta una lista de módulos separados por comas para actualizar. Por ejemplo, podríamos usar `-u todo_app, mail`. Cuando se actualiza un módulo, también se actualizan todos los módulos instalados que dependen de él. Esto es esencial para mantener la integridad de los mecanismos de herencia, utilizados para extender  características.
 
-A lo largo del libro, cuando necesites aplicar el
+A lo largo del libro, cuando necesites aplicar el trabajo realizado en módulos, la forma más segura es reiniciar la instancia Odoo con el comando anterior. Al presionar la tecla de flecha hacia arriba, se obtiene el comando anterior que se utilizó. Por lo tanto, la mayoría de las veces, te encontrará usando la combinación de teclas Ctrl + C, arriba y Enter.
+
+Desafortunadamente, tanto la actualización de la lista de módulos como la desinstalación de módulos son acciones que no están disponibles a través de la línea de comandos. Estos deben hacerse a través de la interfaz web en el menú de **Aplicaciones**.
+
+###El modo de desarrollo del servidor
+En Odoo 10 se introdujo una nueva opción que proporciona características amigables para los desarrolladores. Para usarla, inicia la instancia del servidor con la opción adicional `--dev = all`.
+Esto permite que algunas características prácticas aceleren nuestro ciclo de desarrollo. Los más importantes son:
++ Recargar código Python automáticamente, una vez que se guarda un archivo Python, evitando un reinicio manual del servidor
++ Leer las definiciones de vista directamente desde los archivos XML, evitando actualizaciones manuales del módulo
+
+La opción `--dev` acepta una lista de opciones separadas por comas, aunque la opción `all` será adecuada la mayor parte del tiempo. También podemos especificar el depurador que preferimos usar. De forma predeterminada, se utiliza el depurador Python, `pdb`. Algunas personas pueden preferir instalar y usar depuradores alternativos. Aquí también se admiten `ipdb` y `pudb`.
 
 
 
