@@ -460,3 +460,12 @@ Después de actualizar la lista de módulos, podemos confirmar que los nuevos m�
 Ten en cuenta que la segunda opción de menú **App Store** muestra la lista de módulos del almacén de aplicaciones Odoo en lugar de los módulos locales:
 
 AQUI VA UNA IMAGEN
+
+##Resumen
+En este capítulo, aprendimos a configurar un sistema Debian para alojar Odoo e instalarlo desde el código fuente de GitHub. También aprendimos a crear bases de datos Odoo y ejecutar instancias de Odoo. Para permitir a los desarrolladores utilizar sus herramientas favoritas en su estación de trabajo personal, explicamos cómo configurar el uso compartido de archivos en el huesped Odoo.
+
+Ahora deberíamos tener un ambiente Odoo en funcionamiento para trabajar y estar cómodos con la administración de bases de datos e instancias.
+
+Con esto en su lugar, estamos listos para ir directamente a la acción. En el próximo capítulo, crearemos nuestro primer módulo Odoo desde cero y entenderemos los principales elementos que involucra.
+
+¡Entonces empecemos!
