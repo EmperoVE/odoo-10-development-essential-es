@@ -214,4 +214,6 @@ class TodoTask(models.Model):
     active = fields.Boolean('Active?', default=True)
 
 ```
+La primera línea es un marcador especial que indica al intérprete de Python que este archivo tiene UTF-8 para que pueda esperar y manejar caracteres no ASCII. No usaremos ninguno, pero es una buena práctica tenerlo de todos modos.
 
+La segunda línea es una instrucción de importación de código Python, haciendo disponibles los objetos  `models` y  `fields` del núcleo Odoo.
