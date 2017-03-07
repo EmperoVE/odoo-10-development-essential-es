@@ -92,3 +92,21 @@ Ahora debemos añadir un archivo `__manifest__.py` junto al archivo `__init__.py
 }
 
 ```
+El atributo `depends` puede tener una lista de otros módulos que se requieren. Odoo los instalará automáticamente cuando este módulo esté instalado. No es un atributo obligatorio, pero se aconseja tenerlo siempre. Si no se necesitan dependencias en particular, debemos depender del módulo básico `base`.
+
+Debes tener cuidado de asegurarte de que todas las dependencias se establecen explícitamente aquí; De lo contrario, el módulo puede fallar al instalar en una base de datos limpia (debido a las dependencias que faltan) o tener errores de carga si por casualidad los otros módulos necesarios se cargan después.
+
+Para nuestra aplicación, no necesitamos dependencias específicas, por lo que dependemos únicamente del módulo `base`.
+
+Para ser conciso, elegimos utilizar muy pocas claves de descriptor, pero, en un escenario real, te recomendamos que también uses las claves adicionales, ya que son relevantes para la tienda de aplicaciones Odoo.
+
++ `summary` se muestra como un subtítulo para el módulo.
++ `version`, por defecto, es 1.0. Debe seguir reglas de versiones semánticas (vea http://semver.org/ para más detalles).
++ El Identificador de `license`, por defecto es `LGPL-3`.
++ `website` es una URL para encontrar más información sobre el módulo. Esto puede ayudar a la gente a encontrar más documentación o al rastreador de incidencias para registrar bugs y sugerencias.
++ `category` es la categoría funcional del módulo, que por defecto es `Uncategorized`. La lista de categorías existentes se encuentra en el formulario grupos de seguridad (**Settings | User | Groups**), en la lista desplegable del campo **Application**.
+
+Estas otras teclas descriptoras también están disponibles:
+
++ `installable` es por defecto `True` pero se puede establecer como `False` para deshabilitar un módulo.
++ `Auto_install` si se establece en `True`, este módulo se instalará automáticamente, siempre que todas sus dependencias ya estén instaladas. Se utiliza para los módulos de pegamento.
