@@ -45,4 +45,13 @@ En este capítulo, crearemos un módulo completamente nuevo, sin extender ningú
 
 Una vez que estemos cómodos con la creación de un nuevo módulo, podemos sumergirnos en el mecanismo de herencia, que será introducido en el Capítulo 3, *Herencia - Extendiendo Aplicaciones Existentes*.
 
-Para obtener desarrollo productivo para Odoo debemos
+Para obtener desarrollo productivo para Odoo debemos estar cómodos con el flujo de trabajo de desarrollo: administrar el entorno de desarrollo, aplicar cambios de código y comprobar los resultados. Esta sección le guiará a través de estos fundamentos.
+
+###Creando el esqueleto básico del módulo
+Siguiendo las instrucciones del Capítulo 1, *Iniciando con desarrollo Odoo*, deberíamos tener el servidor Odoo en `~ / odoo-dev / odoo /`. Para mantener las cosas ordenadas, crearemos un nuevo directorio junto con él para alojar nuestros módulos personalizados, en `~ / odoo-dev / custom-addons`.
+
+Odoo incluye un comando `scaffold` para crear automáticamente un nuevo directorio de módulo, con una estructura básica ya establecida. Puedes obtener más información al respecto con el siguiente comando:
+```
+$ ~/odoo-dev/odoo/odoo-bin scaffold --help
+```
+
