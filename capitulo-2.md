@@ -165,3 +165,19 @@ En muchos casos, esto se realiza actualizando el módulo: busca el módulo en la
 Sin embargo, cuando los cambios son sólo en código Python, la actualización puede no tener un efecto. En lugar de una actualización de módulo, es necesario reiniciar el servidor de aplicaciones. Dado que Odoo carga el código Python sólo una vez, cualquier cambio posterior en el código requiere que se aplique un reinicio del servidor.
 
 En algunos casos, si los cambios de módulo estuvieran en los archivos de datos y en el código de Python, es posible que necesites ambas operaciones. Esta es una fuente común de confusión para los nuevos desarrolladores Odoo.
+Pero afortunadamente, hay una mejor manera. La manera más segura y rápida de hacer que todos nuestros cambios en un módulo sean efectivos es detener y reiniciar la instancia del servidor, solicitando que nuestros módulos sean actualizados a nuestra base de datos de trabajo.
+
+En el terminal donde se ejecuta la instancia de servidor, utiliza **Ctrl + C** para detenerla. A continuación, inicie el servidor y actualice el módulo `todo_app` mediante el siguiente comando:
+
+```
+$ ./odoo-bin -d todo -u todo_app
+
+```
+
+
+La opción `-u` (o `--update` en el forma larga) requiere la opción `-d` y acepta una lista de módulos separados por comas para actualizar. Por ejemplo, podríamos usar `-u todo_app, mail`. Cuando se actualiza un módulo, también se actualizan todos los módulos instalados que dependen de él. Esto es esencial para mantener la integridad de los mecanismos de herencia, utilizados para extender  características.
+
+A lo largo del libro, cuando necesites aplicar el
+
+
+
