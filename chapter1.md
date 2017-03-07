@@ -444,4 +444,15 @@ Podemos proporcionar no sólo una, sino una lista de directorios donde se pueden
 Vamos a iniciar el servidor con una ruta addons que incluye nuestro nuevo directorio de módulos:
 ```
 $ cd ~/odoo-dev/odoo
+
+$ ./odoo-bin -d demo --addons-path="../todo_app,./addons"
 ```
+
+Si miras más de cerca el registro del servidor, notarás una línea que informa de la ruta de complementos en uso: `INFO? Odoo: addons paths: [...]`. Confirma que contiene nuestro directorio `todo_app`.
+
+###Actualizando la lista de aplicaciones
+Todavía necesitamos pedirle a Odoo que actualice su lista de módulos antes de que estos nuevos módulos estén disponibles para la instalación.
+
+Para ello, necesitamos activar el modo desarrollador, ya que proporciona la opción de menú **Actualizar Lista de Aplicaciones**. Se puede encontrar en el menú superior de **Apps**.
+
+Después de actualizar la lista de módulos, podemos confirmar que los nuevos módulos están disponibles para la instalación. Utilice la opción de menú Aplicaciones para ver la lista de módulos locales. Busca `todo` y deberías ver los nuevos módulos disponibles.
