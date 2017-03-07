@@ -253,13 +253,26 @@ Las mejores prácticas de programación incluyen tener pruebas automatizadas par
 Odoo soporta dos formas de describir las pruebas: ya sea utilizando archivos de datos YAML o utilizando código Python, basado en la biblioteca `Unittest2`. Las pruebas YAML son un legado de versiones anteriores, y no se recomiendan. Preferiremos usar pruebas de Python y añadiremos un caso básico de prueba a nuestro módulo.
 
 
+Los archivos de código de prueba deben tener un nombre que empiece por `test_` y se debe importar desde `tests / __ init__.py`. Pero el directorio de `test` (o submódulo Python) no se debe importar desde la parte superior del módulo  `__init__.py`, ya que se descubrirá y cargará automáticamente sólo cuando se ejecuten pruebas.
 
+Las pruebas deben colocarse en un subdirectorio `test/`. Añade un archivo `tests / __ init__.py` con lo siguiente:
+```
+from . import test_todo
 
+```
+Ahora, añade el código de prueba real disponíble en el archivo  `tests/test_todo.py`:
+```
+# -*- coding: utf-8 -*- 
+from odoo.tests.common import TransactionCase 
+ 
+class TestTodo(TransactionCase): 
+ 
+    def test_create(self): 
+        "Create a simple Todo" 
+        Todo = self.env['todo.task'] 
+        task = Todo.create({'name': 'Test Task'}) 
+        self.assertEqual(task.is_done, False)
 
-
-
-
-
-
+```
 
 
