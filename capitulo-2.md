@@ -132,3 +132,18 @@ $ cd ~/odoo-dev
 $ ./odoo/odoo-bin -d todo --addons-path="custom-addons,odoo/addons" --save
 ```
 La opción `--save` guarda las opciones que utilizaste en un archivo de configuración. Esto nos evita repetirlas cada vez que reiniciamos el servidor: solo se ejecuta `./odoo-bin` y se utilizará la última opción guardada.
+
+Observa atentamente el registro del servidor. Debe tener una línea `INFO? Odoo: addons paths: [...]`. Debe incluir nuestro directorio de `custom-addons`.
+
+Recuerda incluir también cualquier otro directorio de complementos que puedas estar utilizando. Por ejemplo, si también tienes un directorio `~ / odoo-dev / extra` que contiene módulos adicionales que se utilizarán, es posible que desees incluirlos también utilizando la opción `--addons-path`:
+```
+
+--addons-path = "custom-addons, extra, odoo / addons"
+
+```
+
+
+Ahora necesitamos la instancia Odoo para reconocer el nuevo módulo que acabamos de agregar.
+
+###Instalando el nuevo módulo
+En el menú superior de **Aplicaciones**, seleccione la opción **Actualizar Lista de Aplicaciones**. Esto actualizará la lista de módulos, añadiendo los módulos que se hayan agregado desde la última actualización a la lista. Recuerda que necesitamos activar el modo desarrollador para que esta opción sea visible
