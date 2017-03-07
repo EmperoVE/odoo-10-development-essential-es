@@ -66,4 +66,29 @@ También necesita ser Python importable, por lo que también debe tener un archi
 
 El nombre del directorio del módulo es su nombre técnico. Usaremos `todo_app` para ello. El nombre técnico debe ser un identificador Python válido: debe comenzar con una letra y sólo puede contener letras, números y el carácter de subrayado.
 
-Los siguientes comandos crearán el directorio del módulo y crearán un archivo`__init__.py ` vacío en él, `~ / odoo-dev / custom-addons / todo_app / __ init__.py`.
+Los siguientes comandos crearán el directorio del módulo y crearán un archivo  `__init__.py ` vacío en él, `~ / odoo-dev / custom-addons / todo_app / __ init__.py`.
+
+En caso de que desee hacerlo directamente desde la línea de comandos, esto es lo que debes usar:
+```
+$ mkdir ~/odoo-dev/custom-addons/todo_app
+
+$ touch ~/odoo-dev/custom-addons/todo_app/__init__.py
+```
+
+A continuación, necesitamos crear el archivo de manifiesto. Debería contener sólo un diccionario Python con una docena de posibles atributos; De esto, solo se requiere el atributo de `name`. El atributo `description`, para una descripción más larga, y el atributo `author` proporcionan una mejor visibilidad y son recomendados.
+
+Ahora debemos añadir un archivo `__manifest__.py` junto al archivo `__init__.py` con el siguiente contenido:
+
+```
+
+{ 
+    'name': 'To-Do Application', 
+    'description': 'Manage your personal
+    To-Do 
+    tasks.', 
+    'author': 'Daniel Reis', 
+    'depends': ['base'], 
+    'application': True, 
+}
+
+```
