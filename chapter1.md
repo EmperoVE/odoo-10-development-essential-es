@@ -400,4 +400,15 @@ AQUI VA OTRA IMAGEN
 Odoo incluye un par de herramientas que son muy útiles para los desarrolladores, y vamos a hacer uso de ellAs a lo largo del libro. Son características técnicas y el modo de desarrollo. Estos están desactivados por defecto, por lo que este es un buen momento para aprender a habilitarlos.
 
 ###Activación de las herramientas de desarrollo
-Las herramientas de desarrollo proporcionan una configuración y funciones avanzadas de servidor. Estos incluyen un menú de depuración en la barra de menú superior junto con opciones de menú adicionales en el menú ***AJUSTES** (****),
+Las herramientas de desarrollo proporcionan una configuración y funciones avanzadas de servidor. Estos incluyen un menú de depuración en la barra de menú superior junto con opciones de menú adicionales en el menú **Settings**, en particular el menú **Technical**.
+
+Estas herramientas vienen deshabilitadas de forma predeterminada y, para habilitarlas, debemos iniciar sesión como administrador. En la barra de menú superior, seleccione el menú **Settings**. En la parte inferior derecha, debajo de la versión Odoo, encontrará dos opciones para habilitar el modo de desarrollo; cualquiera de ellas habilitará los menús **Debug** y **Technical**. La segunda opción, **Activate the developer mode (whit assest)**, también deshabilita la minificación de JavaScript y CSS utilizada por el cliente web, facilitando la depuración del comportamiento del cliente:
+
+Aqui va una imagen
+
+Después de eso, la página se vuelve a cargar y debería verse un icono de error en la barra de menú superior, justo antes del avatar y nombre de usuario de la sesión que proporciona las opciones de modo de depuración. Y en la opción **Settings** en el menú superior, deberíamos ver una nueva sección del menú **Technical** que da acceso a muchos internos de la instancia de Odoo:
+
+AQUI VA OTRA IMAGEN
+
+####Tip
+La opción **Technical** del menú nos permite inspeccionar y editar todas las configuraciones Odoo almacenadas en la base de datos, desde la interfaz de usuario hasta la seguridad y otros parámetros del sistema. Aprenderás más sobre muchos de estos a lo largo del libro.
