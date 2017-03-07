@@ -177,7 +177,7 @@ $ ./odoo-bin -d todo -u todo_app
 
 La opción `-u` (o `--update` en el forma larga) requiere la opción `-d` y acepta una lista de módulos separados por comas para actualizar. Por ejemplo, podríamos usar `-u todo_app, mail`. Cuando se actualiza un módulo, también se actualizan todos los módulos instalados que dependen de él. Esto es esencial para mantener la integridad de los mecanismos de herencia, utilizados para extender  características.
 
-A lo largo del libro, cuando necesites aplicar el trabajo realizado en módulos, la forma más segura es reiniciar la instancia Odoo con el comando anterior. Al presionar la tecla de flecha hacia arriba, se obtiene el comando anterior que se utilizó. Por lo tanto, la mayoría de las veces, te encontrará usando la combinación de teclas Ctrl + C, arriba y Enter.
+A lo largo del libro, cuando necesites aplicar el trabajo realizado en módulos, la forma más segura es reiniciar la instancia Odoo con el comando anterior. Al presionar la tecla de flecha hacia arriba, se obtiene el comando anterior que se utilizó. Por lo tanto, la mayoría de las veces, te encontrará usando la combinación de teclas _**Ctrl + C**_, arriba y _**Enter**_.
 
 Desafortunadamente, tanto la actualización de la lista de módulos como la desinstalación de módulos son acciones que no están disponibles a través de la línea de comandos. Estos deben hacerse a través de la interfaz web en el menú de **Aplicaciones**.
 
@@ -217,3 +217,13 @@ class TodoTask(models.Model):
 La primera línea es un marcador especial que indica al intérprete de Python que este archivo tiene UTF-8 para que pueda esperar y manejar caracteres no ASCII. No usaremos ninguno, pero es una buena práctica tenerlo de todos modos.
 
 La segunda línea es una instrucción de importación de código Python, haciendo disponibles los objetos  `models` y  `fields` del núcleo Odoo.
+
+La tercera línea declara nuestro nuevo modelo. Es una clase derivada de `models.Model`.
+
+La siguiente línea establece el atributo `_name` que define el identificador que se utilizará en Odoo para referirse a este modelo. Toma en cuenta que el nombre real de la clase Python, `TodoTask` en este caso, carece de significado para otros módulos Odoo. El valor `_name` es lo que se utilizará como identificador.
+
+Observa que esta y las siguientes líneas tienen sangría. Si no estás familiarizado con Python, debes saber que esto es importante: la sangría define un bloque de código anidado, por lo que estas cuatro líneas deben tener estar todas igual sangría.
+
+Luego, tenemos el atributo modelo `_description `. No es obligatorio, pero proporciona un nombre fácil de usar para los registros del modelo, que puede utilizarse para mejores mensajes de usuario.
+
+Las tres últimas líneas definen los campos del modelo. Vale la pena señalar que `name` y `active` son nombres de campos especiales. De forma predeterminada, Odoo usará el campo de `name` como el título del registro al referenciarlo de otros modelos. El campo `active` se utiliza para inactivar los registros y, por defecto, sólo los registros activos serán mostrados.
