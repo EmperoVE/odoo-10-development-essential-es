@@ -24,7 +24,7 @@ Es probable que estés empezando con Odoo, así que ahora es obviamente un buen 
 ###Descripción de aplicaciones y módulos
 Es común oír hablar de los módulos y aplicaciones Odoo. Pero, ¿cuál es exactamente la diferencia entre ellos?
 
-Los **Complementos de Módulos** son los componentes básicos para las aplicaciones Odoo. Un módulo puede agregar nuevas características a Odoo, o modificar las existentes. Es un directorio que contiene un manifiesto, o archivo descriptor, llamado __manifest__.py, más los archivos restantes que implementan sus características.
+Los **Complementos de Módulos** son los componentes básicos para las aplicaciones Odoo. Un módulo puede agregar nuevas características a Odoo, o modificar las existentes. Es un directorio que contiene un manifiesto, o archivo descriptor, llamado `__manifest__.py`, más los archivos restantes que implementan sus características.
 
 Las **Aplicaciones** son la forma en que se añaden las principales características a Odoo. Proporcionan los elementos básicos para un área funcional, como Contabilidad o RH, en función de qué características de módulos complementarios modifican o amplían. Debido a esto, se destacan en el menú **Apps** de Odoo.
 
