@@ -633,6 +633,65 @@ Si ahora ejecutamos las pruebas y los métodos del modelo están correctamente e
 $ ./odoo-bin -d todo -i todo_app --test-enable
 
 ```
+##Configurando la seguridad de acceso
+
+Es posible que haya notado que, al cargar, nuestro módulo recibe un mensaje de advertencia en el registro del servidor:
+
+**The model todo.task has no access rules, consider adding one.**
+
+
+(**El modelo todo.task no tiene reglas de acceso, considere agregar una.**)
+
+
+
+
+El mensaje es bastante claro: nuestro nuevo modelo no tiene reglas de acceso, por lo que no puede ser utilizado por nadie que no sea el superusuario de admin. Como superusuario, el admin ignora las reglas de acceso a datos, y es por eso que hemos podido utilizar el formulario sin errores. Pero debemos corregir esto antes de que otros usuarios puedan usar nuestro modelo.
+
+Otra cuestión que todavía tenemos que abordar es que queremos que las tareas pendientes sean privadas para cada usuario. Odoo soporta reglas de acceso a nivel de fila, que usaremos para implementar eso.
+###Probando la seguridad de acceso
+
+De hecho, nuestras pruebas deben estar fallando en este momento debido a las reglas de acceso que faltan. Ellas no están porque se hacen con el usuario admin. Por lo tanto, debemos cambiarlos para que utilicen el usuario Demo en su lugar.
+
+Para ello, debemos editar el archivo `tests / test_todo.py` para añadir un método `setUp`:
+```
+# class TestTodo(TransactionCase): 
+ 
+    def setUp(self, *args, **kwargs): 
+        result = super(TestTodo, self).setUp(*args, \ 
+        **kwargs) 
+        user_demo = self.env.ref('base.user_demo') 
+        self.env= self.env(user=user_demo) 
+        return result 
+```
+
+
+Esta primera instrucción llama al código `setUp` de la clase padre. Los siguientes cambian el entorno utilizado para ejecutar las pruebas, `self.env`, a una nueva usando el usuario `Demo`. No se necesitan más cambios en las pruebas que ya escribimos.
+
+También debemos añadir un caso de prueba para asegurarnos de que los usuarios sólo pueden ver sus propias tareas. Para ello, primero, agregua una importación adicional en la parte superior:
+```
+from odoo.exceptions import AccessError 
+
+```
+A continuación, agregua un método adicional a la clase de prueba:
+```
+    def test_record_rule(self): 
+        "Test per user record rules" 
+        Todo = self.env['todo.task'] 
+        task = Todo.sudo().create({'name': 'Admin Task'}) 
+        with self.assertRaises(AccessError): 
+            Todo.browse([task.id]).name 
+
+```
+
+Dado que nuestro método `env` ahora está utilizando el usuario de Demo, usamos el método `sudo ()` para cambiar el contexto al usuario admin. A continuación, lo usamos para crear una tarea que no debería ser accesible para el usuario Demo.
+
+Al intentar acceder a los datos de esta tarea, esperamos que se genere una excepción `AccessError`.
+
+Si ejecutamos las pruebas ahora, deberían fallar, así que nos encargamos de eso.
+###Añadiendo seguridad de control de acceso
+
+Para obtener una imagen de qué información se necesita para agregar reglas de acceso a un modelo, utiliza el cliente web y ve a Settings | Technical | Security | Access Controls List :
+AQUI VA UNA IMAGEN
 
 
 
