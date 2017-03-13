@@ -693,5 +693,83 @@ Si ejecutamos las pruebas ahora, deberían fallar, así que nos encargamos de es
 Para obtener una imagen de qué información se necesita para agregar reglas de acceso a un modelo, utiliza el cliente web y ve a **Settings | Technical | Security | Access Controls List** :
 AQUI VA UNA IMAGEN
 
+###Nota
+
+Aquí podemos ver la ACL de algunos modelos. Indica, por grupo de seguridad, qué acciones se permiten en los registros.
+
+Esta información debe ser proporcionada por el módulo utilizando un archivo de datos para cargar las líneas en el modelo `ir.model.access`. Vamos a agregar acceso completo al grupo de empleados en el modelo. El empleado es el grupo básico de acceso al que casi todos pertenecen.
+
+Esto se hace utilizando un archivo CSV denominado `security / ir.model.access.csv`. Vamos a agregarlo con el siguiente contenido:
+```
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink 
+acess_todo_task_group_user,todo.task.user,model_todo_task,base.group_user,1,1,1,1 
+
+```
+
+El nombre de archivo corresponde al modelo para cargar los datos, y la primera línea del archivo tiene los nombres de columna. Estas son las columnas proporcionadas en nuestro archivo CSV:
+
++ `id` es el identificador externo del registro (también conocido como XML ID). Debe ser único en nuestro módulo.
++ `name` es un título de descripción. Es sólo informativo y es mejor si se mantiene único. Los módulos oficiales normalmente usan una cadena separada por puntos con el nombre del modelo y el grupo. Siguiendo esta convención, utilizamos `todo.task.user`.
++ `model_id` es el identificador externo del modelo al que estamos dando acceso. Los modelos tienen XML IDs generados automáticamente por el ORM: para `todo.task`, el identificador es `model_todo_task`.
++ `group_id` identifica el grupo de seguridad para dar permisos. Los más importantes son proporcionados por el módulo base. El grupo Empleado es un caso así y tiene el identificador `base.group_user`.
++ Los campos `perm` marcan el acceso a garantizar `read`, `write`, ` create` o `un link` (borrar) el acceso.
+
+No debemos olvidar añadir la referencia a este nuevo archivo en el atributo de datos del descriptor `__manifest__.py`. Debe tener un aspecto como este:
+```
+'data': [ 
+    'security/ir.model.access.csv', 
+    'views/todo_view.xml', 
+    'views/todo_menu.xml', 
+],
+
+```
+Como antes, actualice el módulo para que estas adiciones entren en vigor. El mensaje de advertencia debe desaparecer, y podemos confirmar que los permisos están bien iniciando sesión con el usuario `demo` (la contraseña también es `demo`). Si ejecutamos nuestras pruebas ahora solo deberían fallar el caso de prueba `test_record_rule`.
+###Reglas de acceso a nivel de fila
+
+Podemos encontrar la opción **Record Rules** en el menú **Technical**, junto con **Access Control List*.
+
+Las reglas de registro se definen en el modelo `ir.rule`. Como de costumbre, necesitamos proporcionar un nombre distintivo. También necesitamos el modelo en el que operan y el filtro de dominio que se utilizará para la restricción de acceso. El filtro de dominio utiliza la lista usual de tuplas sintáctica utilizada en Odoo.
+
+Por lo general, las reglas se aplican a algunos grupos de seguridad en particular. En nuestro caso, lo haremos aplicable al grupo Empleados. Si no se aplica a ningún grupo de seguridad en particular, se considera global (el campo `global` se establece automáticamente en `True`). Las reglas globales son diferentes porque imponen restricciones que las reglas no globales no pueden anular.
+
+Para agregar la regla de registro, debemos crear un archivo `security / todo_access_rules.xml` con el siguiente contenido:
+```
+<?xml version="1.0" encoding="utf-8"?> 
+<odoo> 
+  <data noupdate="1"> 
+    <record id="todo_task_user_rule" model="ir.rule"> 
+      <field name="name">ToDo Tasks only for owner</field> 
+      <field name="model_id" ref="model_todo_task"/> 
+      <field name="domain_force">
+          [('create_uid','=',user.id)] 
+      </field> 
+      <field name="groups" eval="
+      [(4,ref('base.group_user'))]"/> 
+    </record> 
+  </data> 
+</odoo> 
+
+```
+
+###Nota
+
+Observa el atributo `noupdate = "1"`. Significa que estos datos no se actualizarán en actualizaciones de módulos. Esto le permitirá ser personalizado más adelante ya que las actualizaciones de módulos no destruirán los cambios realizados por el usuario. Pero ten en cuenta que esto también será el caso durante el desarrollo, por lo que es posible que desees establecer `noupdate = "0" ` durante el desarrollo hasta que estéss satisfecho con el archivo de datos.
+
+En el campo de grupos, también encontrarás una expresión especial. Es un campo relacional de uno a muchos, y tienen una sintaxis especial para operar. En este caso, la tupla (4, x) indica anexar `x` a los registros, y aquí `x` es una referencia al grupo Empleados, identificado por `base.group_user`. Esta sintaxis especial de escritura de uno-a-muchos se discute con más detalle en el Capítulo 4, *Datos de Módulo*.
+
+Como antes, debemos añadir el archivo a `__manifest__.py` antes de poder cargarlo en el módulo:
+```
+'data': [ 
+  'security/ir.model.access.csv', 
+  'security/todo_access_rules.xml', 
+  'todo_view.xml', 
+  'todo_menu.xml', 
+], 
+
+```
+
+Si lo hicimos bien, podemos ejecutar las pruebas de módulo y ahora deben pasar.
+
+
 
 
