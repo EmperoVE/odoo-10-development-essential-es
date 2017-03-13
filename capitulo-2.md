@@ -387,5 +387,80 @@ Agregue este nuevo archivo `views / todo_view.xml` para definir nuestra vista de
   </record> 
 </odoo> 
 ```
+Recuerde agregar este nuevo archivo a la clave de datos en el archivo de manifiesto, de lo contrario, nuestro módulo no lo sabrá y no se cargará.
+
+Esto agregará un registro al modelo `ir.ui.view` con el identificador `view_form_todo_task`. La vista es para el modelo `todo.task` y se denomina `To-do Task Form`. El nombre es solo para información; No tiene que ser único, pero debe permitir que uno identifique fácilmente a qué registro se refiere. De hecho, el nombre puede ser totalmente omitido, en ese caso, se generará automáticamente a partir del nombre del modelo y el tipo de vista.
+
+El atributo más importante es `arch`, y contiene la definición de la vista, resaltada en el código XML anterior. La etiqueta `<form>` define el tipo de vista y, en este caso, contiene tres campos. También agregamos un atributo al campo `active` para que sea solo de lectura.
+##Vistas del formulario de documento empresarial
+
+La sección anterior proporcionó una vista de formulario básica, pero podemos hacer algunas mejoras en ella. Para los modelos de documentos, Odoo tiene un estilo de presentación que imita una página en papel. Este formulario contiene dos elementos: `<header>` para contener los botones de acción y `<sheet>` para contener los campos de datos.
+
+Ahora podemos reemplazar el `<form>` básico definido en la sección anterior por éste:
+```
+<header>
+
+
+
+ 
+  <!-- Buttons go here--> 
+ 
+ </header> 
+
+
+
+
+
+
+<sheet>
+
+
+
+ 
+    <!-- Content goes here: --> 
+    <group>
+      <field name="name"/> 
+      <field name="is_done"/>
+      <field name="active" readonly="1"/>
+    </group>
+
+  </sheet>
+
+
+
+ 
+</form> 
+
+```
+
+## Añadiendo botones de acción
+
+Los formularios pueden tener botones para realizar acciones. Estos botones pueden ejecutar acciones de ventana como abrir otro formulario o ejecutar funciones de Python definidas en el modelo.
+
+Pueden colocarse en cualquier lugar dentro de un formulario, pero para los formularios de estilo de documento, el lugar recomendado para ellos es la sección `<header>`.
+
+Para nuestra aplicación, agregaremos dos botones para ejecutar los métodos del modelo `todo.task`:
+```
+
+<header> 
+  
+<button name="do_toggle_done" type="object" 
+    string="Toggle Done" class="oe_highlight" /> 
+  <button name="do_clear_done" type="object" 
+    string="Clear All Done" />
+
+
+
+ 
+</header> 
+```
+
+
+Los atributos básicos de un botón comprenden lo siguiente:
+
++ `stryng` con el texto a mostrar en el botón
++ `type` de acción que realiza
++ `name` es el identificador de esa acción
++ `class` es un atributo opcional para aplicar estilos CSS, como en HTML normal
 
 
