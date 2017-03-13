@@ -573,5 +573,66 @@ Como antes, agregamos esto a `todo_view.xml`:
 
 Los elementos `<field>` definen campos que también se buscan al escribir en el cuadro de búsqueda. Los elementos `<filter>` añaden condiciones de filtro predefinidas, que se pueden alternar con un clic de usuario, definido mediante el uso de una sintaxis específica.
 
+##La capa de lógica de negocio
+
+Ahora vamos a añadir algo de lógica a nuestros botones. Esto se hace con código Python, utilizando los métodos de la clase de modelos Python.
+###Añadiendo lógica de negocio
+
+Debemos editar el archivo Python `todo_model.py` para agregar a la clase los métodos llamados por los botones. Primero, necesitamos importar la nueva API, así que agréguala a la declaración de importación en la parte superior del archivo Python:
+```
+from odoo import models, fields, api
+```
+
+La acción del botón **Toggle Done** será muy simple: solo cambia la bandera **Is Done?**. Para la lógica de los registros, utiliza el decorador `@api.multi`. Aquí, `self` representará un conjunto de registros, y entonces deberíamos hacer un bucle a través de cada registro.
+
+Dentro de la clase TodoTask, añade esto:
+```
+@api.multi 
+def do_toggle_done(self): 
+    for task in self: 
+        task.is_done = not task.is_done 
+    return True
+```
+El código pasa por todos los registros de tarea y, para cada uno, modifica el campo `is_done`, invirtiendo su valor. El método no necesita devolver nada, pero debemos tenerlo al menos para devolver un valor `True`. La razón es que los clientes pueden utilizar XML-RPC para llamar a estos métodos y este protocolo no admite funciones de servidor devolviendo sólo un valor `None`.
+
+Para el botón **Clear All Done**, queremos ir un poco más lejos. Debe buscar todos los registros activos que están hechos, y hacerlos inactivos. Normalmente, se espera que los botones de formulario actúen sólo en el registro seleccionado, pero en este caso, queremos que actúe también en registros distintos del actual:
+```
+@api.model 
+def do_clear_done(self): 
+    dones = self.search([('is_done', '=', True)]) 
+    dones.write({'active': False}) 
+    return True 
+```
+
+
+En los métodos decorados con `@ api.model`, la variable `self` representa el modelo sin registro en particular. Construiremos un conjunto de registros `dones` que contenga todas las tareas marcadas como terminadas. A continuación, establecemos el indicador `active` para `False` en ellos.
+
+El método de búsqueda es un método API que devuelve los registros que cumplen algunas condiciones. Estas condiciones están escritas en un dominio, que es una lista de tripletes. Exploraremos los dominios con más detalle en el Capítulo 6, *Vistas – Diseñando la interfaz de usuario*.
+
+El método `write` establece los valores de una vez en todos los elementos del conjunto de registros. Los valores a escribir se describen utilizando un diccionario. Usar `write here` es más eficiente que iterar a través del conjunto de registros para asignar el valor a cada uno de ellos uno por uno.
+###Añadiendo de pruebas
+
+Ahora debemos agregar pruebas para la lógica de negocio. Idealmente, queremos que cada línea de código sea cubierta por al menos un caso de prueba. En `tests / test_todo.py`, agregua unas cuantas líneas más de código al método `test_create ()`:
+```
+# def test_create(self): 
+        # ... 
+       
+ # Test Toggle Done 
+        task.do_toggle_done() 
+        self.assertTrue(task.is_done) 
+        # Test Clear Done 
+        Todo.do_clear_done() 
+        self.assertFalse(task.active)
+
+```
+
+
+Si ahora ejecutamos las pruebas y los métodos del modelo están correctamente escritos, no deberíamos ver ningún mensaje de error en el registro del servidor:
+
+```
+$ ./odoo-bin -d todo -i todo_app --test-enable
+
+```
+
 
 
