@@ -463,4 +463,115 @@ Los atributos básicos de un botón comprenden lo siguiente:
 + `name` es el identificador de esa acción
 + `class` es un atributo opcional para aplicar estilos CSS, como en HTML normal
 
+###Uso de grupos para organizar formularios
+
+La etiqueta `<group> `te permite organizar el contenido del formulario. Colocar elementos `<group>` dentro de un elemento `<group>` crea un diseño de dos columnas dentro del grupo externo. Se aconseja que los elementos del grupo tengan un atributo de nombre para que sea más fácil para otros módulos extenderlos.
+
+Usaremos esto para organizar mejor nuestro contenido. Cambiemos el contenido `<sheet>` de nuestro formulario para que coincida con este:
+
+```
+<sheet> 
+  
+<group name="group_top"> 
+    <group name="group_left">
+
+
+
+ 
+      <field name="name"/> 
+    
+</group> 
+    <group name="group_right">
+
+
+
+ 
+      <field name="is_done"/> 
+      <field name="active" readonly="1"/> 
+    
+</group> 
+  </group>
+
+
+
+ 
+</sheet> 
+```
+
+### La vista de formulario completa
+
+En este punto, nuestro formulario `todo.task` debe verse así:
+
+```
+<form> 
+  <header> 
+    <button name="do_toggle_done" type="object" 
+      string="Toggle Done" class="oe_highlight" /> 
+    <button name="do_clear_done" type="object" 
+      string="Clear All Done" /> 
+  </header> 
+  <sheet> 
+    <group name="group_top"> 
+      <group name="group_left"> 
+        <field name="name"/> 
+      </group> 
+      <group name="group_right"> 
+        <field name="is_done"/> 
+        <field name="active" readonly="1" /> 
+      </group> 
+    </group> 
+  </sheet> 
+</form> 
+```
+###Tip
+Recuerda que para que los cambios se carguen en nuestra base de datos Odoo, se necesita una actualización del módulo. Para ver los cambios en el cliente web, el formulario debe ser recargado: haz clic de nuevo en la opción de menú que lo abre o vuelve a cargar la página del navegador (_**F5**_ en la mayoría de los navegadores).
+
+Los botones de acción no funcionarán aún, ya que todavía necesitamos agregar su lógica de negocio.
+###Adición de vistas de lista y de búsqueda
+
+Cuando se visualiza un modelo en modo de lista, se utiliza una vista `<tree>`. Las vistas de árbol son capaces de mostrar líneas organizadas en jerarquías, pero la mayoría de las veces, se utilizan para mostrar listas sin formato.
+
+Podemos agregar la siguiente definición de vista `tree` a `todo_view.xml`:
+```
+<record id="view_tree_todo_task" model="ir.ui.view"> 
+  <field name="name">To-do Task Tree</field> 
+  <field name="model">todo.task</field> 
+  <field name="arch" type="xml"> 
+    <tree colors="decoration-muted:is_done==True"> 
+      <field name="name"/> 
+      <field name="is_done"/> 
+    </tree> 
+  </field> 
+</record> 
+```
+
+Esto define una lista con sólo dos columnas: `name` y `is_done`. También añadimos un toque agradable: las líneas para las tareas hechas (`is_done == True`) se muestran en gris. Esto se hace aplicando la clase silenciada Bootstrap. Consulta http://getbootstrap.com/css/#helper-classes-colors para obtener más información sobre Bootstrap y sus colores contextuales.
+
+En la esquina superior derecha de la lista, Odoo muestra un cuadro de búsqueda. Los campos que busca y los filtros disponibles se definen mediante una vista `<search>`.
+
+Como antes, agregamos esto a `todo_view.xml`:
+```
+<record id="view_filter_todo_task" model="ir.ui.view"> 
+  <field name="name">To-do Task Filter</field> 
+  <field name="model">todo.task</field> 
+  <field name="arch" type="xml"> 
+   
+ <search> 
+      <field name="name"/> 
+      <filter string="Not Done" 
+        domain="[('is_done','=',False)]"/> 
+      <filter string="Done" 
+        domain="[('is_done','!=',False)]"/> 
+    </search>
+
+
+
+ 
+  </field> 
+</record> 
+```
+
+Los elementos `<field>` definen campos que también se buscan al escribir en el cuadro de búsqueda. Los elementos `<filter>` añaden condiciones de filtro predefinidas, que se pueden alternar con un clic de usuario, definido mediante el uso de una sintaxis específica.
+
+
 
