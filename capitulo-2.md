@@ -288,3 +288,38 @@ $ ./odoo-bin -d todo -i todo_app --test-enable
 
 El servidor Odoo buscará un subdirectorio tests/ en los módulos actualizados y los ejecutará. Si alguna de las pruebas falla, el registro del servidor te mostrará eso.
 
+##La capa de vista
+
+La capa de vista describe la interfaz de usuario. Las vistas se definen mediante XML, que es utilizado por el marco de cliente web para generar vistas HTML con datos.
+
+Tenemos elementos de menú que pueden activar acciones que pueden hacer vistas. Por ejemplo, la opción de menú **Usuarios** procesa una acción también denominada **Usuarios**, que a su vez genera una serie de vistas. Existen varios tipos de vista disponibles, como las vistas de lista y formulario y las opciones de filtro también disponíbles, están definidas por un tipo particular de vista, la vista de búsqueda.
+
+Las directrices de desarrollo de Odoo establecen que los archivos XML que definen la interfaz de usuario deben colocarse dentro de un subdirectorio `views /` subdirectorio
+Comencemos a crear la interfaz de usuario para nuestra aplicación de tareas pendientes.
+###Agregar elementos de menú
+
+Ahora que tenemos un modelo para almacenar nuestros datos, debemos hacerlo disponible en la interfaz de usuario.
+
+Para ello, debemos añadir una opción de menú para abrir el modelo `To–do Task` para que pueda utilizarse.
+
+Cree el archivo `views / todo_menu.xml` para definir un elemento de menú y la acción realizada por él:
+
+
+```
+
+<?xml version="1.0"?> 
+<odoo> 
+  <!-- Action to open To-do Task list --> 
+  <act_window id="action_todo_task" 
+    name="To-do Task" 
+    res_model="todo.task" 
+    view_mode="tree,form" /> 
+  <!-- Menu item to open To-do Task list --> 
+  <menuitem id="menu_todo_task" 
+    name="Todos" 
+    action="action_todo_task" /> 
+</odoo> 
+
+```
+
+
