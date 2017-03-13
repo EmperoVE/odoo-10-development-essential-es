@@ -690,7 +690,7 @@ Al intentar acceder a los datos de esta tarea, esperamos que se genere una excep
 Si ejecutamos las pruebas ahora, deberían fallar, así que nos encargamos de eso.
 ###Añadiendo seguridad de control de acceso
 
-Para obtener una imagen de qué información se necesita para agregar reglas de acceso a un modelo, utiliza el cliente web y ve a Settings | Technical | Security | Access Controls List :
+Para obtener una imagen de qué información se necesita para agregar reglas de acceso a un modelo, utiliza el cliente web y ve a **Settings | Technical | Security | Access Controls List** :
 AQUI VA UNA IMAGEN
 
 
