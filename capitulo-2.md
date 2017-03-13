@@ -788,6 +788,16 @@ Ahora, si actualizamos la lista de módulos, nuestro módulo debe mostrarse con 
 
 También podemos añadir una descripción mejor para explicar lo que hace y lo grandioso que es. Esto se puede hacer en la clave `description` del archivo `__manifest__.py`. Sin embargo, la forma preferida es agregar un archivo `README.rst` al directorio raíz del módulo.
 
+##Resumen
+
+Hemos creado un nuevo módulo desde el principio, cubriendo los elementos más utilizados en un módulo: modelos, los tres tipos básicos de vistas (formulario, lista y búsqueda), lógica empresarial en los métodos de modelo y seguridad de acceso.
+
+En el proceso, nos familiarizamos con el proceso de desarrollo de módulos, que implica actualizaciones de módulos y reinicios del servidor de aplicaciones para hacer que los cambios graduales sean efectivos en Odoo.
+
+Recuerde siempre, cuando se agregan campos del modelo, se necesita una actualización. Al cambiar el código de Python, incluyendo el archivo de manifiesto, se necesita un reinicio. Al cambiar archivos XML o CSV, se necesita una actualización; También, en caso de duda, haz lo siguiente: reinicia el servidor y actualiza los módulos.
+
+En el siguiente capítulo, aprenderás cómo construir módulos que se apilarán en los existentes para agregar características.
+
 
 
 
