@@ -339,5 +339,21 @@ Ahora necesitamos actualizar el módulo de nuevo para que estos cambios surtan e
 
 AQUI VA UNA IMAGEN
 
+Aunque no hemos definido nuestra vista de interfaz de usuario, al hacer clic en el menú **Todos** se abrirá un formulario generado automáticamente para nuestro modelo, lo que nos permitirá agregar y editar registros.
+
+Odoo es lo suficientemente agradable como para generarlos automáticamente para que podamos empezar a trabajar con nuestro modelo de inmediato.
+
+¡Hasta aquí todo bien! Vamos a mejorar nuestra interfaz de usuario ahora. Trata de hacer mejoras graduales como se muestra en las próximas secciones, haciendo actualizaciones de módulos frecuentes, y no tengas miedo de experimentar. También puedes intentar la opción de servidor `--dev = all`. Usándolo, las definiciones de vista se leen directamente desde los archivos XML para que tus cambios puedan estar inmediatamente disponibles para Odoo sin necesidad de una actualización de módulo.
+###Tip
+
+Si una actualización falla debido a un error de XML, no te preocupe! Comenta las últimas porciones XML editadas o elimina el archivo XML de `__manifest__.py` y repita la actualización. El servidor debe iniciarse correctamente. Ahora lee el mensaje de error en el registro del servidor con cuidado: debe señalarte dónde está el problema.
+
+Odoo admite varios tipos de vistas, pero las tres más importantes son: `tree` (generalmente llamado vistas de lista), `form` y `search views`. Vamos a añadir un ejemplo de cada uno a nuestro módulo.
+###Creando la vista de formulario
+
+Todas las vistas se almacenan en la base de datos, en el modelo `ir.ui.view`. Para añadir una vista a un módulo, declaramos un elemento `<record>` que describe la vista en un archivo XML, que se va a cargar en la base de datos cuando se instala el módulo.
+
+Agregue este nuevo archivo `views / todo_view.xml` para definir nuestra vista de formulario:
+
 
 
