@@ -322,4 +322,22 @@ Cree el archivo `views / todo_menu.xml` para definir un elemento de menú y la a
 
 ```
 
+La interfaz de usuario, incluidas las opciones y las acciones de menú, se almacena en las tablas de la base de datos. El archivo XML es un archivo de datos utilizado para cargar esas definiciones en la base de datos cuando el módulo se instala o actualiza. El código anterior es un archivo de datos Odoo, que describe dos registros para añadir a Odoo:
+
++ El elemento `<act_window>` define una acción de ventana del lado del cliente que abrirá el modelo `todo.task` con las vistas de árbol y formulario habilitadas, en ese orden.
++ El `<menuitem>` define un elemento de menú superior que llama a la acción `action_todo_task`, que se definió anteriormente.
+
+Ambos elementos incluyen un atributo id. Este atributo id también llamado **XML ID**, es muy importante: se utiliza para identificar de forma única cada elemento de datos dentro del módulo, y puede ser utilizado por otros elementos para referenciarlo. En este caso, el elemento `<menuitem>` necesita hacer referencia a la acción para procesar, y necesita hacer uso de la <act_window> ID para eso. Los ID XML se tratan con mayor detalle en el Capítulo 4, *Datos del módulo*
+
+Nuestro módulo aún no conoce el nuevo archivo de datos XML. Esto se hace agregándolo al atributo de datos en el archivo `__manifest__.py`. Este, contiene la lista de archivos a cargar por el módulo. Agregue este atributo al diccionario del manifiesto:
+```
+
+'Data': ['views / todo_menu.xml'],
+```
+
+Ahora necesitamos actualizar el módulo de nuevo para que estos cambios surtan efecto. Vaya al menú superior de **Todos** y debe ver nuestra nueva opción de menú disponible:
+
+AQUI VA UNA IMAGEN
+
+
 
