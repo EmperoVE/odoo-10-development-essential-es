@@ -392,7 +392,7 @@ Recuerde agregar este nuevo archivo a la clave de datos en el archivo de manifie
 Esto agregará un registro al modelo `ir.ui.view` con el identificador `view_form_todo_task`. La vista es para el modelo `todo.task` y se denomina `To-do Task Form`. El nombre es solo para información; No tiene que ser único, pero debe permitir que uno identifique fácilmente a qué registro se refiere. De hecho, el nombre puede ser totalmente omitido, en ese caso, se generará automáticamente a partir del nombre del modelo y el tipo de vista.
 
 El atributo más importante es `arch`, y contiene la definición de la vista, resaltada en el código XML anterior. La etiqueta `<form>` define el tipo de vista y, en este caso, contiene tres campos. También agregamos un atributo al campo `active` para que sea solo de lectura.
-##Vistas del formulario de documento empresarial
+###Vistas del formulario de documento empresarial
 
 La sección anterior proporcionó una vista de formulario básica, pero podemos hacer algunas mejoras en ella. Para los modelos de documentos, Odoo tiene un estilo de presentación que imita una página en papel. Este formulario contiene dos elementos: `<header>` para contener los botones de acción y `<sheet>` para contener los campos de datos.
 
@@ -433,7 +433,7 @@ Ahora podemos reemplazar el `<form>` básico definido en la sección anterior po
 
 ```
 
-## Añadiendo botones de acción
+### Añadiendo botones de acción
 
 Los formularios pueden tener botones para realizar acciones. Estos botones pueden ejecutar acciones de ventana como abrir otro formulario o ejecutar funciones de Python definidas en el modelo.
 
