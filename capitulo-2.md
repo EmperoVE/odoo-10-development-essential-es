@@ -354,6 +354,38 @@ Odoo admite varios tipos de vistas, pero las tres más importantes son: `tree` (
 Todas las vistas se almacenan en la base de datos, en el modelo `ir.ui.view`. Para añadir una vista a un módulo, declaramos un elemento `<record>` que describe la vista en un archivo XML, que se va a cargar en la base de datos cuando se instala el módulo.
 
 Agregue este nuevo archivo `views / todo_view.xml` para definir nuestra vista de formulario:
+```
+<?xml version="1.0"?> 
+<odoo> 
+  <record id="view_form_todo_task" model="ir.ui.view"> 
+    <field name="name">To-do Task Form</field> 
+    <field name="model">todo.task</field> 
+    <field name="arch" type="xml"> 
+     
+ <form string="To-do Task"> 
 
+
+
+
+
+        <group>
+          <field name="name"/> 
+          <field name="is_done"/> 
+          <field name="active" readonly="1"/> 
+
+
+
+
+
+        </group> 
+      </form>
+
+
+
+ 
+    </field> 
+  </record> 
+</odoo> 
+```
 
 
