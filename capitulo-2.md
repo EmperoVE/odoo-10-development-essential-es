@@ -770,6 +770,24 @@ Como antes, debemos añadir el archivo a `__manifest__.py` antes de poder cargar
 
 Si lo hicimos bien, podemos ejecutar las pruebas de módulo y ahora deben pasar.
 
+##Describiendo mejor el módulo
+
+Nuestro módulo se ve bien. ¿Por qué no añadir un icono para que se vea aún mejor? Para esto, solo necesitamos agregar al módulo un archivo `static / description / icon.png` con el icono que se va a usar.
+
+Estaremos reutilizando el icono de la aplicación existente **Notes**, por lo que deberíamos copiar el archivo `odoo / addons / static / description / icon.png` en el directorio `addons / todo_app / static / description`.
+
+Los siguientes comandos deben hacer ese truco para nosotros:
+
+```
+$ mkdir -p ~/odoo-dev/custom-addons/todo_app/static/description
+$ cp ~/odoo-dev/odoo/addons/note/static/description/icon.png ~/odoo-dev/custom-addons/todo_app/static/description
+
+```
+
+Ahora, si actualizamos la lista de módulos, nuestro módulo debe mostrarse con el nuevo icono.
+
+También podemos añadir una descripción mejor para explicar lo que hace y lo grandioso que es. Esto se puede hacer en la clave `description` del archivo `__manifest__.py`. Sin embargo, la forma preferida es agregar un archivo `README.rst` al directorio raíz del módulo.
+
 
 
 
