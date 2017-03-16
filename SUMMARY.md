@@ -4,6 +4,6 @@
 * [Capitulo 1. Iniciando con desarrollo Odoo](chapter1.md)
 * [Capítulo 2. Creando Tu Primera Aplicación Odoo](capitulo-2.md)
 * [Capítulo 3. Herencia - Ampliando aplicaciones existentes.](capitulo-3.md)
-* Capitulo 4
+* [Capítulo 4. Datos del Módulo.](capitulo-4-datos-del-modulo.md)
 * Capitulo 5
 
