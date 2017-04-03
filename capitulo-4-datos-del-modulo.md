@@ -41,9 +41,11 @@ Podemos usar el menú de **External Identifiers** mostrado anteriormente, pero e
 
 Para encontrar el identificador externo de un registro de datos, en la vista de formulario correspondiente, seleccione la opción **View Metadata** en el menú **Developer**. Esto mostrará un diálogo con el ID de base de datos del registro y el identificador externo (también conocido como XML ID).
 
-Como ejemplo, para buscar el ID de `demo user`, podemos navegar a la vista de formulario, en **Settings | Users* y seleccione la opción **View Metadata** y esto se mostrará:
+Como ejemplo, para buscar el ID de `demo user`, podemos navegar a la vista de formulario, en **Settings | Users** y seleccione la opción **View Metadata** y esto se mostrará:
+
 AQUI VA UNA IMAGEN
-Para hallar el identificador externo para elementos de vista, como formulario, árbol, búsqueda o acción, el menú **Developer** también es una buena fuente de ayuda. Para ello, podemos utilizar la opción **Manage Views** o abrir la información para la vista deseada mediante la opción **Edit <view type>. A continuación, selecciona la opción **View metadata**.
+
+Para hallar el identificador externo para elementos de vista, como formulario, árbol, búsqueda o acción, el menú **Developer** también es una buena fuente de ayuda. Para ello, podemos utilizar la opción **Manage Views** o abrir la información para la vista deseada mediante la opción **Edit <view type>**. A continuación, selecciona la opción **View metadata**.
 ##Exportando e importando data
 Comenzaremos a explorar cómo exportar e importar datos desde la interfaz de usuario de Odoo, ya partir de ahí, pasaremos a los detalles más técnicos sobre cómo utilizar los archivos de datos en nuestros módulos de complemento.
 ###Exportando data
@@ -51,7 +53,9 @@ Comenzaremos a explorar cómo exportar e importar datos desde la interfaz de usu
 La exportación de datos es una característica estándar disponible en cualquier vista de lista. Para usarlo, primero debemos seleccionar las filas para exportar seleccionando las casillas de verificación correspondientes en el extremo izquierdo y luego seleccionar la opción **Export** del botón **More**.
 
 He aquí un ejemplo, usando las tareas de tareas pendientes creadas recientemente:
+
 AQUI VA UNA IMAGEN
+
 También podemos marcar la casilla de verificación en el encabezado de la columna. Comprobará todos los registros a la vez y exportará todos los registros que coincidan con los criterios de búsqueda actuales.
 ###Nota
 
@@ -60,6 +64,7 @@ En versiones anteriores de Odoo, sólo los registros vistos en la pantalla (la p
 La opción **Export** nos lleva a un formulario de diálogo, donde podemos elegir qué exportar. La opción **Import-Compatible Export** (Importar exportación compatible) asegura que el archivo exportado se puede importar de nuevo a Odoo. Necesitaremos usar esto.
 
 El formato de exportación puede ser CSV o Excel. Preferiremos un archivo CSV para obtener una mejor comprensión del formato de exportación. A continuación, seleccionamos las columnas que queremos exportar y hacemos clic en el botón **Export to File**. Esto iniciará la descarga de un archivo con los datos exportados:
+
 AQUI VA UNA IMAGEN
 
 Si seguimos estas instrucciones y seleccionamos los campos mostrados en la captura de pantalla anterior, deberíamos terminar con un archivo de texto CSV similar a este:
