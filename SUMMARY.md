@@ -7,4 +7,5 @@
 * [Capítulo 4. Datos del Módulo.](capitulo-4-datos-del-modulo.md)
 * [ Capítulo 5. Modelos - Estructurando la aplicación de datos.](capitulo-5.md)
 * [Capítulo 6. Vistas - Diseñando la interfaz de usuario.](capitulo-6.md)
+* [Capitulo 13. Lista de Verificación de despliegue - Levantar el servidor](capitulo-13-lista-de-verificacion-de-despliegue-levantar-el-servidor.md)
 
