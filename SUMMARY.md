@@ -7,6 +7,7 @@
 * [Capítulo 4. Datos del Módulo.](capitulo-4.md)
 * [ Capítulo 5. Modelos - Estructurando la aplicación de datos.](capitulo-5.md)
 * [Capítulo 6. Vistas - Diseñando la interfaz de usuario.](capitulo-6.md)
+* [Capítulo 7. Lógica de aplicación de ORM - Procesos de soporte empresariales.](capitulo-7.md)
 * [Capitulo 12. API Externa - Integración con otros sistemas.](capitulo-12.md)
 * [Capitulo 13. Lista de Verificación de despliegue - Levantar el servidor.](capitulo-13.md)
 
