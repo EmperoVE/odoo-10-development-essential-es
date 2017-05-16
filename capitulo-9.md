@@ -1,10 +1,10 @@
-#Capítulo 9. Vistas QWeb y Kanban
+# Capítulo 9. Vistas QWeb y Kanban
 
 **QWeb** es un motor de plantilla utilizado por Odoo. Se basa en XML y se utiliza para generar fragmentos y páginas HTML. QWeb fue introducido por primera vez en la versión 7.0 para permitir vistas de kanban más ricas y, desde la versión 8.0, también se utiliza para el diseño de informes y páginas web de CMS.
 
 Aquí aprenderás sobre la sintaxis de QWeb y cómo usarla para crear sus propias vistas kanban e informes personalizados. Comencemos aprendiendo más sobre los tableros kanban.
 
-##Acerca de tableros kanban
+## Acerca de tableros kanban
 
 **Kanban** es una palabra japonesa utilizada para representar un método de gestión de colas de trabajo. Se inspira en el Sistema de Producción Toyota y en la Fabricación Lean. Se ha convertido en popular en la industria del software con la adopción de metodologías Agile.
 
@@ -18,7 +18,7 @@ Por supuesto, puede ampliarse a cualquier proceso específico que podamos necesi
 
 Créditos de la foto: "A Scrum board suggesting to use kanban" por Jeff.lasovski. Cortesía de Wikipedia.
 
-###Vistas Kanban
+### Vistas Kanban
 
 Para muchos casos de uso empresarial, un tablero kanban puede ser una forma más eficaz de administrar el proceso correspondiente que el motor de flujo de trabajo normalmente más pesado. Odoo admite las vistas de tablas kanban, junto con la lista clásica y vistas de formulario. Esto facilita la implementación de este tipo de vista. Vamos a aprender cómo usarlos.
 
@@ -48,7 +48,7 @@ Las tarjetas de **Contacto "Contact"** básicamente tienen una imagen en el lado
 
 Vamos a utilizar esta estructura más elaborada como un modelo para las tarjetas en nuestro tablero kanban de tareas pendientes.
 
-##Diseñando vistas kanban
+## Diseñando vistas kanban
 
 Vamos a agregar la vista kanban a las tareas pendientes con un nuevo módulo addon. Sería más sencillo añadirlo directamente al módulo `todo_ui`. Sin embargo, para una explicación más clara, usaremos un nuevo módulo y evitaremos muchos cambios, posiblemente confusos, en los archivos ya creados.
 
@@ -94,7 +94,7 @@ Ahora tenemos el esqueleto básico para nuestro módulo en su lugar.
 
 Antes de comenzar con las vistas kanban, necesitamos agregar un par de campos al modelo de tareas pendientes.
 
-###Prioridad, estado kanban y color
+### Prioridad, estado kanban y color
 
 Aparte de las etapas, algunos campos más son útiles y se utilizan con frecuencia en las juntas kanban.
 
@@ -137,7 +137,7 @@ class TodoTask(models.Model):
 
 Ahora podemos trabajar en la vista kanban.
 
-###Elementos de tarjeta Kanban
+### Elementos de tarjeta Kanban
 
 La arquitectura de vista kanban tiene un elemento superior `<kanban>` y la siguiente estructura básica:
 
@@ -191,14 +191,14 @@ A continuación, tenemos un elemento `<templates>`, que contiene una o más plan
 
 Estas plantillas utilizan HTML estándar y el lenguaje de plantillas QWeb. QWeb proporciona directivas especiales, que se procesan para generar dinámicamente el HTML final que se va a presentar.
 
-####Tip
+#### Tip
 
 Odoo utiliza la biblioteca de estilo web de Twitter Bootstrap 3, por lo que esas clases de estilo están generalmente disponibles dondequiera que se pueda renderizar HTML. Puedes obtener más información sobre Bootstrap en https://getbootstrap.com
 
 Ahora vamos a ver más de cerca las plantillas de QWeb para usarlas en las vistas kanban.
 
 
-###El diseño de la tarjeta kanban
+### El diseño de la tarjeta kanban
 
 El área de contenido principal de una tarjeta kanban se define dentro de la plantilla `kanban-box`. Este área de contenido también puede tener un sub-contenedor de pie de página.
 
@@ -317,7 +317,7 @@ A veces queremos tener una pequeña imagen representativa que se mostrará en la
   record.id.value)" class="o_kanban_image"/> 
 ```
 
-###Añadiendo un menú de opciones de tarjeta kanban
+### Añadiendo un menú de opciones de tarjeta kanban
 
 Las tarjetas Kanban pueden tener un menú de opciones, situado en la parte superior derecha. Las acciones habituales son editar o eliminar el registro, pero es posible tener cualquier acción que se puede llamar desde un botón. También tenemos un widget para configurar el color de la tarjeta.
 
@@ -379,7 +379,7 @@ También podemos ver cómo mostrar u ocultar una opción dependiendo de los valo
 
 La última opción agrega el widget especial del selector de color usando el campo de datos `color` para seleccionar y cambiar el color de fondo de la tarjeta.
 
-###Acciones en vistas kanban
+### Acciones en vistas kanban
 
 En las plantillas de QWeb, la etiqueta `<a>` para los vínculos puede tener un atributo `type`. Establece el tipo de acción que el enlace realizará para que los enlaces puedan actuar igual que los botones en formas regulares. Así, además de los elementos `<button>`, las etiquetas `<a>` también se pueden usar para ejecutar acciones Odoo.
 
@@ -389,7 +389,7 @@ Al igual que en las vistas de formulario, el tipo de acción puede ser `action` 
 + `edit` abre la vista de formulario correspondiente directamente en modo de edición
 + `delete` elimina el registro y remueve el elemento de la vista kanban
 
-##El lenguaje de plantillas QWeb
+##  El lenguaje de plantillas QWeb
 
 El analizador QWeb busca directivas especiales en las plantillas y las reemplaza con HTML generado dinámicamente. Estas directivas son atributos de elementos XML y pueden utilizarse en cualquier etiqueta o elemento válido, como `<div>`, `<span>` o `<campo>`.
 
@@ -410,7 +410,7 @@ Esto no pretende ser técnicamente exacto. Es sólo un mapa mental que puede ser
 
 A continuación, aprenderemos acerca de la evaluación de expresiones de QWeb y exploraremos las directivas QWeb disponibles, usando ejemplos que mejoren nuestra tareas pendientes de la tarjeta kanban.
 
-###La evaluación del contexto Qweb Javascript
+### La evaluación del contexto Qweb Javascript
 
 Muchas de las directivas QWeb utilizan expresiones que se evalúan para producir algún resultado. Cuando se utiliza desde el lado del cliente, como es el caso de las vistas kanban, estas expresiones están escritas en JavaScript. Se evalúan en un contexto que tiene algunas variables útiles disponibles.
 
@@ -433,7 +433,7 @@ También es de destacar que algunos caracteres no están permitidos dentro de la
 + `gt` es por mayor que
 + `gte`es por mayor o igual que
 
-###Utilizando t-attf para la sustitución de atributos de cadena
+### Utilizando t-attf para la sustitución de atributos de cadena
 
 Nuestra tarjeta kanban utiliza la directiva QWeb `t-attf` para establecer dinámicamente una clase en el elemento superior `<div>` para que la tarjeta se coloree dependiendo del valor del campo `color`. Para ello, se utilizó la directiva QWeb `t-attf-`.
 
@@ -458,12 +458,12 @@ Para ello, reemplaza `<field name="date_deadline"/>` en nuestra tarjeta kanban c
 
 Esto resulta en  `class="oe_kanban_text_red"` o en `class="oe_kanban_text_black", dependiendo de la fecha límite. Tenga en cuenta que, aunque la clase CSS `oe_kanban_text_red` está disponible en las vistas kanban, la clase CSS `oe_kanban_text_black` no existe y se utilizó para explicar mejor el punto.
 
-####Tip
+#### Tip 
 
 El signo más bajo que `<`, no está permitido en las expresiones, y elegimos trabajar alrededor de esto usando una comparación negada mayor que. Otra posibilidad sería utilizar la función `&lt`; (Menor que) símbolo de escape en su lugar.
 
 
-###Utilizando t-att para atributos dinámicos
+### Utilizando t-att para atributos dinámicos
 
 La directiva QWeb `t-att-` genera dinámicamente un valor de atributo mediante la evaluación de una expresión. Nuestra tarjeta kanban lo usa para establecer dinámicamente algunos atributos en la etiqueta `<img>`.
 
@@ -486,7 +486,7 @@ Los parámetros de la función son: el modelo para leer la imagen, el nombre del
 
 No se detiene allí, y `t-att-NAME` y `t-attf-NAME` se pueden hacer para renderizar cualquier atributo, ya que el nombre del atributo generado se toma del sufijo `NAME` utilizado.
 
-###Usando t-foreach para bucles
+### Usando t-foreach para bucles
 
 Un bloque de HTML se puede repetir iterando a través de un bucle. Podemos usarlo para agregar los avatares de los seguidores de tareas a la tarjeta kanban de la tarea.
 
@@ -542,7 +542,7 @@ Por ejemplo, podríamos hacer uso de lo siguiente para evitar una coma de arrast
 </t> 
 ```
 
-###Usando t-if para renderizado condicional
+### Usando t-if para renderizado condicional
 
 Nuestra vista kanban utilizó la directiva `t-if` en el menú de opciones de la tarjeta para hacer que algunas opciones estén disponibles dependiendo de algunas condiciones. La directiva `t-if` espera que una expresión se evalúe en JavaScript al representar vistas kanban en el lado del cliente. La etiqueta y su contenido se renderizan sólo si la condición se evalúa como verdadera.
 
@@ -556,7 +556,7 @@ Como otro ejemplo, para mostrar la estimación del esfuerzo de tarea en la tarje
 
 Utilizamos un elemento `<t t-if="...">` para que si la condición es falsa, el elemento no produce salida. Si es cierto, sólo el elemento `<li>` contenido se renderiza a la salida. Observe que la expresión de condición usó el símbolo `gt` en lugar de `>`, para representar el operador *mayor que*.
 
-###Utilizando t-esc y t-raw para generar valores
+### Utilizando t-esc y t-raw para generar valores
 
 Utilizamos el elemento `<field>` para representar el contenido del campo. Pero los valores de campo también se pueden presentar directamente sin una etiqueta `<field>`.
 
@@ -572,11 +572,11 @@ En algunos casos, y si se garantiza que los datos de origen son seguros, `t-raw`
 <t t-raw="record.message_parter_ids.raw_value" />
 ```
 
-####Tip
+#### Tip
 
 Por razones de seguridad, es importante evitar el uso de `t-raw` tanto como sea posible. Su uso debe ser estrictamente reservado para la salida de datos HTML que fue preparado específicamente sin datos de usuario en él, o donde cualquier usuario de datos se escapó explícitamente para HTML caracteres especiales.
 
-###Usando t-set para establecer valores en variables
+### Usando t-set para establecer valores en variables
 
 Para una lógica más compleja, podemos almacenar el resultado de una expresión en una variable para usarla más adelante en la plantilla. Esto se debe hacer usando la directiva `t-set`, nombrando la variable a establecer seguida por la directiva `t-value` con la expresión calculando el valor a asignar.
 
@@ -605,7 +605,7 @@ Las variables también se pueden asignar contenido HTML a una variable, como en 
 La clase `oe_e` CSS utiliza la fuente de pictograma Entypo. La representación HTML del signo de calendario se almacena en una variable que puede usarse cuando sea necesario en la plantilla. El conjunto de iconos de **Fuente Impresionante "Font Awesome"** también está disponible fuera de la caja, y podría haber sido utilizado.
 
 
-###Usando t-call para insertar otras plantillas
+### Usando t-call para insertar otras plantillas
 
 Las plantillas de QWeb pueden ser fragmentos de HTML reutilizables, que se pueden insertar en otras plantillas. En lugar de repetir los mismos bloques HTML una y otra vez, podemos diseñar bloques de construcción para componer vistas de interfaz de usuario más complejas.
 
@@ -663,7 +663,7 @@ A continuación, define el valor de esa variable al realizar la llamada de sub-p
 El contenido completo dentro del elemento `t-call` también está disponible para la sub-plantilla a través de la variable mágica `0`. En lugar de variables de argumento, podemos definir un fragmento de código HTML que se puede usar en la sub-plantilla con `<t t-raw="0" /> `.
 
 
-###Más formas de utilizar t-attf
+### Más formas de utilizar t-attf
 
 Hemos pasado por las directivas QWeb más importantes, pero hay algunas más que deberíamos tener en cuenta. Vamos a hacer una breve explicación de ellos.
 
@@ -695,7 +695,7 @@ Esto da como resultado lo siguiente:
 <p class="oe_bold" /> 
 ```
 
-##Herencia en vistas kanban
+## Herencia en vistas kanban
 
 Las plantillas utilizadas en las vistas e informes de kanban se amplían utilizando las técnicas habituales utilizadas para otras vistas, por ejemplo, mediante expresiones XPath. Consulta el Capítulo 3, *Herencia - Ampliando las aplicaciones existentes*, para obtener más detalles.
 
@@ -741,7 +741,7 @@ $ xpath -e "//record[@id='res_partner_kanban_view']" -e "//field[@name='display_
 
 ```
 
-##Activos personalizados CSS y JavaScript
+## Activos personalizados CSS y JavaScript
 
 Como hemos visto, las vistas kanban son en su mayoría HTML y hacen uso intensivo de las clases CSS. Hemos introducido algunas clases de CSS utilizadas con frecuencia por el producto estándar. Pero para obtener mejores resultados, los módulos también pueden agregar su propio CSS.
 
@@ -766,7 +766,7 @@ A continuación se muestra un archivo XML de ejemplo para agregar un archivo CSS
 ```
 Como de costumbre, se debe hacer referencia en el archivo descriptor `__manifest__.py`. Observa que los activos se encuentran dentro de un subdirectorio `/static/src`. Aunque esto no es necesario, es una convención generalmente usada.
 
-##Resúmen
+## Resúmen
 
 Aprendiste acerca de los tableros kanban y cómo construir las vistas kanban para implementarlas. También introdujimos el modelo QWeb y cómo se puede utilizar para diseñar tarjetas kanban. QWeb es también el motor de renderizado que potencia el sitio web CMS, por lo que está creciendo en importancia en el conjunto de herramientas de Odoo. En el próximo capítulo, seguiremos usando QWeb, pero en el lado del servidor, para crear nuestros informes personalizados.
 

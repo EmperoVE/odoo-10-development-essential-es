@@ -1,4 +1,4 @@
-#Capítulo 2. Creación de su primera aplicación Odoo
+# Capítulo 2. Creación de su primera aplicación Odoo
 Desarrollar en Odoo la mayor parte del tiempo significa crear nuestros propios módulos. En este capítulo, crearemos nuestra primera aplicación Odoo y aprenderemos los pasos necesarios para ponerla a disposición de Odoo e instalarla.
 
 Inspirado por el notable proyecto http://todomvc.com/, vamos a construir una simple aplicación de tareas pendientes. Debería permitirnos agregar nuevas tareas, marcarlas como completadas y, finalmente, borrar la lista de tareas de todas las tareas ya completadas.
@@ -13,15 +13,15 @@ Odoo sigue una arquitectura similar a MVC, y pasaremos por las capas durante nue
 
 A continuación, aprenderemos cómo configurar la seguridad de control de acceso y, finalmente, agregaremos información sobre la descripción y la marca al módulo.
 
-####Nota
+#### Nota
 Ten en cuenta que el concepto del término controlador mencionado aquí es diferente de los controladores de desarrollo web Odoo. Estos son puntos finales del programa que las páginas web pueden llamar para realizar acciones.
 
-Con este enfoque, podrás aprender gradualmente sobre los bloques básicos de construcción que conforman una aplicación y experimentar el proceso iterativo de construir un módulo Odoo desde cero.
-
-##Conceptos esenciales
+Con este enfoque, podrás aprender gradualmente sobre los bloques básicos de construcción que conforman una aplicación y experimentar el proceso iterativo de  construir un módulo Odoo desde cero.
+ 
+## Conceptos esenciales
 Es probable que estés empezando con Odoo, así que ahora es obviamente un buen momento para explicar los módulos de Odoo y cómo se utilizan en un desarrollo Odoo.
 
-###Descripción de aplicaciones y módulos
+### Descripción de aplicaciones y módulos
 Es común oír hablar de los módulos y aplicaciones Odoo. Pero, ¿cuál es exactamente la diferencia entre ellos?
 
 Los **Complementos de Módulos** son los componentes básicos para las aplicaciones Odoo. Un módulo puede agregar nuevas características a Odoo, o modificar las existentes. Es un directorio que contiene un manifiesto, o archivo descriptor, llamado `__manifest__.py`, más los archivos restantes que implementan sus características.
@@ -32,7 +32,7 @@ Si su módulo es complejo y agrega funcionalidad nueva o mayor a Odoo, podrías 
 
 Si un módulo es una aplicación o no, se define en el manifiesto. Técnicamente no tiene ningún efecto particular sobre cómo se comporta el módulo addon. Sólo se utiliza para resaltar en la lista de **Aplicaciones**.
 
-###Modificando y extendiendo módulos
+###  Modificando y extendiendo módulos
 En el ejemplo que vamos a seguir, crearemos un nuevo módulo con el menor número posible de dependencias.
 
 Sin embargo, este no será el caso típico. Principalmente, modificaremos o extenderemos un módulo ya existente.
@@ -47,7 +47,7 @@ Una vez que estemos cómodos con la creación de un nuevo módulo, podemos sumer
 
 Para obtener desarrollo productivo para Odoo debemos estar cómodos con el flujo de trabajo de desarrollo: administrar el entorno de desarrollo, aplicar cambios de código y comprobar los resultados. Esta sección le guiará a través de estos fundamentos.
 
-###Creando el esqueleto básico del módulo
+### Creando el esqueleto básico del módulo
 Siguiendo las instrucciones del Capítulo 1, *Iniciando con desarrollo Odoo*, deberíamos tener el servidor Odoo en `~ / odoo-dev / odoo /`. Para mantener las cosas ordenadas, crearemos un nuevo directorio junto con él para alojar nuestros módulos personalizados, en `~ / odoo-dev / custom-addons`.
 
 Odoo incluye un comando `scaffold` para crear automáticamente un nuevo directorio de módulo, con una estructura básica ya establecida. Puedes obtener más información al respecto con el siguiente comando:
@@ -59,7 +59,7 @@ Es posible que desees tener esto en cuenta cuando empieces a trabajar en tu pró
 
 Un módulo addon Odoo es un directorio que contiene un archivo descriptor `__manifest__.py`.
 
-####Nota
+#### Nota
 En versiones anteriores, este archivo descriptor se denominó `__openerp__.py`. Este nombre aún se admite pero está obsoleto.
 
 También necesita ser Python importable, por lo que también debe tener un archivo `__init__.py`.
@@ -113,10 +113,10 @@ Estas otras teclas descriptoras también están disponibles:
 
 Desde Odoo 8.0, en lugar de la clave de `description`, podemos utilizar un archivo `README.rst` o `README.md` en el directorio superior del módulo.
 
-###Una palabra sobre las licencias
+### Una palabra sobre las licencias
 Elegir una licencia para tu trabajo es muy importante, y debes considerar cuidadosamente cuál es la mejor opción para tí y sus implicaciones. Las licencias más utilizadas para los módulos Odoo son la **Licencia Pública General Menor de GNU (LGLP¨** y la **Licencia Pública General de Affero (AGPL)**. La LGPL es más permisiva y permite el trabajo derivado comercial, sin la necesidad de compartir el código fuente correspondiente. La AGPL es una licencia de código abierto más fuerte, y requiere trabajo derivado y alojamiento de servicio para compartir su código fuente. Obten más información acerca de las licencias GNU en https://www.gnu.org/licenses/.
 
-###Añadiendo a la ruta addons
+### Añadiendo a la ruta addons
 Ahora que tenemos un nuevo módulo minimalista, queremos ponerlo a disposición de la instancia de Odoo.
 
 Para ello, debemos asegurarnos de que el directorio que contiene el módulo está en la ruta addons, entonces actualiza la lista de módulos Odoo.
@@ -145,19 +145,19 @@ Recuerda incluir también cualquier otro directorio de complementos que puedas e
 
 Ahora necesitamos la instancia Odoo para reconocer el nuevo módulo que acabamos de agregar.
 
-###Instalando el nuevo módulo
+### Instalando el nuevo módulo
 En el menú superior de **Aplicaciones**, seleccione la opción **Actualizar Lista de Aplicaciones**. Esto actualizará la lista de módulos, añadiendo los módulos que se hayan agregado desde la última actualización a la lista. Recuerda que necesitamos activar el modo desarrollador para que esta opción sea visible. Esto se hace en el panel de **Configuración**, en el enlace de abajo a la derecha, debajo de la información del número de versión de Odoo.
 
-####Tip
+#### Tip
 Asegúrate de que tu sesión de cliente web está funcionando con la base de datos correcta. Puedes comprobarlo en la parte superior derecha: el nombre de la base de datos se muestra entre paréntesis, justo después del nombre de usuario. Una manera de aplicar la base de datos correcta es iniciar la instancia del servidor con la opción adicional `--db-filter = ^ MYDB $`.
 
 La opción **Aplicaciones** nos muestra la lista de módulos disponibles. De forma predeterminada, muestra sólo los módulos de aplicación. Ya que hemos creado un módulo de aplicación, no necesitamos eliminar ese filtro para verlo. Escribe `todo` en la búsqueda y debes ver nuestro nuevo módulo, listo para ser instalado:
 
-IMAGEN
+![Installed](file:///home/dticucv/Escritorio/OEBPS/Image00008.jpg)
 
 Ahora haZ clic en el botón **Instalar** del módulo y ¡estamos listos!
 
-###Actualizando un módulo
+### Actualizando un módulo
 El desarrollo de un módulo es un proceso iterativo, y querrás que los cambios hechos en los archivos fuente sean aplicados y hechos visibles en Odoo.
 
 En muchos casos, esto se realiza actualizando el módulo: busca el módulo en la lista de **Aplicaciones** y una vez que ya esté instalado, tendrás disponible un botón de **Actualización**.
@@ -181,7 +181,7 @@ A lo largo del libro, cuando necesites aplicar el trabajo realizado en módulos,
 
 Desafortunadamente, tanto la actualización de la lista de módulos como la desinstalación de módulos son acciones que no están disponibles a través de la línea de comandos. Estos deben hacerse a través de la interfaz web en el menú de **Aplicaciones**.
 
-###El modo de desarrollo del servidor
+### El modo de desarrollo del servidor
 En Odoo 10 se introdujo una nueva opción que proporciona características amigables para los desarrolladores. Para usarla, inicia la instancia del servidor con la opción adicional `--dev = all`.
 Esto permite que algunas características prácticas aceleren nuestro ciclo de desarrollo. Los más importantes son:
 + Recargar código Python automáticamente, una vez que se guarda un archivo Python, evitando un reinicio manual del servidor
@@ -189,7 +189,7 @@ Esto permite que algunas características prácticas aceleren nuestro ciclo de d
 
 La opción `--dev` acepta una lista de opciones separadas por comas, aunque la opción `all` será adecuada la mayor parte del tiempo. También podemos especificar el depurador que preferimos usar. De forma predeterminada, se utiliza el depurador Python, `pdb`. Algunas personas pueden preferir instalar y usar depuradores alternativos. Aquí también se admiten `ipdb` y `pudb`.
 
-##La capa modelo
+## La capa modelo
 Ahora que Odoo conoce nuestro nuevo módulo, comencemos agregándole un modelo simple.
 
 Los modelos describen objetos de negocio, como una oportunidad, ordenes de clientes o socios (cliente, proveedor, etc.). Un modelo tiene una lista de atributos y también puede definir su negocio específico.
@@ -198,7 +198,7 @@ Los modelos se implementan utilizando una clase Python derivada de una clase de 
 
 Nuestro módulo será una aplicación muy simple para mantener las tareas pendientes. Estas tareas tendrán un solo campo de texto para la descripción y una casilla de verificación para marcarlas como completas. Más adelante deberíamos añadir un botón para limpiar la lista de tareas de las tareas completas.
 
-###Creando el modelo de datos
+### Creando el modelo de datos
 Las directrices de desarrollo de Odoo establecen que los archivos Python para los modelos deben colocarse dentro de un subdirectorio `models`. Para simplificar, no lo seguiremos aquí, así que vamos a crar un archivo `todo_model.py` en el directorio principal del módulo `todo_app`.
 
 Añade el siguiente contenido:
@@ -236,7 +236,7 @@ from . Importar todo_modelo
 
 No veremos ninguna opción de menú para acceder a este nuevo modelo ya que no los hemos añadido aún. Sin embargo, podemos inspeccionar el modelo recién creado usando el menú **Technical**. En el menú superior **Settings**, ve a **Technical | Database Structure | Models**, busca el modelo `todo.task` en la lista y haz clic en él para ver su definición:
 
-AQUI VA UNA IMAGEN
+![Settings](file:///home/dticucv/Escritorio/OEBPS/Image00009.jpg)
 
 Si todo va bien, se confirma que el modelo y los campos fueron creados. Si no puedes verlos aquí, intenta reiniciar el servidor con una actualización de módulo, como se describió anteriormente.
 
@@ -247,7 +247,7 @@ También podemos ver algunos campos adicionales que no declaramos. Estos son cam
 + `write_date` y `write_uid` confirman cuándo el registro fue modificado por última vez y quien lo modificó respectivamente.
 +  `__last_update` es un ayudante que en realidad no se almacena en la base de datos. Se utiliza para verificaciones de concurrencia.
 
-###Añadiendo pruebas automatizadas
+### Añadiendo pruebas automatizadas
 Las mejores prácticas de programación incluyen tener pruebas automatizadas para tu código. Esto es aún más importante para lenguajes dinámicos como Python. Como no hay ningún paso de compilación, no puede estar seguro de que no haya errores sintácticos hasta que el intérprete realmente  ejecute el código. Un buen editor puede ayudarnos a detectar estos problemas con antelación, pero no puede ayudarnos a asegurar que el código se ejecute como lo desean las pruebas automatizadas.
 
 Odoo soporta dos formas de describir las pruebas: ya sea utilizando archivos de datos YAML o utilizando código Python, basado en la biblioteca `Unittest2`. Las pruebas YAML son un legado de versiones anteriores, y no se recomiendan. Preferiremos usar pruebas de Python y añadiremos un caso básico de prueba a nuestro módulo.
@@ -288,7 +288,7 @@ $ ./odoo-bin -d todo -i todo_app --test-enable
 
 El servidor Odoo buscará un subdirectorio tests/ en los módulos actualizados y los ejecutará. Si alguna de las pruebas falla, el registro del servidor te mostrará eso.
 
-##La capa de vista
+## La capa de vista
 
 La capa de vista describe la interfaz de usuario. Las vistas se definen mediante XML, que es utilizado por el marco de cliente web para generar vistas HTML con datos.
 
@@ -337,19 +337,20 @@ Nuestro módulo aún no conoce el nuevo archivo de datos XML. Esto se hace agreg
 
 Ahora necesitamos actualizar el módulo de nuevo para que estos cambios surtan efecto. Vaya al menú superior de **Todos** y debe ver nuestra nueva opción de menú disponible:
 
-AQUI VA UNA IMAGEN
+![Save](file:///home/dticucv/Escritorio/OEBPS/Image00010.jpg)
 
 Aunque no hemos definido nuestra vista de interfaz de usuario, al hacer clic en el menú **Todos** se abrirá un formulario generado automáticamente para nuestro modelo, lo que nos permitirá agregar y editar registros.
 
 Odoo es lo suficientemente agradable como para generarlos automáticamente para que podamos empezar a trabajar con nuestro modelo de inmediato.
 
 ¡Hasta aquí todo bien! Vamos a mejorar nuestra interfaz de usuario ahora. Trata de hacer mejoras graduales como se muestra en las próximas secciones, haciendo actualizaciones de módulos frecuentes, y no tengas miedo de experimentar. También puedes intentar la opción de servidor `--dev = all`. Usándolo, las definiciones de vista se leen directamente desde los archivos XML para que tus cambios puedan estar inmediatamente disponibles para Odoo sin necesidad de una actualización de módulo.
-###Tip
+
+### Tip
 
 Si una actualización falla debido a un error de XML, no te preocupe! Comenta las últimas porciones XML editadas o elimina el archivo XML de `__manifest__.py` y repita la actualización. El servidor debe iniciarse correctamente. Ahora lee el mensaje de error en el registro del servidor con cuidado: debe señalarte dónde está el problema.
 
 Odoo admite varios tipos de vistas, pero las tres más importantes son: `tree` (generalmente llamado vistas de lista), `form` y `search views`. Vamos a añadir un ejemplo de cada uno a nuestro módulo.
-###Creando la vista de formulario
+### Creando la vista de formulario
 
 Todas las vistas se almacenan en la base de datos, en el modelo `ir.ui.view`. Para añadir una vista a un módulo, declaramos un elemento `<record>` que describe la vista en un archivo XML, que se va a cargar en la base de datos cuando se instala el módulo.
 
@@ -392,7 +393,8 @@ Recuerde agregar este nuevo archivo a la clave de datos en el archivo de manifie
 Esto agregará un registro al modelo `ir.ui.view` con el identificador `view_form_todo_task`. La vista es para el modelo `todo.task` y se denomina `To-do Task Form`. El nombre es solo para información; No tiene que ser único, pero debe permitir que uno identifique fácilmente a qué registro se refiere. De hecho, el nombre puede ser totalmente omitido, en ese caso, se generará automáticamente a partir del nombre del modelo y el tipo de vista.
 
 El atributo más importante es `arch`, y contiene la definición de la vista, resaltada en el código XML anterior. La etiqueta `<form>` define el tipo de vista y, en este caso, contiene tres campos. También agregamos un atributo al campo `active` para que sea solo de lectura.
-###Vistas del formulario de documento empresarial
+ 
+### Vistas del formulario de documento empresarial
 
 La sección anterior proporcionó una vista de formulario básica, pero podemos hacer algunas mejoras en ella. Para los modelos de documentos, Odoo tiene un estilo de presentación que imita una página en papel. Este formulario contiene dos elementos: `<header>` para contener los botones de acción y `<sheet>` para contener los campos de datos.
 
@@ -463,7 +465,7 @@ Los atributos básicos de un botón comprenden lo siguiente:
 + `name` es el identificador de esa acción
 + `class` es un atributo opcional para aplicar estilos CSS, como en HTML normal
 
-###Uso de grupos para organizar formularios
+### Uso de grupos para organizar formularios
 
 La etiqueta `<group> `te permite organizar el contenido del formulario. Colocar elementos `<group>` dentro de un elemento `<group>` crea un diseño de dos columnas dentro del grupo externo. Se aconseja que los elementos del grupo tengan un atributo de nombre para que sea más fácil para otros módulos extenderlos.
 
@@ -523,11 +525,11 @@ En este punto, nuestro formulario `todo.task` debe verse así:
   </sheet> 
 </form> 
 ```
-###Tip
+### Tip
 Recuerda que para que los cambios se carguen en nuestra base de datos Odoo, se necesita una actualización del módulo. Para ver los cambios en el cliente web, el formulario debe ser recargado: haz clic de nuevo en la opción de menú que lo abre o vuelve a cargar la página del navegador (_**F5**_ en la mayoría de los navegadores).
 
-Los botones de acción no funcionarán aún, ya que todavía necesitamos agregar su lógica de negocio.
-###Adición de vistas de lista y de búsqueda
+Los botones de acción no funcionarán aún, ya que todavía necesitamos agregar su lógica de negocio. 
+### Adición de vistas de lista y de búsqueda
 
 Cuando se visualiza un modelo en modo de lista, se utiliza una vista `<tree>`. Las vistas de árbol son capaces de mostrar líneas organizadas en jerarquías, pero la mayoría de las veces, se utilizan para mostrar listas sin formato.
 
@@ -573,10 +575,10 @@ Como antes, agregamos esto a `todo_view.xml`:
 
 Los elementos `<field>` definen campos que también se buscan al escribir en el cuadro de búsqueda. Los elementos `<filter>` añaden condiciones de filtro predefinidas, que se pueden alternar con un clic de usuario, definido mediante el uso de una sintaxis específica.
 
-##La capa de lógica de negocio
+## La capa de lógica de negocio
 
 Ahora vamos a añadir algo de lógica a nuestros botones. Esto se hace con código Python, utilizando los métodos de la clase de modelos Python.
-###Añadiendo lógica de negocio
+### Añadiendo lógica de negocio
 
 Debemos editar el archivo Python `todo_model.py` para agregar a la clase los métodos llamados por los botones. Primero, necesitamos importar la nueva API, así que agréguala a la declaración de importación en la parte superior del archivo Python:
 ```
@@ -610,7 +612,7 @@ En los métodos decorados con `@ api.model`, la variable `self` representa el mo
 El método de búsqueda es un método API que devuelve los registros que cumplen algunas condiciones. Estas condiciones están escritas en un dominio, que es una lista de tripletes. Exploraremos los dominios con más detalle en el Capítulo 6, *Vistas – Diseñando la interfaz de usuario*.
 
 El método `write` establece los valores de una vez en todos los elementos del conjunto de registros. Los valores a escribir se describen utilizando un diccionario. Usar `write here` es más eficiente que iterar a través del conjunto de registros para asignar el valor a cada uno de ellos uno por uno.
-###Añadiendo de pruebas
+### Añadiendo de pruebas
 
 Ahora debemos agregar pruebas para la lógica de negocio. Idealmente, queremos que cada línea de código sea cubierta por al menos un caso de prueba. En `tests / test_todo.py`, agregua unas cuantas líneas más de código al método `test_create ()`:
 ```
@@ -633,7 +635,7 @@ Si ahora ejecutamos las pruebas y los métodos del modelo están correctamente e
 $ ./odoo-bin -d todo -i todo_app --test-enable
 
 ```
-##Configurando la seguridad de acceso
+## Configurando la seguridad de acceso
 
 Es posible que haya notado que, al cargar, nuestro módulo recibe un mensaje de advertencia en el registro del servidor:
 
@@ -648,7 +650,8 @@ Es posible que haya notado que, al cargar, nuestro módulo recibe un mensaje de 
 El mensaje es bastante claro: nuestro nuevo modelo no tiene reglas de acceso, por lo que no puede ser utilizado por nadie que no sea el superusuario de admin. Como superusuario, el admin ignora las reglas de acceso a datos, y es por eso que hemos podido utilizar el formulario sin errores. Pero debemos corregir esto antes de que otros usuarios puedan usar nuestro modelo.
 
 Otra cuestión que todavía tenemos que abordar es que queremos que las tareas pendientes sean privadas para cada usuario. Odoo soporta reglas de acceso a nivel de fila, que usaremos para implementar eso.
-###Probando la seguridad de acceso
+
+### Probando la seguridad de acceso
 
 De hecho, nuestras pruebas deben estar fallando en este momento debido a las reglas de acceso que faltan. Ellas no están porque se hacen con el usuario admin. Por lo tanto, debemos cambiarlos para que utilicen el usuario Demo en su lugar.
 
@@ -688,12 +691,14 @@ Dado que nuestro método `env` ahora está utilizando el usuario de Demo, usamos
 Al intentar acceder a los datos de esta tarea, esperamos que se genere una excepción `AccessError`.
 
 Si ejecutamos las pruebas ahora, deberían fallar, así que nos encargamos de eso.
-###Añadiendo seguridad de control de acceso
+
+### Añadiendo seguridad de control de acceso
 
 Para obtener una imagen de qué información se necesita para agregar reglas de acceso a un modelo, utiliza el cliente web y ve a **Settings | Technical | Security | Access Controls List** :
-AQUI VA UNA IMAGEN
 
-###Nota
+![Create](file:///home/dticucv/Escritorio/OEBPS/Image00011.jpg)
+
+### Nota
 
 Aquí podemos ver la ACL de algunos modelos. Indica, por grupo de seguridad, qué acciones se permiten en los registros.
 
@@ -724,7 +729,7 @@ No debemos olvidar añadir la referencia a este nuevo archivo en el atributo de 
 
 ```
 Como antes, actualice el módulo para que estas adiciones entren en vigor. El mensaje de advertencia debe desaparecer, y podemos confirmar que los permisos están bien iniciando sesión con el usuario `demo` (la contraseña también es `demo`). Si ejecutamos nuestras pruebas ahora solo deberían fallar el caso de prueba `test_record_rule`.
-###Reglas de acceso a nivel de fila
+### Reglas de acceso a nivel de fila
 
 Podemos encontrar la opción **Record Rules** en el menú **Technical**, junto con **Access Control List*.
 
@@ -751,7 +756,7 @@ Para agregar la regla de registro, debemos crear un archivo `security / todo_acc
 
 ```
 
-###Nota
+### Nota
 
 Observa el atributo `noupdate = "1"`. Significa que estos datos no se actualizarán en actualizaciones de módulos. Esto le permitirá ser personalizado más adelante ya que las actualizaciones de módulos no destruirán los cambios realizados por el usuario. Pero ten en cuenta que esto también será el caso durante el desarrollo, por lo que es posible que desees establecer `noupdate = "0" ` durante el desarrollo hasta que estéss satisfecho con el archivo de datos.
 
@@ -770,7 +775,7 @@ Como antes, debemos añadir el archivo a `__manifest__.py` antes de poder cargar
 
 Si lo hicimos bien, podemos ejecutar las pruebas de módulo y ahora deben pasar.
 
-##Describiendo mejor el módulo
+## Describiendo mejor el módulo
 
 Nuestro módulo se ve bien. ¿Por qué no añadir un icono para que se vea aún mejor? Para esto, solo necesitamos agregar al módulo un archivo `static / description / icon.png` con el icono que se va a usar.
 
@@ -788,7 +793,7 @@ Ahora, si actualizamos la lista de módulos, nuestro módulo debe mostrarse con 
 
 También podemos añadir una descripción mejor para explicar lo que hace y lo grandioso que es. Esto se puede hacer en la clave `description` del archivo `__manifest__.py`. Sin embargo, la forma preferida es agregar un archivo `README.rst` al directorio raíz del módulo.
 
-##Resumen
+## Resumen
 
 Hemos creado un nuevo módulo desde el principio, cubriendo los elementos más utilizados en un módulo: modelos, los tres tipos básicos de vistas (formulario, lista y búsqueda), lógica empresarial en los métodos de modelo y seguridad de acceso.
 

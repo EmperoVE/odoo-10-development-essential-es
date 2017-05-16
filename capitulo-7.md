@@ -1,4 +1,4 @@
-#Capítulo 7. Lógica de aplicación de ORM - Procesos de soporte empresariales.
+# Capítulo 7. Lógica de aplicación de ORM - Procesos de soporte empresariales.
 Con la programación API de Odoo, podemos escribir lógica compleja y asistentes para proporcionar una interacción de usuario rica para nuestras aplicaciones. En este capítulo, veremos cómo escribir código para apoyar la lógica de negocio en nuestros modelos, y también aprenderemos cómo activarlo en eventos y acciones de usuario.
 
 Podemos realizar cálculos y validaciones en eventos, como crear o escribir en un registro, o realizar alguna lógica cuando se hace clic en un botón. Por ejemplo, hemos implementado acciones de botón para las Tareas pendientes, para alternar el indicador **Listo "Is Done"** y desactivar todas las tareas realizadas desactivándolas. 
@@ -7,7 +7,7 @@ Además, también podemos utilizar asistentes para implementar interacciones má
 
 Comenzaremos por crear un asistente para nuestra aplicación de tareas pendientes.
 
-##Creando un asistente
+## Creando un asistente
 
 Supongamos que nuestros usuarios de la aplicación To-Do regularmente necesitan establecer los plazos y la persona responsable de un gran número de tareas. Podrían usar un asistente para ayudar con esto. Debería permitirles seleccionar las tareas a actualizar y, a continuación, elegir la fecha límite y / o el usuario responsable para establecerlas.
 
@@ -37,7 +37,7 @@ from . import models
 
 A continuación, necesitamos describir el modelo de datos que soporta nuestro asistente.
 
-###El modelo del asistente
+### El modelo del asistente
 
 Un asistente muestra una vista de formulario para el usuario, normalmente como una ventana de diálogo, con algunos campos que se rellenan. Estos serán utilizados por la lógica del asistente.
 
@@ -73,7 +73,7 @@ class TodoWizard(models.TransientModel):
 
 Vale la pena señalar que las relaciones uno-a-muchos con los modelos regulares no deben usarse en modelos transitorios. La razón de esto es que requeriría que el modelo regular tuviera la relación inversa de muchos a uno con el modelo transitorio, pero esto no está permitido, ya que podría haber la necesidad de recolectar basura a los registros de modelos regulares junto con el modelo Registros transitorios.
 
-###El formulario de asistente
+### El formulario de asistente
 
 Las vistas del formulario del asistente son las mismas que para los modelos regulares, excepto en dos elementos específicos:
 
@@ -135,7 +135,7 @@ La acción de ventana `<act_window>` que vemos en el XML añade una opción al b
 
 También puedes haber notado que `attrs` se utiliza en el botón de **actualización masiva "Mass Update"**, para añadir el toque agradable de hacerlo invisible hasta que se seleccione un nuevo plazo o un usuario responsable.
 
-###La lógica empresarial del asistente
+### La lógica empresarial del asistente
 
 A continuación, tenemos que implementar las acciones a realizar en los botones de formulario. Excluyendo el botón **Cancelar "Cancel"**, tenemos tres botones de acción para implementar, pero ahora nos enfocaremos en el botón de **actualización masiva "Mass Update"**.
 
@@ -179,7 +179,7 @@ Es una buena práctica para los métodos de siempre devolver algo. Es por eso qu
 
 A continuación, vamos a tener una mirada más cercana al registro, y luego trabajaremos en la lógica detrás de los dos botones en la parte superior: Contar y obtener todo.
 
-###Logging
+### Logging
 
 Estas actualizaciones masivas podrían ser mal utilizadas, por lo que podría ser una buena idea registrar alguna información cuando se utiliza. El código anterior inicializa el `_logger` en las dos líneas antes de la clase `TodoWizard`, utilizando la biblioteca estándar de registro de Python. La variable interna Python `__name__` es para identificar los mensajes como procedentes de este módulo.
 
@@ -194,12 +194,12 @@ _logger.error('An ERROR message')
 
 Al pasar valores para usar en el mensaje de registro, en lugar de usar interpolación de cadena, deberíamos proporcionarlos como parámetros adicionales. Por ejemplo, en lugar de `_logger.info('Hello% s' % 'World')` deberíamos usar `_logger.info('Hello% s', 'World')`. Puedes notar que lo hicimos en el método `do_mass_update ()`.
 
-####Nota
+#### Nota
 
 Una cosa interesante a notar sobre el registro, es que las entradas del registro imprimen siempre la marca de tiempo en UTC. Esto puede ser una sorpresa para los nuevos administradores, pero se debe al hecho de que el servidor maneja internamente todas las fechas en UTC.
 
 
-###Aumentando las excepciones
+### Aumentando las excepciones
 
 Cuando algo no está bien, querremos interrumpir el programa con un mensaje de error. Esto se hace levantando una excepción. Odoo ofrece algunas clases de excepción adicionales a las disponibles en Python. Estos son ejemplos para los más útiles:
 
@@ -222,7 +222,7 @@ def do_count_tasks(self):
 
 Como una nota de lado, parece que podríamos haber utilizado el decorador `@api.model`, ya que este método no funciona en el conjunto de registros `self`. Pero en este caso no podemos porque el método tiene que ser llamado desde un botón.
 
-###Acciones de ayuda en asistentes
+### Acciones de ayuda en asistentes
 
 Ahora supongamos que queremos un botón para recoger automáticamente todas las tareas pendientes para evitar que el usuario los escoge uno por uno. Ese es el punto de tener el botón **Obtener Todo "Get All"** en el formulario. El código detrás de este botón obtendrá un conjunto de registros con todas las tareas activas y lo asignará a las tareas del campo muchos-a-muchos.
 
@@ -265,11 +265,11 @@ Aquí podemos ver cómo trabajar con cualquier otro modelo disponible: primero u
 
 El modelo transitorio almacena los valores en los campos de formulario del asistente y puede leerse o escribirse como cualquier otro modelo. La variable `all_tasks` se asigna al campo uno-a-muchos `task_ids`. Como puede ver, esto se hace como lo haríamos para cualquier otro tipo de campo.
 
-##Trabajando con la API ORM
+## Trabajando con la API ORM
 
 De la sección anterior, ya tenemos una idea de cómo es usar la API de ORM. A continuación veremos qué más podemos hacer con él.
 
-###Decoradores de métodos
+### Decoradores de métodos
 
 Durante nuestro viaje, los varios métodos que encontramos utilizaron decoradores API como `@api.multi`. Estos son importantes para el servidor para saber cómo manejar el método. Vamos a recapitular los disponibles y cuando deben ser utilizados.
 
@@ -297,7 +297,7 @@ return {
         } 
 ```
 
-###Anulando los métodos predeterminados de ORM
+### Anulando los métodos predeterminados de ORM
 
 Hemos aprendido sobre los métodos estándar proporcionados por la API, ¡pero sus usos no terminan ahí! También podemos ampliarlos para agregar un comportamiento personalizado a nuestros modelos.
 
@@ -335,7 +335,7 @@ Estas técnicas abren muchas posibilidades, pero recuerda que también hay otras
 + Para que los valores se establezcan en otros campos cuando se cambia un campo, podemos usarlo en las funciones de cambio. Un ejemplo de esto es cuando se selecciona un cliente, estableciendo su moneda como la moneda del documento, que posteriormente puede ser modificada manualmente por el usuario. Tenga en cuenta que el cambio sólo funciona en la interacción de vista de formulario y no en las llamadas de escritura directa.
 + Para las validaciones, debemos utilizar funciones de restricción decoradas con `@api.constraints(fld1, fld2, ...)`. Estos son como campos calculados pero, en lugar de calcular valores, se espera que generen errores.
 
-###Métodos para llamadas a clientes web y RPC
+### Métodos para llamadas a clientes web y RPC
 
 Hemos visto los métodos de modelo más importantes usados ​​para generar conjuntos de registros y cómo escribir en ellos. Pero hay algunos métodos de modelo más disponibles para acciones más específicas, como se muestra aquí:
 
@@ -353,7 +353,7 @@ Los siguiente métodos son utilizados principalmente por el cliente web para ren
 + `fields_get()` se utiliza para describir las definiciones de campo del modelo, como se ve en la opción **Ver Campos "Viem Fields"** del menú del desarrollador.
 + `fields_view_get()` es utilizado por el cliente web para recuperar la estructura de la vista de interfaz de usuario a procesar. Se le puede dar el ID de la vista como un argumento o el tipo de vista que queremos usando `view_type='form'`. Por ejemplo, puedes probar esto: `rset.fields_view_get(view_type='tree')`.
 
-###El comando shell
+### El comando shell
 
 Python tiene una interfaz de línea de comandos que es una gran manera de explorar su sintaxis. Del mismo modo, Odoo también tiene una característica equivalente, donde podemos interactivamente probar comandos para ver cómo funcionan. Ese es el comando `shell`.
 
@@ -409,11 +409,11 @@ En la sesión anterior, hacemos una cierta inspección sobre nuestro medio ambie
 
 Al igual que con Python, puedes salir del prompt utilizando _**Ctrl + D**_. Esto también cerrará el proceso del servidor y regresará al prompt del sistema shell.
 
-####Tip
+#### Tip
 
 La característica de shell se agregó en la versión 9.0. Para la versión 8.0 hay un módulo back-portted de la comunidad para agregarlo. Una vez descargado y incluido en la ruta addons, no es necesario realizar ninguna instalación adicional. Se puede descargar desde https://www.odoo.com/apps/modules/8.0/shell/.
 
-###El entorno del servidor
+### El entorno del servidor
 
 El servidor shell proporciona una referencia `self` idéntica a la que encontrarías dentro de un método del modelo Users, `res.users`.
 
@@ -458,7 +458,7 @@ res.partner(7, 51)
 En este ejemplo, un conjunto de registros para el modelo `res.partner` contiene dos registros, con IDs `7` y `51`.
 
 
-###Modificando del entorno de ejecución
+### Modificando del entorno de ejecución
 
 El ambiente es inmutable, y por lo tanto no se puede modificar. Pero podemos crear un entorno modificado y luego ejecutar acciones con él.
 
@@ -484,7 +484,7 @@ res.users(1,)
 
 ```
 
-###Transacciones y SQL de bajo nivel
+### Transacciones y SQL de bajo nivel
 
 Las operaciones de escritura de base de datos se ejecutan en el contexto de una transacción de base de datos. Por lo general, no tenemos que preocuparnos de esto ya que el servidor se encarga de que mientras se ejecuta métodos de modelo.
 
@@ -494,15 +494,15 @@ Pero en algunos casos, podemos necesitar un control más fino sobre la transacci
 + `self.env.savepoint()` establece un punto de almacenamiento de transacciones para retroceder a
 + `self.env.rollback()` cancela las operaciones de escritura de la transacción desde el último punto de salvación, o todas si no se creó ningún punto de salvación
 
-####Tip
+#### Tip
 
 En una sesión shell, la manipulación de datos no se hará efectiva en la base de datos hasta que utilices `self.env.cr.commit()`.
 
 Con el método cursor `execute()`, podemos ejecutar SQL directamente en la base de datos. Se necesita una cadena con la instrucción SQL para ejecutar y un segundo argumento opcional con una tupla o lista de valores para usar como parámetros para el SQL. Estos valores se utilizarán donde se encuentren los marcadores de posición `%s`.
 
-####Nota
+#### Nota
 
-####¡Precaución!
+#### ¡Precaución!
 
 Con `cr.execute()` debemos resistir a añadir directamente los valores de los parámetros a la cadena de consulta. Este es un riesgo de seguridad bien conocido que puede ser explotado a través de ataques de inyección de SQL. Siempre usa marcadores de posición `%s`y el segundo parámetro para pasar valores.
 
@@ -535,18 +535,18 @@ login=%s OR id=%s", ('demo', 1))
 
 También es posible ejecutar instrucciones de **Data Manipulation Language (DML)** como `UPDATE` e `INSERT`. Dado que el servidor mantiene cachés de datos, pueden volverse inconsistentes con los datos reales de la base de datos. Debido a esto, mientras se utiliza DML sin procesar, las caches se deben borrar después usando `self.env.invalidate_all()`.
 
-####Nota
+#### Nota
 
-####¡Precaución!
+#### ¡Precaución!
 
 Ejecutar SQL directamente en la base de datos puede dar lugar a datos inconsistentes. Debes usarlo sólo si está seguro de lo que está haciendo.
 
-##Trabajando con conjuntos de registros
+## Trabajando con conjuntos de registros
 
 Ahora exploraremos cómo funciona el ORM y nos enteramos de las operaciones más comunes que se realizan con ella. Usaremos el prompt proporcionado por el comando `shell` para explorar interactivamente cómo funcionan los recordsets.
 
 
-###Consultando modelos
+### Consultando modelos
 
 Con `self`, sólo podemos acceder al conjunto de registros del método. Pero la referencia de entorno `self.env` nos permite acceder a cualquier otro modelo. Por ejemplo, `self.env['res.partner']` devuelve una referencia al modelo Partners (que en realidad es un conjunto de registros vacío). Podemos usar `search()` o `browse()` en él para generar conjuntos de registros.
 
@@ -592,7 +592,7 @@ res.partner(7, 51)
 
 ```
 
-###Singletons
+### Singletons
 
 El caso especial de un conjunto de registros con sólo un registro se llama un conjunto de registros **singleton**. Los singletons siguen siendo un conjunto de registros y se pueden utilizar donde se espera un conjunto de registros.
 
@@ -615,11 +615,11 @@ Administrator
 Intentar acceder a valores de campo en conjuntos de registros con más de un registro generará error, por lo que este puede ser un problema en los casos en los que no estamos seguros si estamos trabajando con un conjunto de registros singleton. En los métodos diseñados para trabajar sólo con singleton, podemos comprobar esto usando `self.ensure_one()` al principio. Se planteará un error si `self` no es singleton.
 
 
-####Tip
+#### Tip
 
 Ten en cuenta que un registro vacío también es un singleton.
 
-###Escribir en los registros
+### Escribir en los registros
 
 Los conjuntos de registros implementan el patrón de registro activo. Esto significa que podemos asignar valores a ellos, y estos cambios se harán persistentes en la base de datos. Esta es una manera intuitiva y conveniente de manipular datos, como se muestra aquí:
 
@@ -731,12 +731,12 @@ También vale la pena mencionar `copy()` para duplicar un registro existente; To
 
 ```
 
-####Nota
+#### Nota
 
 Recuerda que los campos con el atributo `copy=False` no se copiarán.
 
 
-###Trabajando con el tiempo y las fechas
+### Trabajando con el tiempo y las fechas
 
 Por razones históricas, los conjuntos de registros ORM controlan los valores `date` y `datetime` utilizando sus representaciones de cadenas, en lugar de los objetos `Date` y `Datetime` reales de Python. En la base de datos se almacenan en los campos de fecha, pero las fechas se almacenan en la hora UTC.
 
@@ -789,7 +789,7 @@ Para facilitar la conversión entre formatos, ambos objetos  `fields.Date` y `fi
 + `from_string(value)` convierte una cadena en un objeto date o datetime
 + `to_string(value)` convierte un objeto date o datetime en una cadena en el formato esperado por el servidor
 
-###Operaciones en conjuntos de registros
+### Operaciones en conjuntos de registros
 
 Los conjuntos de registros admiten operaciones adicionales en ellos. Podemos comprobar si un registro está incluido o no en un conjunto de registros. Si `x` es un conjunto de registros singleton y `my_recordset` es un conjunto de registros que contiene muchos registros, podemos utilizar:
 
@@ -902,7 +902,7 @@ res.partner(8, 7)
 
 ```
 
-###Manipulando conjuntos de registros
+### Manipulando conjuntos de registros
 
 Seguramente queremos añadir, eliminar o reemplazar los elementos en estos campos relacionados, y esto nos lleva a la pregunta: ¿cómo se pueden manipular los conjuntos de registros?
 
@@ -920,7 +920,7 @@ La notación de corte también se puede utilizar, como se muestra en estos ejemp
 + `rs[0]` y `rs[-1]` recuperan el primer elemento y el último elemento, respectivamente.
 + `rs[1:]` da como resultado una copia del conjunto de registros sin el primer elemento. Esto produce los mismos registros que `rs - rs[0]` pero conserva su orden.
 
-####Nota
+#### Nota
 
 En Odoo 10, la manipulación del conjunto de registros conserva el orden. Esto es diferente a las versiones anteriores de Odoo, donde la manipulación del conjunto de registros no estaba garantizada para conservar el orden, aunque se sabe que la adición y el corte mantienen el orden de los registros.
 
@@ -938,7 +938,7 @@ Como ejemplo, la sintaxis `write()` equivalente a los tres ejemplos anteriores d
 + `self.write([(3, task1.id, None)])` elimina `task1` del conjunto de registros
 + `self.write([(3, self.task_ids [-1].id, False)])` elimina el último registro
 
-###Usando campos relacionales
+### Usando campos relacionales
 
 Como vimos anteriormente, los modelos pueden tener campos relacionales: **muchos-a-uno**, **uno-a-muchos** y **muchos-a-muchos**. Estos tipos de campo tienen conjuntos de registros como valores.
 
@@ -1019,7 +1019,7 @@ False
 
 ```
 
-###Trabajando con campos relacionales
+### Trabajando con campos relacionales
 
 Mientras se utiliza el patrón de registro activo, se pueden asignar conjuntos de registros a los campos relacionales.
 
@@ -1031,7 +1031,7 @@ Al utilizar los métodos `create()` o `write()`, donde los valores se asignan me
 
 Por ejemplo, en lugar de `self.write({'user_id': self.env. user })`, deberíamos usar `self.write({'user_id': self.env. user.id })`.
 
-##Resumen
+## Resumen
 
 En los capítulos anteriores, vimos cómo construir modelos y diseñar vistas. Aquí fuimos un poco más lejos, aprendiendo a implementar la lógica de negocios y usar conjuntos de registros para manipular datos de modelos.
 

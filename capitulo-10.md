@@ -1,4 +1,4 @@
-#Capítulo 10. Creando reportes de QWeb
+# Capítulo 10. Creando reportes de QWeb
 
 Los informes son una característica invaluable para las aplicaciones empresariales. El motor incorporado de los informes de QWeb, disponible desde la versión 8.0, es el motor de informe por defecto. Los informes se diseñan utilizando plantillas QWeb para producir documentos HTML que luego se pueden convertir en formato PDF.
 
@@ -9,7 +9,7 @@ Esto significa que podemos aprovechar convenientemente lo que hemos aprendido so
 Pero antes de empezar, debemos asegurarnos de que hemos instalado la versión recomendada de la utilidad utilizada para convertir HTML en documentos PDF.
 
 
-##Instalando wkhtmltopdf
+## Instalando wkhtmltopdf
 
 Para generar correctamente los informes, es necesario instalar la versión recomendada de la biblioteca `wkhtmltopdf. Su nombre significa **Webkit HTML a PDF**. Odoo lo usa para convertir una página HTML renderizada en un documento PDF.
 
@@ -65,7 +65,7 @@ wkhtmltopdf 0.12.1 (with patched qt)
 
 Después de esto, la secuencia de inicio del servidor Odoo no mostrará el mensaje de información **Necesitas un archivo Wkhtmltopdf para imprimir una versión en pdf del reporte "You need Wkhtmltopdf to print a pdf version of the report's"**.
 
-##Creando informes empresariales
+## Creando informes empresariales
 
 Por lo general, implementaríamos el informe en nuestro módulo de complemento de la aplicación de tareas pendientes. Pero para propósitos de aprendizaje, crearemos un nuevo módulo addon solo para nuestro informe.
 
@@ -102,7 +102,7 @@ El archivo `reports/todo_report.xml` puede comenzar declarando el nuevo informe 
 
 La etiqueta `<report>` es un acceso directo para escribir datos al modelo `ir.actions.report.xml`, que es un tipo particular de acción del cliente. Sus datos están disponibles en las opciones de menú **Configuración | Técnico | Informes " Settings | Technical | Reports "**.
 
-####Tip
+#### Tip
 
 Durante el diseño del informe, es posible que prefieras dejar `report_type="qweb-html"`, y cambiarlo de nuevo al archivo `qweb-pdf` una vez terminado. Esto hará que sea más rápido generar y más fácil inspeccionar el resultado HTML de la plantilla de OWeb.
 
@@ -110,7 +110,7 @@ Después de instalarlo, la vista de formulario de tareas pendientes mostrará un
 
 No funcionará en este momento, ya que todavía no hemos definido el informe. Este será un informe QWeb, por lo que utilizará una plantilla QWeb. El atributo `name` identifica la plantilla que se va a utilizar. A diferencia de otras referencias de identificador, se requiere el prefijo del módulo en el atributo `name`. Debemos usar la referencia completa `<module_name>.<identifier_name>`.
 
-##Plantillas de informes QWeb
+## Plantillas de informes QWeb
 
 Los informes generalmente seguirán un esqueleto básico, como se muestra a continuación. Esto se puede agregar al archivo `reports/todo_report.xml`, justo después del elemento `<report>`.
 
@@ -130,7 +130,7 @@ Los elementos más importantes aquí son las directivas `t-call` que utilizan es
 
 Ahora tenemos en su lugar, el esqueleto básico para nuestro módulo y vista de informe. Ten en cuenta que, dado que los informes son sólo plantillas QWeb, se puede aplicar la herencia, al igual que en las otras vistas. Las plantillas QWeb utilizadas en los informes se pueden ampliar utilizando las vistas heredadas normales con expresiones **XPATH**.
 
-##Presentando datos en informes
+## Presentando datos en informes
 
 A diferencia de las vistas Kanban, las plantillas de QWeb en los informes se representan en el lado del servidor y utilizan una implementación Python QWeb. Podemos ver esto como dos implementaciones de la misma especificación, y hay algunas diferencias que necesitamos tener en cuenta.
 
@@ -177,7 +177,7 @@ Ahora podemos empezar a diseñar el contenido de la página de nuestro informe:
 
 El diseño del contenido puede utilizar el sistema de cuadrícula HTML de Bootstrap de Twitter. En pocas palabras, Bootstrap tiene un diseño de cuadrícula con 12 columnas. Se puede añadir una nueva fila usando `<div class="row">`. Dentro de una fila, tenemos celdas, cada una de ellas abarcando un cierto número de columnas, que debe ocupar las 12 columnas. Cada celda se puede definir con la fila `<div class="col-xs-N">`, donde N es el número de columnas que abarca.
 
-####Nota
+#### Nota
 
 Una referencia completa para Bootstrap, que describe estos y otros elementos de estilo, se puede encontrar en http://getbootstrap.com.
 
@@ -219,7 +219,7 @@ Un ejemplo es el widget monetario, usado arriba, al lado de la fecha límite.
 
 Un ejemplo más sofisticado es el widget `contact`, utilizado para dar formato a las direcciones. Utilizamos la dirección de la empresa, `res_company.partner_id`, ya que tiene algunos datos predeterminados y podemos ver inmediatamente la dirección procesada. Pero tendría más sentido usar la dirección del usuario asignado, `o.user_id.partner_id`. De forma predeterminada, el widget `contact` muestra direcciones con algunos pictogramas, como un icono de teléfono. La opción `no_marker="true"` que usamos los deshabilita.
 
-##Renderizando imágenes
+## Renderizando imágenes
 
 La última columna de nuestro informe contará con la lista de seguidores, con los avatares. Usaremos el componente Bootstrap `media-list` y un bucle a través de los seguidores para renderizar cada uno de ellos:
 
@@ -241,7 +241,7 @@ La última columna de nuestro informe contará con la lista de seguidores, con l
 ```
 El contenido de los campos binarios se proporciona en una representación `base64`. El elemento `<img>` puede aceptar directamente este tipo de datos para el atributo `src`. Así podemos utilizar la directiva Qweb `t-att-src` para generar dinámicamente cada una de las imágenes.
 
-##Total de resumen y totales corrientes
+## Total de resumen y totales corrientes
 
 Una necesidad común en los informes es proporcionar totales. Esto se puede hacer usando expresiones de Python para calcular esos totales.
 
@@ -282,7 +282,7 @@ Y luego, dentro del bucle, añade el número de seguidores del registro a la var
 
 ```
 
-##Definiendo formatos de papel
+## Definiendo formatos de papel
 En este punto nuestro informe se ve bien en HTML, pero no se imprime bien en una página PDF. Podríamos obtener mejores resultados usando una página horizontal. Así que tenemos que añadir este formato de papel.
 
 En la parte superior del archivo XML, agregua este registro:
@@ -321,11 +321,11 @@ Vamos a editar la acción utilizada para abrir nuestro informe, para agregar est
   paperformat="paperformat_euro_landscape" 
 /> 
 ```
-####Tip
+#### Tip
 
 El atributo `paperformat` en la etiqueta `<report>` se agregó en la versión 9.0. Para 8.0 necesitamos usar un elemento `<record>` para agregar una acción de informe con un valor `paperformat`.
 
-##Habilitando la traducción de idiomas en los informes
+## Habilitando la traducción de idiomas en los informes
 
 Para habilitar las traducciones de un informe, debe ser llamado desde una plantilla, usando un elemento `<t t-call>` con un atributo `t-lang`.
 
@@ -353,7 +353,7 @@ La función espera un nombre de plantilla, y lo procesará y traducirá. Esto si
 
 ```
 
-##Informes basados ​​en SQL personalizado
+## Informes basados ​​en SQL personalizado
 
 El informe que construimos se basó en un conjunto de registros regulares. Pero en algunos casos necesitamos transformar o agregar datos de una manera que no sea fácil al procesar datos sobre la marcha, como al procesar el informe.
 
@@ -440,7 +440,7 @@ A continuación, podemos agregar un nuevo informe basado en este modelo, `report
 
 Para casos aún más complejos, podemos utilizar una solución diferente: un asistente. Para esto debemos crear un modelo transitorio con líneas relacionadas, donde el encabezado incluya parámetros de informe, introducidos por el usuario, y las líneas tendrán los datos generados que usará el informe. Estas líneas se generan mediante un método modelo que puede contener cualquier lógica que podamos necesitar. Se recomienda encarecidamente inspirarse en un informe similar existente.
 
-##Resúmen
+## Resúmen
 
 En el capítulo anterior aprendimos sobre QWeb y cómo usarlo para diseñar una vista Kanban. En este capítulo aprendimos sobre el motor de informes QWeb y sobre las técnicas más importantes para generar informes con el lenguaje de plantillas QWeb.
 

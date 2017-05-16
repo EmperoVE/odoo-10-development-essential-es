@@ -1,4 +1,4 @@
-#Capítulo 6. Vistas - Diseñando la interfaz de usuario.
+# Capítulo 6. Vistas - Diseñando la interfaz de usuario.
 
 Este capítulo te ayudará a aprender cómo crear la interfaz gráfica para que los usuarios interactúen con la aplicación de tareas pendientes. Descubrirá los distintos tipos de vistas y widgets disponibles, comprenderás qué son contexto y dominio y cómo utilizarlos para proporcionar una buena experiencia de usuario.
 
@@ -27,8 +27,7 @@ Esto significa que un nuevo archivo de datos XML para nuestra interfaz de usuari
 } 
 ```
 
-####Nota
-Nota
+#### Nota
 
 Recuerda que los archivos de datos se cargan en el orden especificado. Esto es importante porque sólo puede referenciar IDs XML que se definieron antes de que ser utilizadas.
 
@@ -44,7 +43,7 @@ También podemos crear el subdirectorio y los archivos `views/todo_view.xml` y `
 
 En el capítulo 3, *Herencia - Ampliando las aplicaciones existentes*, se dio un menú básico a nuestra aplicación, pero ahora queremos mejorarlo. Por lo tanto, vamos a añadir nuevos elementos de menú y las acciones de la ventana correspondiente, que se activarán cuando se seleccionan.
 
-###Elementos de menú
+### Elementos de menú
 
 Los elementos de menú se almacenan en el modelo `ir.ui.menu` y se pueden consultar a través del menú **Settings** en **Technical|User Interface|Menu Items.
 
@@ -89,7 +88,7 @@ Por último, en el menú **Configuration** agregamos la opción para la tarea Et
 
 En este punto, si intentamos actualizar el complemento debemos obtener errores porque no hemos definido las IDs XML utilizados en los atributos de `action`. Los agregaremos en la siguiente sección.
 
-###Acciones de ventana
+### Acciones de ventana
 
 Una **acción de ventana** da instrucciones al cliente de GUI, y usualmente se usa en elementos de menú o botones en vistas. Le dice a la GUI en qué modelo trabajar, y qué vistas para poner a disposición. Estas acciones pueden forzar que sólo un subconjunto de los registros sea visible, utilizando un filtro `domain`. También pueden establecer valores predeterminados y filtros a través del atributo `context`.
 
@@ -141,10 +140,11 @@ También añadimos una tercera acción, no utilizada en ninguno de los elementos
 + `src_model` indica en qué modelo esta acción debe estar disponible.
 + `multi`, cuando se establece en `True`, lo hace disponible en la vista de lista para que pueda aplicarse a una selección múltiple de registros. El valor predeterminado es `False`, como en nuestro ejemplo, hará que la opción sólo esté disponible en la vista de formulario, por lo que sólo puede aplicarse a un registro a la vez.
 
-##Contexto y dominio
+## Contexto y dominio
 
 Nos hemos topado con contexto y dominio varias veces. Hemos visto que las acciones de ventana son capaces de establecerlos y los campos relacionales en los modelos también pueden tenerlos como atributos.
-###Datos de contexto
+
+### Datos de contexto
 
 El **contexto** es un diccionario que lleva datos de sesión que se pueden utilizar tanto del lado del cliente en la interfaz de usuario como del lado del servidor de la ORM y la lógica de negocio.
 
@@ -192,7 +192,7 @@ _filter_my_tasks': 1}
 
 ```
 
-###Expresiones de dominio
+### Expresiones de dominio
 
 El **dominio** se utiliza para filtrar registros de datos. Utilizan una sintaxis específica que la ORD Odoo analiza para producir las expresiones SQL WHERE que consultarán la base de datos.
 
@@ -241,13 +241,13 @@ El siguiente diagrama ilustra esta resolución de los operadores anidados:
 
 ![nestedoperationsresolutions](file:///home/dticucv/Escritorio/OEBPS/Image00020.jpg)
 
-##Las vistas de formulario
+## Las vistas de formulario
 
 Como hemos visto en capítulos anteriores, las vistas de formulario pueden seguir un diseño simple o un diseño de documento comercial, similar a un documento en papel.
 
 Ahora veremos cómo diseñar estas vistas de documentos empresariales y cómo usar los elementos y widgets disponibles. Normalmente haríamos esto heredando y extendiendo las vistas de `todo_app`. Pero en aras de la claridad, vamos a crear vistas completamente nuevas para anular las originales.
 
-###Tratando con varias vistas del mismo tipo
+### Tratando con varias vistas del mismo tipo
 
 El mismo modelo puede tener más de una vista del mismo tipo. Esto puede ser útil ya que una acción de ventana puede indicar la vista específica que debe utilizarse, a través de su ID XML. Así que tenemos la flexibilidad de tener dos elementos de menú diferentes para abrir el mismo modelo utilizando diferentes vistas. Esto se hace añadiendo un atributo `view_id` a la acción de la ventana, con el ID XML de la vista a utilizar. Por ejemplo, podríamos haber usado esto en la acción `todo_app.action_todo_task`, con algo similar a: `view_id = "view_form_todo_task_ui"`.
 
@@ -257,7 +257,7 @@ Dado que el valor predeterminado para la prioridad de vista es 16, cualquier val
 
 No es la ruta más utilizada, para ayudar a mantener nuestros ejemplos tan legibles como sea posible, usaremos el enfoque de prioridad en nuestros próximos ejemplos.
 
-###Vistas del documento de negocios
+### Vistas del documento de negocios
 
 Las aplicaciones empresariales son a menudo sistemas de registro - para productos en un almacén, facturas en un departamento de contabilidad, y muchos más. La mayoría de los datos grabados se pueden representar como un documento en papel. Para una mejor experiencia de usuario, las vistas de formulario pueden imitar estos documentos en papel. Por ejemplo, en nuestra aplicación, podríamos pensar en una Tarea pendiente como algo que tiene un simple formulario de papel que rellenar. Proporcionaremos una vista de formulario que siga este diseño.
 
@@ -324,7 +324,7 @@ Podemos ver que las vistas de documentos empresariales suelen utilizar tres áre
 
 La sección de historial y comunicación, en la parte inferior, utiliza los widgets de redes sociales proporcionados por el módulo addon de correo. Para poder usarlos, nuestro modelo debe heredar el modelo `mixin mail.thread`, como vimos en el Capítulo 3, *Herencia - Extendiendo las Aplicaciones Existentes*.
 
-####El encabezado
+#### El encabezado
 
 El encabezado en la parte superior por lo general cuenta con el ciclo de vida o los pasos que el documento seguirá a través y los botones de acción.
 
@@ -358,7 +358,7 @@ En el archivo `views/todo_view.xml` ahora podemos expandir el encabezado básico
 
 Aquí añadimos `state` como un campo oculto. Necesitamos esto para obligar al cliente a incluir también ese campo en las solicitudes de datos enviadas al servidor. De lo contrario, no estará disponible para su uso en expresiones.
 
-####Tip
+#### Tip
 
 Es importante recordar que cualquier campo que desees utilizar, en un dominio o expresión `attrs`, debe cargarse en la vista, por lo que los campos quedarán invisibles en cualquier momento que los necesite, pero no es necesario que los usuarios los vean.
 
@@ -384,7 +384,7 @@ Cuando se utiliza el widget de barra de estado con un campo de estado, se puede 
   statusbar_visible="draft,open" />
 ```
 
-####La hoja
+#### La hoja
 
 El lienzo de hoja es el área principal del formulario donde se colocan los elementos de datos reales. Está diseñado para que parezca un documento en papel real, y es común ver que los registros en Odoo se conocen como **documents**.
 
@@ -397,7 +397,7 @@ Normalmente, una estructura de hoja de documento tendrá estas áreas:
 
 Vamos a pasar por cada una de estas áreas.
 
-####Título y subtítulos
+#### Título y subtítulos
 
 Los campos fuera de un elemento `<group>` no tienen automáticamente etiquetas renderizadas para ellos. Este será el caso de los elementos de título, por lo que el elemento `<label for "..." />` debe ser utilizado para procesarla. A expensas de un trabajo extra, esto tiene la ventaja de dar más control sobre la pantalla de etiquetas.
 
@@ -427,7 +427,7 @@ En algunos casos, como Socios o Productos, se muestra una imagen representativa 
 <field name="my_image" widget="image" class="oe_avatar"/>
 ```
 
-####Área de botones inteligentes
+####  Área de botones inteligentes
 
 El área superior derecha puede tener una caja invisible donde se pueden colocar los botones. La versión 8.0 introdujo botones inteligentes, mostrados como rectángulos con un indicador estadístico que se puede seguir cuando se hace clic.
 
@@ -440,7 +440,7 @@ Podemos agregar la caja de botones justo después del final del DIV `oe_title`, 
 
 El contenedor de los botones es un `div` con la clase `oe_button_box` y también `oe_right`, para alinearlo al lado derecho del formulario. Estaremos discutiendo los botones con más detalle en una sección posterior, así que esperaremos hasta entonces para agregar botones reales en esta caja.
 
-####Agrupando contenido en un formulario
+#### Agrupando contenido en un formulario
 
 El contenido principal del formulario debe organizarse mediante etiquetas `<group>`. La etiqueta `group` inserta dos columnas en el lienzo y, en su interior, por defecto, los campos se mostrarán con etiquetas.
 
@@ -486,7 +486,7 @@ Es una buena práctica asignar un nombre o `name` a las etiquetas de grupo para 
 
 Dentro de un grupo, un elemento `<newline>` forzará una nueva línea y el siguiente elemento se renderizará en la primera columna del grupo. Se pueden añadir títulos de sección adicionales dentro de un grupo utilizando el elemento `<separator>`.
 
-####Tip
+#### Tip
 
 Prueba la opción Alternar formato de esquema de formulario **Toggle Form Layout Outline** del menú Desarrollador **Developer**: dibuja líneas alrededor de cada sección de grupo, lo que permite una mejor comprensión del diseño de formulario actual.
 
@@ -496,7 +496,7 @@ El atributo `col` se puede utilizar en elementos `<group>` para personalizar el 
 
 Los elementos colocados dentro del grupo, incluidos los elementos `<field>`, pueden utilizar un atributo `colspan` para establecer un número específico de columnas que deben tomar. De forma predeterminada, se toma una columna.
 
-####Libretas de notas con pestañas
+#### Libretas de notas con pestañas
 
 Otra forma de organizar el contenido es utilizar el elemento `notebook`, que contiene varias secciones con pestañas, llamadas páginas. Estos pueden ser utilizados para mantener menos datos usados ​​fuera de la vista hasta que sea necesario, o para organizar un gran número de campos por tema.
 
@@ -513,11 +513,11 @@ No necesitaremos agregar esto a nuestro formulario Tarea pendiente, pero aquí h
 </notebook> 
 ```
 
-##Ver componentes semánticos
+## Ver componentes semánticos
 
 Hemos visto cómo organizar el contenido en un formulario, utilizando componentes estructurales como encabezado, grupo y block de notas. Ahora podemos ver más de cerca los componentes semánticos, los campos y los botones, y lo que podemos hacer con ellos.
 
-###Campos
+### Campos
 
 Los campos de vista tienen algunos atributos disponibles para ellos. La mayoría de ellos tienen valores tomados de su definición en el modelo, pero estos pueden ser anulados en la vista.
 
@@ -541,7 +541,7 @@ Los atributos específicos de algunos tipos de campos son:
 + `filename` se utiliza para los campos binarios y es el nombre del campo del modelo que se usará para almacenar el nombre del archivo subido.
 + `mode` se utiliza para campos uno-a-muchos. Especifica el tipo de vista a utilizar para mostrar los registros. De forma predeterminada, es árbol o `tree`, pero también puede ser `form`, `kanban` o `graph`.
 
-####Etiquetas para campos
+#### Etiquetas para campos
 
 El elemento `<label>` se puede utilizar para controlar mejor la presentación de una etiqueta de campo. Un caso en el que se utiliza es presentar la etiqueta sólo cuando el formulario está en modo de edición:
 ```
@@ -549,7 +549,7 @@ El elemento `<label>` se puede utilizar para controlar mejor la presentación de
 ```
 Al hacer esto, si el campo está dentro de un elemento `<group>`, por lo general queremos también establecer `nolabel="True"` en él.
 
-####Campos relacionales
+#### Campos relacionales
 
 En los campos relacionales, podemos tener algún control adicional sobre lo que el usuario puede hacer. De forma predeterminada, el usuario puede crear nuevos registros desde estos campos (también conocido como "creación rápida") y abrir el formulario de registro relacionado. Esto se puede desactivar usando el atributo de campo de `options`:
 ```
@@ -557,7 +557,7 @@ Options={'no_open': True, 'no_create': True}
 ```
 El contexto y el dominio también son particularmente útiles en los campos relacionales. El contexto puede definir los valores predeterminados para los registros relacionados y el dominio puede limitar los registros seleccionables. Un ejemplo común es top, tiene la lista de registros seleccionable en un campo para depender del valor actual para otro campo del registro actual. El dominio se puede definir en el modelo, pero también se puede sobreescribir en la vista.
 
-####Widgets de campo
+#### Widgets de campo
 
 Cada tipo de campo se muestra en el formulario con el widget predeterminado correspondiente. Pero los widgets alternativos adicionales están disponibles para ser usados.
 
@@ -582,7 +582,7 @@ Para campos relacionales y de selección, tenemos estos widgets adicionales:
 + `kanban_state_selection` muestra una luz de semáforo para la lista de selección de estado kanban. El estado normal se representa en gris, hecho se representa en verde, y cualquier otro estado se representa en rojo.
 + `priority` representa el campo de selección como una lista de estrellas seleccionables. Las opciones de selección suelen ser un dígito numérico.
 
-###Botones
+### Botones
 
 Los botones admiten estos atributos:
 
@@ -598,7 +598,7 @@ Los botones admiten estos atributos:
 + `confirm` muestra un cuadro de mensaje de confirmación, con el texto asignado a este atributo.
 + `pecial="cancel"` se utiliza en los asistentes, para cancelar y cerrar el formulario del asistente.
 
-###  Botones inteligentes
+### Botones inteligentes
 
 Al diseñar la estructura del formulario, incluimos un área superior derecha para contener botones inteligentes. Ahora vamos a añadir un botón dentro de él.
 
@@ -663,16 +663,16 @@ La Acción utilizada debe definirse antes del Formulario, por lo que debemos añ
 
 Observe cómo usamos la clave de contexto default_user_id para el filtro de dominio. Esta clave en particular también establecerá el valor predeterminado en el campo user_id al crear nuevas Tareas después de seguir el enlace del botón.
 
-##Vistas dinámicas
+## Vistas dinámicas
 Los elementos de vista también admiten algunos atributos dinámicos que permiten a las vistas cambiar dinámicamente su apariencia o comportamiento dependiendo de los valores del campo. Podemos tener en eventos de cambio, la capacidad de cambiar valores en otros campos mientras edita datos en un formulario, o tener campos obligatorios o visibles sólo cuando se cumplen ciertas condiciones.
 
-###En los eventos de cambio
+### En los eventos de cambio
 
 El mecanismo de cambio **on change** nos permite cambiar valores en otros campos de formulario cuando se cambia un campo particular. Por ejemplo, el cambio en un campo Producto puede establecer el campo Precio con un valor predeterminado siempre que se cambie el producto.
 
 En las versiones anteriores, los eventos de cambio se definieron en el nivel de vista, pero desde la versión 8.0 se definen directamente en la capa Modelo, sin necesidad de ninguna marcación específica en las vistas. Esto se hace creando métodos para realizar los cálculos, y usando `@api.onchange('field1', 'field2')` para enlazarlo a los campos. Estos métodos de cambio se analizan con más detalle en el Capítulo 7, *Lógica de Aplicación de ORM - Procesos de Apoyo al Negocio.
 
-###Atributos dinámicos
+### Atributos dinámicos
 
 El mecanismo de cambio también se encarga de la recomputación automática de los campos computados, para reaccionar inmediatamente a la entrada del usuario. Utilizando el mismo ejemplo anterior, si cambia el campo Precio cuando cambiamos el Producto, también se actualizará automáticamente un campo computado del valor total utilizando la nueva información de precios. Un par de atributos proporcionan una manera fácil de controlar la visibilidad de un elemento de interfaz de usuario particular:
 
@@ -692,7 +692,7 @@ El atributo `invisble` está disponible en cualquier elemento, no sólo campos. 
 
 Los `attrs` también pueden establecer valores para otros dos atributos: `readonly` y `required`. Estos sólo tienen sentido para los campos de datos, para que no sean editables o obligatorios. Esto nos permite implementar alguna lógica básica del lado del cliente, como hacer un campo obligatorio dependiendo de otros valores de registro, como el Estado.
 
-##Vistas de lista
+## Vistas de lista
 
 En este punto, las vistas de lista deben necesitar poca introducción, pero todavía vamos a discutir los atributos que se pueden utilizar con ellos. A continuación se muestra un ejemplo de una vista de lista para nuestras Tareas pendientes:
 
@@ -715,7 +715,7 @@ En este punto, las vistas de lista deben necesitar poca introducción, pero toda
 
 El color y la fuente del texto de fila pueden cambiar dinámicamente dependiendo de los resultados de una evaluación de expresión de Python. Esto se hace a través de los atributos `decoration-NAME`, con la expresión para evaluar basada en atributos de campo. La parte `NAME` puede ser `bf` o `it`, para fuentes en negrita y cursiva, o cualquier color contextual de texto Bootstrap: `peligro, información, silenciado, primario, éxito` o `advertencia`. La documentación Bootstrap contiene ejemplos sobre cómo se presentan: http://getbootstrap.com/css/#helper-classes-colors.
 
-####Tip
+#### Tip
 
 Los atributos `colors` y `fonts`, disponibles en la versión 8.0, estaban obsoletos en la versión 9.0. Los nuevos atributos de decoración deben ser utilizados en su lugar.
 
@@ -735,7 +735,7 @@ En las vistas de lista, los campos numéricos pueden mostrar valores de resumen 
 <field name="amount" sum="Total Amount" />
 ```
 
-##Vistas de Búsqueda
+## Vistas de Búsqueda
 
 Las opciones de búsqueda disponibles se definen mediante el tipo de vista `<búsqueda>` . Podemos elegir los campos se pueden buscar automáticamente al escribir en el cuadro de búsqueda. También podemos proporcionar filtros predefinidos, activados con un clic y opciones de agrupación predefinidas que se utilizarán en vistas de lista.
 
@@ -782,7 +782,7 @@ Para los elementos de filtro, estos son los atributos disponibles:
 + `context` es un diccionario de contexto que se agrega al contexto actual. Generalmente establece una clave `group_id` con el nombre del campo para agrupar registros.
 + `groups` hace que la búsqueda en el campo sólo esté disponible para una lista de grupos de seguridad (IDs XML).
 
-##Vistas de calendario
+## Vistas de calendario
 
 Como su nombre indica, este tipo de vista presenta los registros de un calendario que se pueden ver durante mes, semana o días. Una vista de calendario para las Tareas pendientes podría tener este aspecto:
 
@@ -811,7 +811,7 @@ Los atributos del calendario son:
 + `display` es el texto de visualización para cada entrada de calendario. Puede registrar valores de usuario utilizando los nombres de campo entre corchetes, como `[name]`. Estos campos deben declararse como hijos del elemento de calendario, y en el ejemplo anterior.
 + `mode` es el modo de visualización predeterminado para el calendario, ya sea `day`, `week` o `month`.
 
-##Vistas de gráficos y pivotes
+## Vistas de gráficos y pivotes
 
 Las vistas de gráfico proporcionan una vista gráfica de los datos, en forma de gráfico. Los campos actuales disponibles en las Tareas pendientes no son buenos candidatos para un gráfico, por lo que agregamos uno para utilizarlo en dicha vista.
 
@@ -863,7 +863,7 @@ Las vistas de gráfico y pivote deben contener elementos de campo que describen 
 
 Por defecto, la agregación utilizada es la suma de los valores. Esto se puede cambiar estableciendo el atributo `group_operator` en la definición de campo Python. Los valores que se pueden usar incluyen `avg`, `max` y `min`.
 
-##Otros tipos de vista
+## Otros tipos de vista
 
 Vale la pena señalar que no cubrimos otros tres tipos de vista que también están disponibles: kanban, gantt y diagrama.
 
@@ -873,6 +873,6 @@ La vista de gantt estaba disponible hasta la versión 8.0, pero se eliminó en l
 
 Por último, las vistas de diagrama se utilizan para casos muy específicos, y un módulo addon los necesitará raramente. Por si acaso, le gustaría saber que el material de referencia para los dos tipos de vista se puede encontrar en la documentación oficial, https://www.odoo.com/documentation/10.0/reference/views.html.
 
-##Resumen
+## Resumen
 
 En este capítulo, aprendimos más sobre las vistas de Odoo para construir la interfaz de usuario, cubriendo los tipos de vista más importantes. En el próximo capítulo, aprenderemos más sobre cómo agregar lógica de negocios a nuestras aplicaciones.

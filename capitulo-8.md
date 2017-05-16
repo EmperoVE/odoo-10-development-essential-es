@@ -1,8 +1,8 @@
-#Capítulo 8. Escribiendo pruebas y depurando tu código
+# Capítulo 8. Escribiendo pruebas y depurando tu código
 
 Una buena parte del trabajo de un desarrollador es probar y depurar código. Las pruebas automatizadas son una herramienta inestimable para construir y mantener software robusto. En este capítulo, aprenderemos cómo agregar pruebas automatizadas a nuestros módulos de complemento, para hacerlos más robustos. También se presentan las técnicas de depuración del servidor, que permiten al desarrollador inspeccionar y comprender lo que está sucediendo en su código.
 
-##Pruebas de unidad
+## Pruebas de unidad
 
 Las pruebas automatizadas se aceptan generalmente como una mejor práctica en software. No solo nos ayuda a asegurar que nuestro código se implemente correctamente. Más importante aún, proporciona una red de seguridad para futuras mejoras de código o reescritura.
 
@@ -12,7 +12,7 @@ Los dos objetivos descritos pueden proporcionar una luz de guía al escribir pru
 
 Esto solo por lo general hará un buen progreso en el segundo objetivo - para mostrar la corrección funcional del código, ya que después de esto seguramente tendrá un gran punto de partida para construir casos de prueba adicionales para casos de uso no obvio.
 
-##Añadiendo pruebas de unidad
+## Añadiendo pruebas de unidad
 
 Las pruebas de Python se agregan a módulos addon mediante un subdirectorio `tests/`. El corredor de pruebas descubrirá automáticamente las pruebas en los subdirectorios con ese nombre en particular.
 
@@ -50,7 +50,7 @@ Estas clases de prueba son envolturas alrededor de testcases `unitcases`. Esto f
 
 Para ser más preciso, Odoo utiliza una biblioteca de extensión `unittest`, `unittest2`.
 
-##Configurando pruebas
+## Configurando pruebas
 
 Debemos comenzar preparando los datos que se utilizarán en las pruebas.
 
@@ -88,7 +88,7 @@ class TestWizard(TransactionCase):
 ```
 Para probar nuestro asistente, queremos tener exactamente abiertas dos tareas pendientes. Así que empezamos cerrando cualquier tarea pendiente existente, para que no se interpongan en nuestras pruebas, y creamos dos nuevas tareas pendientes para las pruebas, usando el usuario Demo. Finalmente creamos una nueva instancia de nuestro asistente, utilizando el usuario Demo, y asignandolo a `self.wizard`, de modo que esté disponible para los métodos de prueba.
 
-##Probando excepciones
+## Probando excepciones
 
 A veces necesitamos nuestras pruebas para verificar si se generó una excepción. Un caso común es cuando se prueba si algunas validaciones se están haciendo correctamente.
 
@@ -115,7 +115,7 @@ Si el método `do_count_tasks()` no genera una excepción, la comprobación fall
 
 Lo usamos para inspeccionarlo. El mensaje de excepción contiene el número de tareas contadas, que esperamos que sean dos. En la sentencia final usamos `assertIn` para comprobar que el texto de excepción contiene la cadena `' 2 '`.
 
-##Ejecutando de pruebas
+## Ejecutando de pruebas
 
 Las pruebas están escritas, es hora de ejecutarlas. Para eso solo necesitamos agregar la opción `--test-enable` al comando de inicio del servidor Odoo, mientras instalamos o actualizamos (`-i` o `-u`) el módulo addon.
 
@@ -128,7 +128,7 @@ $ ./odoo-bin -d todo --test-enable -i todo_wizard --stop-after-init
 
 Sólo se probarán los módulos instalados o actualizados. Si algunas dependencias necesitan ser instaladas, sus pruebas también se ejecutarán. Si desea evitar esto, puede instalar el módulo para probar la forma usual y, a continuación, ejecutar las pruebas mientras realiza una actualización (`-u`) del módulo para probar.
 
-#Acerca de las pruebas de YAML
+# Acerca de las pruebas de YAML
 
 Odoo también soporta un segundo tipo de pruebas, descritas usando archivos de datos YAML. Originalmente todas las pruebas usaban YAML, hasta que más recientemente se introdujeron las pruebas basadas en pruebas `unittest`. Si bien ambos son compatibles, y muchos complementos principales aún incluyen pruebas YAML, la documentación oficial actualmente no menciona las pruebas YAML. La última documentación disponible está disponible en https://doc.odoo.com/v6.0/contribute/15_guidelines/coding_guidelines_testing/.
 
@@ -158,12 +158,12 @@ Las líneas que comienzan con un `!` Son etiquetas YAML, equivalentes a los elem
 
 Como puedes ver, las pruebas YAML utilizan una sintaxis específica de Odoo que necesita aprendizaje. En comparación, las pruebas de Python utilizan el framework `unittest` existente, solo añadiendo clases envolventes específicas de Odoo como `TransactionCase`.
 
-##Herramientas de desarrollo
+## Herramientas de desarrollo
 
 Hay algunas técnicas que el desarrollador debe aprender para ayudar en su trabajo. En el Capítulo 1, *Iniciando con el desarrollo Odoo*, ya hemos introducido la interfaz de usuario del modo de desarrollador **Developer Mode**. También tenemos disponible una opción de servidor que proporciona algunas características amigables para desarrolladores. Lo describiremos más detalladamente a continuación. Después de eso vamos a discutir otro tema relevante para los desarrolladores: cómo depurar el código del lado del servidor.
 
 
-###Opciones de desarrollo del servidor
+### Opciones de desarrollo del servidor
 
 El servidor Odoo proporciona la opción `--dev` para permitir que algunas funciones del desarrollador aceleren nuestro ciclo de desarrollo, como por ejemplo:
 
@@ -174,7 +174,7 @@ El servidor Odoo proporciona la opción `--dev` para permitir que algunas funcio
 La opción `--dev` acepta una lista de opciones separada por comas, aunque la opción todo será adecuada la mayor parte del tiempo. También podemos especificar el depurador que preferimos usar. De forma predeterminada, se utiliza el depurador Python, `pdb`. Algunas personas pueden preferir instalar y usar depuradores alternativos. Aquí también se admiten `ipdb` y `pudb`.
 
 
-####Nota
+#### Nota
 
 Antes de Odoo 10 teníamos en lugar de la opción `--debug`, permitiendo abrir el depurador en una excepción de módulo de complemento.
 
@@ -193,18 +193,18 @@ Para que esto funcione el paquete Python `watchdog` es necesario, y debe instala
 $ pip install watchdog
 
 ```
-####Nota
+#### Nota
 
 Ten en cuenta que esto es útil sólo para los cambios de código Python y arquitecturas de vista en archivos XML. Para otros cambios, como la estructura de datos del modelo, se necesita una actualización del módulo y la recarga no es suficiente.
 
 
-###Depuración
+### Depuración
 
 Todos sabemos que una buena parte del trabajo de un desarrollador es depurar código. Para hacer esto a menudo hacemos uso de un editor de código que puede establecer puntos de interrupción y ejecutar nuestro programa paso a paso.
 
 Si estás utilizando Microsoft Windows como tu estación de trabajo de desarrollo, la configuración de un entorno capaz de ejecutar código Odoo desde el origen es una tarea no trivial. También el hecho de que Odoo es un servidor que espera las llamadas del cliente, y sólo entonces actúa sobre ellos, lo hace muy diferente de depurar en comparación con los programas del lado del cliente.
 
-####El depurador Python
+#### El depurador Python
 
 Si bien puede parecer un poco intimidante para los recién llegados, el enfoque más pragmático para depurar Odoo es utilizar el depurador integrado de Python, `pdb`. También introduciremos extensiones que proporcionarán una interfaz de usuario más rica, similar a lo que normalmente proporcionan los IDEs sofisticados.
 
@@ -217,7 +217,7 @@ import pdb; pdb.set_trace()
 
 Ahora reinicia el servidor para que se cargue el código modificado. Tan pronto como la ejecución del programa llegue a esa línea, se mostrará un prompt de Python (`pdb`) en la ventana de terminal donde se está ejecutando el servidor, esperando por nuestra entrada.
 
-####Nota
+#### Nota
 
 La opción `--dev` no es necesaria para usar puntos de interrupción de depurador Python manualmente configurados.
 
@@ -237,7 +237,7 @@ El servidor Odoo también admite la opción `dev=all`. Si se activa, cuando se p
 
 Mientras que `pdb` tiene la ventaja de estar disponible fuera de la caja, puede ser bastante concisa, y existen algunas opciones más cómodas.
 
-####Un ejemplo de sesión de depuración
+#### Un ejemplo de sesión de depuración
 
 Veamos cómo se ve una simple sesión de depuración. Podemos comenzar añadiendo punto de interrupción del depurador en la primera línea del método del asistente `do_populate_tasks`:
 
@@ -280,7 +280,7 @@ Al ejecutar la línea de retorno, usando `n` una vez más, se mostrarán los val
 
 La sesión de depuración continuará en las líneas de código de la persona que llama, pero podemos terminarla y continuar la ejecución normal escribiendo `c`.
 
-####Depuradores de Python alternativos
+#### Depuradores de Python alternativos
 
 Mientras que `pdb` tiene la ventaja de estar disponible fuera de la caja, puede ser bastante concisa, y algunas opciones más cómodas existen.
 
@@ -327,13 +327,13 @@ La adición de un punto de interrupción `pudb` se hace justo de la manera que e
 import pudb; pudb.set_trace() 
 ```
 
-####Imprmiendo mensajes y registro
+#### Imprmiendo mensajes y registro
 
 A veces sólo necesitamos inspeccionar los valores de algunas variables o comprobar si se están ejecutando algunos bloques de código. Una instrucción `print` de Python puede hacer el trabajo perfectamente sin detener el flujo de ejecución. Al ejecutar el servidor en una ventana de terminal, el texto impreso se mostrará en la salida estándar. Pero no se almacenará en el registro del servidor si se está escribiendo en un archivo.
 
 Otra opción a tener en cuenta es establecer los mensajes de registro de nivel de depuración en puntos sensibles de nuestro código si creemos que podríamos necesitarlos para investigar los problemas en una instancia implementada. Sólo sería necesario elevar ese nivel de registro de servidor para depurar e inspeccionar los archivos de registro.
 
-###Inspeccioando procesos en ejecución
+### Inspeccioando procesos en ejecución
 
 También hay algunos trucos que nos permiten inspeccionar un proceso Odoo en ejecución.
 
@@ -371,7 +371,7 @@ $ kill -USR1 <PID>
 
 ```
 
-##Resumen
+## Resumen
 
 Las pruebas automatizadas son una práctica valiosa, tanto para las aplicaciones empresariales en general, como para garantizar la robustez del código en un lenguaje de programación dinámico, como Python.
 

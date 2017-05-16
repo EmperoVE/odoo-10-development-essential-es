@@ -5,12 +5,13 @@ Esto se logra a través de mecanismos de herencia, funcionando como capas de mod
 
 En este capítulo, aprenderá cómo escribir tus propios módulos de extensión, lo que te permitirá aprovechar las aplicaciones existentes de núcleo o comunidad. Como un ejemplo relevante, aprenderás a agregar las funciones sociales y de mensajería de Odoo a sus propios módulos.
 
-##Añadiendo capacidades de uso compartido a la aplicación To - Do
+## Añadiendo capacidades de uso compartido a la aplicación To - Do
 
 Nuestra aplicación de To-Do ahora permite a los usuarios gestionar de forma privada sus propias tareas pendientes. ¿No será genial llevar la aplicación a otro nivel agregando funcionalidades de colaboración y redes sociales? Podremos compartir tareas y discutirlas con otras personas.
 
 Lo haremos con un nuevo módulo para ampliar la aplicación To-Do previamente creada y agregar estas nuevas características utilizando los mecanismos de herencia. Esto es lo que esperamos lograr al final de este capítulo:
-AQUI VA UNA IMAGEN
+
+![Mytodo](file:///home/dticucv/Escritorio/OEBPS/Image00012.jpg)
 
 Este será nuestro plan de trabajo para las extensiones de características que se implementarán:
 
@@ -37,7 +38,8 @@ Observa que hemos añadido la dependencia explícita al módulo `todo_app`. Esto
 A continuación, instálalo. Debería ser suficiente actualizar la lista de módulos utilizando la opción de menú **Update Apps List** debajo de **Apps**; Busca el nuevo módulo en la lista de **Apps** y haz clic en el botón **Install**. Ten en cuenta que esta vez tendrás que quitar el filtro de aplicaciones predeterminado para ver el nuevo módulo en la lista, ya que no se marca como una aplicación. Para obtener instrucciones más detalladas sobre cómo descubrir e instalar un módulo, consulta el Capítulo 1, *Iniciando con el desarrollo Odoo*.
 
 Ahora, vamos a empezar a añadir nuevas características a la misma.
-##Extediendo modelos
+
+## Extediendo modelos
 
 Los nuevos modelos se definen a través de las clases de Python. Extenderlos también se hace a través de clases de Python, pero con la ayuda de un mecanismo de herencia específico de Odoo.
 
@@ -48,7 +50,8 @@ De hecho, los modelos Odoo existen fuera de nuestro módulo particular de Python
 Para modificar un modelo Odoo, obtenemos una referencia a su clase de registro y luego realizamos cambios en el sitio en él. Esto significa que estas modificaciones también estarán disponibles en todas partes donde se utilice este nuevo modelo.
 
 Durante el arranque del servidor Odoo, el módulo que carga la secuencia es relevante: las modificaciones realizadas por un módulo complementario sólo serán visibles para los módulos complementarios cargados posteriormente. Por lo tanto, es importante que las dependencias del módulo se establezcan correctamente, asegurando que los módulos que proporcionan los modelos que usamos estén incluidos en nuestro árbol de dependencias.
-###Agregando campos a un modelo
+
+### Agregando campos a un modelo
 
 Vamos a ampliar el modelo `todo.task` para añadir un par de campos a ella: el usuario responsable de la tarea y una fecha límite.
 
@@ -77,14 +80,15 @@ class TodoTask(models.Model):
     date_deadline = fields.Date('Deadline')
 ```
 El nombre de clase `TodoTask` es local para este archivo de Python y, en general, es irrelevante para otros módulos. El atributo de clase `_inherit` es la clave aquí: le dice a Odoo que esta clase está heredando y modificando así el modelo `todo.task`.
-####Nota
+
+#### Nota
 Observa que el atributo `_name` está ausente. No es necesario porque ya está heredado del modelo padre.
 
 Las dos líneas siguientes son declaraciones de campo regulares. El campo `user_id` representa un usuario del modelo de usuarios `res.users`. Es un campo `Many2one`, que es equivalente a una clave extranjera en la jerga de la base de datos. El `date_deadline` es un simple campo de fecha. En el capítulo 5, *Modelos - Estructurando de los datos de aplicación*, explicaremos los tipos de campos disponibles en Odoo con más detalle.
 
 Para que los nuevos campos se agreguen a la tabla de base de datos de soporte del modelo, necesitamos realizar una actualización de módulo. Si todo sale como se esperaba, deberías ver los nuevos campos al inspeccionar el modelo `todo.task` en las opciones de menú **Technical | Database Estructure | Models**.
 
-###Modificando campos existentes
+### Modificando campos existentes
 
 Como puedes ver, agregar nuevos campos a un modelo existente es bastante sencillo. Desde Odoo 8, también es posible modificar los atributos en los campos heredados existentes. Se hace agregando un campo con el mismo nombre y estableciendo valores sólo para los atributos que se van a cambiar.
 
@@ -95,13 +99,14 @@ name = fields.Char(help="What needs to be done?")
 ```
 
 Esto modifica el campo con los atributos especificados, dejando sin modificar todos los otros atributos que no se utilizan explícitamente aquí. Si actualizamos el módulo, ve a un formulario de tareas pendientes y haz una pausa en el cursor sobre el campo **Description**; Se mostrará el texto de la herramienta de información.
-###Modificando los métodos del modelo
+
+### Modificando los métodos del modelo
 
 La herencia también funciona en el nivel de lógica empresarial. Agregar nuevos métodos es simple: solo declara sus funciones dentro de la clase de herencia.
 
 Para extender o cambiar la lógica existente, el método correspondiente puede anularse declarando un método con el mismo nombre. El nuevo método reemplazará al anterior, y también puede extender el código de la clase heredada, utilizando el método `super ()` de Python para llamar al método padre. Puede entonces agregar nueva lógica alrededor de la lógica original antes y después de que el método `super ()` sea llamado.
 
-####Tip
+#### Tip
 
 Es mejor evitar cambiar la firma de la función del método (es decir, mantener los mismos argumentos) para asegurarse de que las llamadas existentes en él seguirán funcionando correctamente. En caso de que necesites agregar parámetros adicionales, haz de ellos argumentos de palabras clave opcionales (con un valor predeterminado).
 
@@ -154,7 +159,8 @@ def do_toggle_done(self):
 El método en la clase heredada comienza con un bucle `for` para comprobar que ninguna de las tareas a activar pertenece a otro usuario. Si estos chequeos pasan, entonces continúa llamando al método de clase padre, usando `super ()`. Si no se plantea un error, y debemos utilizar para ello las excepciones incorporadas de Odoo. Los más relevantes son `ValidationError`, utilizado aquí y `UserError`.
 
 Estas son las técnicas básicas para reemplazar y extender la lógica empresarial definida en las clases de modelo. A continuación, veremos cómo ampliar las vistas de la interfaz de usuario.
-##Extendiendo vistas
+
+## Extendiendo vistas
 Las formas, listas y vistas de búsqueda se definen utilizando las estructuras de `arch XML`. Para ampliar vistas, necesitamos una forma de modificar este XML. Esto significa localizar elementos XML y luego introducir modificaciones en esos puntos.
 
 Las vistas heredadas permiten justamente eso. Una declaración de vista heredada tiene este aspecto:
@@ -194,7 +200,7 @@ Sólo ten en cuenta que si el campo aparece más de una vez en la misma vista, s
 
 A menudo, queremos agregar nuevos campos junto a los existentes, por lo que la etiqueta `<field>` se utilizará como localizador con frecuencia. Pero cualquier otra etiqueta se puede utilizar: `<sheet>, <group>, <div>`, etc. El atributo `name` suele ser la mejor opción para los elementos coincidentes, pero a veces, es posible que necesitemos utilizar otra cosa: el elemento de `CSS class`, por ejemplo. Odoo encontrará el primer elemento que tiene al menos todos los atributos especificados.
 
-####Nota
+#### Nota
 
 Antes de la versión 9.0, el atributo `string` (para la etiqueta de texto que se muestra) también podría utilizarse como localizador de extensión. Desde 9.0, esto ya no está permitido. Esta limitación está relacionada con el mecanismo de traducción del lenguaje que opera en esas cadenas.
 
@@ -213,7 +219,8 @@ Por ejemplo, en el formulario Tarea, tenemos el campo activo, pero tenerlo visib
 </field>
 ```
 Establecer el atributo `invisible` para ocultar un elemento es una buena alternativa para usar el localizador `replace` para eliminar nodos. Se debe evitar la eliminación de nodos, ya que puede romper módulos dependientes que pueden depender del nodo eliminado como marcador de posición para agregar otros elementos.
-####Ampliando de la vista de formulario
+
+#### Ampliando de la vista de formulario
 
 Juntando todos los elementos de formulario anteriores, podemos agregar los nuevos campos y ocultar el campo `active`. La vista de herencia completa para ampliar el formulario de tareas pendientes es la siguiente:
 ```
@@ -243,7 +250,8 @@ Juntando todos los elementos de formulario anteriores, podemos agregar los nuevo
 </record> 
 ```
 Esto debe agregarse a un archivo `views / todo_task.xml` en nuestro módulo, dentro del elemento `<odoo>`, como se muestra en el capítulo anterior.
-####Nota
+
+#### Nota
 
 Las vistas heredadas también se pueden heredar, pero como esto crea dependencias más intrincadas, debe evitarse. Debes preferir heredar de la vista original siempre que sea posible.
 
@@ -251,7 +259,7 @@ Además, no debemos olvidar añadir el atributo `data` al archivo descriptor `__
 ```
 'data': ['views/todo_task.xml'],
 ```
-###Ampliandola vista de árbo y búsqueda
+### Ampliandola vista de árbol y búsqueda
 
 Las extensiones de vista de árbol y búsqueda también se definen utilizando la estructura XML de `arch`, y pueden extenderse de la misma forma que las vistas de formulario. Continuaremos nuestro ejemplo ampliando las vistas de lista y de búsqueda.
 
@@ -329,7 +337,8 @@ Para la vista de búsqueda, agregamos la búsqueda por el usuario y filtros pred
 ```
 
 No se preocupe demasiado por la sintaxis específica de estas vistas. Los cubriremos con más detalle en el Capítulo 6, *Vistas - Diseñando la interfaz de usuario*.
-##Más modelos de mecanismos de herencia
+ 
+## Más modelos de mecanismos de herencia
 
 Hemos visto la extensión básica de los modelos, llamada *herencia de clase* en la documentación oficial. Este es el uso más frecuente de la herencia, y es más fácil pensar en ello como una *extensión in situ*. Tu tomas un modelo y lo extiendes. A medida que agregas nuevas funciones, se agregan al modelo existente. No se crea un nuevo modelo. También podemos heredar de varios modelos padre, estableciendo una lista de valores para el atributo `_inherit`. Con esto, podemos hacer uso de *clases de mixin*. Las clases de Mixin son modelos que implementan características genéricas que podemos agregar a otros modelos. No se espera que se usen directamente, y son como un contenedor de características listas para ser agregadas a otros modelos.
 
@@ -339,7 +348,7 @@ También existe el método de *delegación de herencia*, utilizando el atributo 
 
 Exploremos estas posibilidades con más detalle.
 
-###Copiando características con herencia de prototipo
+### Copiando características con herencia de prototipo
 
 El método que usamos antes para extender un modelo utiliza sólo el atributo `_inherit`. Definimos una clase heredando el modelo `todo.task` y le agregamos algunas características. El atributo de clase `_name` no se estableció explícitamente; Implícitamente, era `todo.task`.
 
@@ -358,7 +367,8 @@ Copiar significa que los métodos y campos heredados también estarán disponibl
 En un momento, vamos a discutir en detalle cómo usar esto para agregar `mail.thread` y sus características de redes sociales a nuestro módulo. En la práctica, al usar mixins, rara vez heredamos de modelos regulares porque esto causa duplicación de las mismas estructuras de datos.
 
 Odoo también proporciona el mecanismo de herencia de delegación que evita la duplicación de estructura de datos, por lo que suele ser preferido cuando se hereda de modelos regulares. Miremos esto con más detalle.
-###Incorporando modelos mediante la herencia de delegación
+
+### Incorporando modelos mediante la herencia de delegación
 
 La herencia de delegación se utiliza menos frecuentemente, pero puede proporcionar soluciones muy convenientes. Se utiliza a través del atributo `_inherits` (nota la `s` adicional) con mapeo de diccionario modelos heredados con campos que se enlazan a ellos.
 
@@ -375,10 +385,12 @@ Con la herencia de delegación, el modelo `res.users` incrusta el modelo heredad
 A través del mecanismo de delegación, todos los campos del modelo heredado y del Socio están disponibles como si fueran campos de `user`. Por ejemplo, los campos Nombre y dirección del asociado se exponen como campos de usuario, pero de hecho, se almacenan en el modelo Socio asociado y no se produce duplicación de datos.
 
 La ventaja de esto, en comparación con la herencia de prototipo, es que no hay necesidad de repetir estructuras de datos, como direcciones, a través de varias tablas. Cualquier modelo nuevo que necesite incluir una dirección puede delegarla a un modelo de socio incrustado. Y si las modificaciones se introducen en los campos de la dirección del socio, ¡éstas están inmediatamente disponibles para todos los modelos que lo incrustan!
-####Nota
+
+#### Nota
 
 Tenga en cuenta que con la herencia de delegación, los campos se heredan, pero los métodos no.
-###Agregando las funciones de redes sociales
+
+### Agregando las funciones de redes sociales
 
 El módulo de red social (nombre técnico `mail`) proporciona el panel de mensajes que se encuentra en la parte inferior de muchos formularios y la función **Seguidores**, así como la lógica de los mensajes y las notificaciones. Esto es algo que a menudo queremos añadir a nuestros modelos, así que vamos a aprender cómo hacerlo.
 
@@ -425,10 +437,11 @@ Los elementos de carga de datos `<record id = "x" model = "y">` realizan realmen
 
 Dado que se puede acceder a los registros de otros módulos con un identificador global `<model>. <Identifier>`, es posible que nuestro módulo sobrescriba algo que fue escrito antes por otro módulo.
 
-####Nota
+#### Nota
 
 Ten en cuenta que dado que el punto está reservado para separar el nombre del módulo del identificador de objeto, no se puede utilizar en los nombres de identificador. En su lugar, utiliza la opción subrayado.
-###Modificando el menú y acciones de registro
+
+### Modificando el menú y acciones de registro
 `
 Como ejemplo, cambiemos la opción de menú creada por el módulo `todo_app` a `My To-Do`. Para ello, podemos agregar lo siguiente al archivo `todo_user / views / todo_task.xml`:
 ```
@@ -448,7 +461,7 @@ También podemos modificar la acción utilizada en el ítem menú. Las acciones 
 </record> 
 ```
 
-###Modificando las reglas de registro de seguridad
+### Modificando las reglas de registro de seguridad
 
 La aplicación Tareas incluye una regla de registro para garantizar que cada tarea sólo fuera visible para el usuario que la creó. Pero ahora, con la adición de características sociales, necesitamos que los seguidores de las tareas también tengan acceso a ellas. El módulo de red social no maneja esto por sí mismo.
 
@@ -496,7 +509,7 @@ Como de costumbre, no debemos olvidar agregar el nuevo archivo al atributo de da
 'data': ['views/todo_task.xml', 'security/todo_access_rules.xml'], 
 ```
 
-#Resumen
+# Resumen
 
 Ahora deberías ser capaz de crear tus propios módulos extendiendo los existentes.
 

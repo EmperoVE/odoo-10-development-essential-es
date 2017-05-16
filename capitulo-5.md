@@ -1,4 +1,4 @@
-#Capítulo 5. Modelos - Estructurando los Datos de la Aplicación.
+#  Capítulo 5. Modelos - Estructurando los Datos de la Aplicación.
 
 En los capítulos anteriores, tuvimos un resumen de principio a fin de la creación de nuevos módulos para Odoo. En el Capítulo 2, *Construyendo tu Primera Aplicación Odoo*, construimos una aplicación completamente nueva, y en el Capítulo 3, *Extendiendo Aplicaciones Existentes de Herencia*, exploramos la herencia y cómo usarla para crear un módulo de extensión para nuestra aplicación. En el Capítulo 4, *Datos de Módulos*, discutimos cómo agregar datos iniciales y de demostración a nuestros módulos.
 
@@ -6,7 +6,7 @@ En estas reseñas, hemos abordado todas las capas involucradas en la construcci�
 
 En este capítulo, aprenderás cómo diseñar las estructuras de datos que soportan una aplicación y cómo representar las relaciones entre ellas.
 
-##Organizando las características de la aplicación en módulos
+## Organizando las características de la aplicación en módulos
 
 Como antes, usaremos un ejemplo para ayudarnos a explicar los conceptos.
 
@@ -14,7 +14,7 @@ Las características de herencia de Odoo proporcionan un mecanismo de extensibil
 
 Esto puede ser útil para limitar la complejidad, tanto en el nivel técnico como en el nivel de experiencia del usuario. Desde una perspectiva técnica, dividir un gran problema en partes más pequeñas facilita la solución y es más amigable para el desarrollo incremental de características. Desde la perspectiva de la experiencia del usuario, podemos optar por activar sólo las características que realmente son necesarias para ellos, para una interfaz de usuario más sencilla. Por lo tanto, vamos a mejorar nuestra aplicación To-Do a través de módulos addon adicionales para finalmente formar una aplicación completa.
 
-###Presentando el módulo todo_ui
+### Presentando el módulo todo_ui
 
 En el capítulo anterior, primero creamos una aplicación para tareas personales y luego la ampliamos para que la tarea se pudiera compartir con otras personas.
 
@@ -63,7 +63,7 @@ También debemos añadir un archivo` __init__.py`. Está perfectamente bien que 
 
 Ahora podemos instalar el módulo en nuestra base de datos Odoo y comenzar con los modelos.
 
-##Creando modelos
+## Creando modelos
 
 Para que las tareas pendientes tengan un tablero kanban, necesitamos Etapas. Las etapas son columnas del tablero, y cada tarea cabrá en una de estas columnas:
 
@@ -100,7 +100,7 @@ Aquí hemos creado los dos nuevos modelos que serán referenciados en las tareas
 
 Centrándonos en las etapas de la tarea, tenemos una clase Python, Etapa, basada en la clase `models.Model`, que define un nuevo modelo Odoo llamado `todo.task.stage`. También tenemos dos campos: `nombre y secuencia`. Podemos ver algunos atributos de modelo (prefijados con un subrayado) que son nuevos para nosotros. Echemos un vistazo a ellos.
 
-##Atributos del modelo
+## Atributos del modelo
 
 Las clases de modelo pueden utilizar atributos adicionales que controlan algunos de sus comportamientos. Estos son los atributos más utilizados:
 
@@ -115,7 +115,7 @@ Para completar, hay un par de más atributos que se pueden utilizar en casos ava
 
 También podemos tener los atributos `_inherit` y `_inherits`, como se explicó en el capítulo 3, *Herencia - Extendiendo las aplicaciones existentes.
 
-###Modelos y clases Python
+### Modelos y clases Python
 Los modelos Odoo están representados por clases Python. En el código anterior, tenemos una `Etapa` clase Python, basada en la clase `models.Model`, que define un nuevo modelo Odoo llamado `todo.task.stage`.
 
 Los modelos Odoo se mantienen en un registro central, también conocido como piscina en las versiones más antiguas de Odoo. Es un diccionario que mantiene referencias a todas las clases de modelo disponibles en la instancia, y puede ser referenciado por un nombre de modelo. Específicamente, el código de un método de modelo puede usar `self.env ['x']` para obtener una referencia a una clase que representa el modelo `x`.
@@ -128,7 +128,7 @@ Las clases de Python, por otro lado, son locales al archivo Python donde se decl
 
 Se pueden utilizar dos convenciones diferentes para los identificadores de clase: `snake_case` o `CamelCase`. Históricamente, el código de Odoo usó el caso snake, y todavía es posible encontrar las clases que utilizan esta convención. Pero la tendencia es utilizar el caso case, puesto que es el estándar de Python definido por las convenciones de codificación del PEP8. Puedes haber notado que estamos utilizando la última forma.
 
-###Modelos transitorios y abstractos
+### Modelos transitorios y abstractos
 
 En el código anterior y en la gran mayoría de los modelos de Odoo, las clases se basan en la clase `models.Model`. Estos tipos de modelos tienen persistencia permanente de la base de datos: se crean tablas de base de datos para ellos y sus registros se almacenan hasta que se borran explícitamente.
 
@@ -137,7 +137,7 @@ Pero Odoo también proporciona otros dos tipos de modelos que se utilizarán: mo
 + **Los modelos transitorios** se basan en la clase `models.TransientModel` y se utilizan para la interacción del usuario estilo asistente. Sus datos aún se almacenan en la base de datos, pero se espera que sea temporal. Un trabajo periódico de vacío limpia los datos antiguos de estas tablas. Por ejemplo, la ventana de diálogo `Load a Lenguage`, que se encuentra en el menú `Setings | Translations`, utiliza un modelo Transient para almacenar selecciones de usuarios e implementar la lógica del asistente.
 + **Los modelos abstractos** se basan en la clase models.AbstractModel y no tienen ningún almacenamiento de datos adjunto a ellos. Actúan como conjuntos de funciones reutilizables que se mezclan con otros modelos, utilizando las capacidades de herencia de Odoo. Por ejemplo, `mail.thread` es un modelo abstracto, proporcionado por el addon `Discuss`, utilizado para agregar funciones de mensaje y seguidores a otros modelos.
 
-###Inspeccionando los modelos existentes
+### Inspeccionando los modelos existentes
 
 Los modelos y campos creados a través de las clases Python tienen su metadata disponíble a través de la interface de usuario. En el menú superior **Settings** navega al ítem de menú ** Technical | Database Structure | Models**.
 Aquí, hallarás la lista de todos los modelos disponíbles en la base de datos. Haciendo click en un modelo en la lista, abrirá una forma con estos detalles:
@@ -150,10 +150,10 @@ En el área inferior, tenemos algunas pestañas de información disponíbles: un
 
 Podemos hallar el **Identificador Externo** del modelo utilizando, desde el menú **Desarrollador**, la opción **Metadata View**. Los identificadores de modelo externo, o IDs XML, son generadas automáticamente por el ORM pero justamente predecible: para el modelo `todo.task`, el identificador externo es `model_todo_task`.
 
-###Tip
+### Tip
 ¡El formulario **Modelos** es editable!. Es posible crear y modificar modelos, campos, y vistas desde aqui. Puedes utilizar este para construír prototipos antes de persistir en modulos.
 
-##Creando campos
+## Creando campos
 Luego de crear un nuevo modelo, el próximo paso es añadir campos a éste. Odoo soporta todos los tipos de datos básicos que se esperan, tales como cadenas  de texto,   la base de datos, enteros, números de punto flotante, Booleanos, fechas,  
 
 Algunos nombres de campo son especiales, se marchitan porque están reservados por el ORM para propósitos especiales, o porque algunas características incorporadas usan por defecto algunos nombres de campo predeterminados.
@@ -206,7 +206,7 @@ Estos son los argumentos de posición estándar esperados por cada uno de los ti
 
 Aparte de estos, también tenemos los campos relacionales, que serán presentados más adelante en este capítulo. Pero ahora, todavía hay más para aprender acerca de estos tipos de campo y sus atributos.
 
-###Atributos de campo comunes
+### Atributos de campo comunes
 
 Los campos tienen atributos que se pueden establecer al definirlos. Dependiendo del tipo de campo, algunos atributos pueden ser pasados ​​en posición, sin una palabra clave de argumento, como se muestra en la sección anterior.
 
@@ -227,7 +227,7 @@ Todos los atributos disponibles se pueden pasar como un argumento de palabra cla
 
 + `states` espera un diccionario que asigna valores para los atributos UI  que dependen de los valores del campo `satate`. Por ejemplo: `states = {'done': [('readonly', True)]}`. Los atributos que se pueden utilizar son `readonly`, `required` e `invisible`.
 
-####Nota
+#### Nota
 
 Ten en cuenta que el campo`satates` es equivalente al atributo `attrs` en las vistas. Nota que las vistas admiten un atributo `states`, pero tiene un uso diferente: acepta una lista de estados separados por comas para controlar cuando el elemento debe ser visible.
 
@@ -236,7 +236,7 @@ Para completar, a veces se utilizan otros dos atributos cuando se actualiza entr
 + `deprecated=True` registra una advertencia cada vez que se utiliza el campo.
 + `oldname='field'` se utiliza cuando un campo se renombra en una versión más reciente, permitiendo que los datos en el campo antiguo se copien automáticamente en el nuevo campo.
 
-###Nombres de campos especiales
+### Nombres de campos especiales
 
 Algunos nombres de campo están reservados para ser utilizados por el ORM.
 
@@ -262,7 +262,7 @@ Algunas características API incorporadas por defecto esperan nombres de campos 
 Hasta ahora, hemos discutido campos no relacionales. Pero una buena parte de una estructura de aplicación de datos es acerca de describir las relaciones entre entidades. Ahora vamos a mirar esto.
 
 
-##Relaciones entre modelos
+## Relaciones entre modelos
 Mirando de nuevo el diseño de nuestro módulo, tenemos estas relaciones:
 
 + Cada tarea tiene una etapa. Esa es una relación de muchos a uno, también conocida como clave extranjera. La inversa es una relación uno-a-muchos, lo que significa que cada etapa puede tener muchas tareas.
@@ -290,7 +290,7 @@ Como ejercicio, puedes intentar también agregar las relaciones inversas corresp
 
 Echemos un vistazo más de cerca a las definiciones de campos relacionales.
 
-###Relaciones de muchos a uno (Many-to-one)
+### Relaciones de muchos a uno (Many-to-one)
 
 La relación `Many2one` acepta dos argumentos posicionales: el modelo relacionado (correspondiente al argumento de la palabra clave `comodel`) y el título `string`. Crea un campo en la tabla de base de datos con una clave externa a la tabla relacionada.
 
@@ -301,7 +301,7 @@ Algunos argumentos con nombre adicionales también están disponibles para utili
 + `domain` es una expresión de dominio, una lista de tuplas, filtra los registros disponibles para el campo de relación.
 + `auto_join=True` permite al ORM utilizar combinaciones de SQL cuando se realizan búsquedas utilizando esta relación. Si se usan, las reglas de seguridad de acceso serán anuladas y el usuario podría tener acceso a registros relacionados que las reglas de seguridad no permitirían, pero las consultas SQL serán más eficientes y se ejecutarán más rápido.
 
-###Relaciones de muchos a muchos (Many-to-many)
+### Relaciones de muchos a muchos (Many-to-many)
 La firma mínima `Many2many` acepta un argumento para el modelo relacionado, y se recomienda proporcionar también el argumento `strings` con el título del  campo.
 
 En el nivel de base de datos, no se agrega ninguna columna a las tablas existentes. En su lugar, crea automáticamente una nueva tabla de relación que tiene sólo dos campos de ID con las claves externas para las tablas relacionadas. El nombre de la tabla de relación y los nombres del campo se generan automáticamente. El nombre de tabla de relación es el nombre de ambas tablas unidos con un subrayado con `_rel` añadido a él.
@@ -326,7 +326,7 @@ tag_ids = fields.Many2many(
     string='Tags')
 ```
 
-####Nota
+#### Nota
 
 Ten en cuenta que los argumentos adicionales son opcionales. Podríamos simplemente establecer el nombre de la tabla de relaciones y dejar que los nombres de campo usen los valores predeterminados automáticos.
 
@@ -344,7 +344,7 @@ tag_ids = fields.Many2many(
 
 Al igual que los campos muchos a uno, los campos muchos-a-muchos también admiten los atributos de palabras clave `domain` y `context`.
 
-####Nota
+#### Nota
 
 Actualmente hay una limitación en el diseño de ORM, con respecto a los modelos abstractos, que cuando se obliga a los nombres de la tabla de relación y las columnas, ya no se pueden heredar. Así que esto no debería hacerse en modelos abstractos.
 
@@ -379,7 +379,7 @@ class Tag(models.Model):
 
 ```
 
-###Relaciones inversas Uno a muchos (One-to-many)
+### Relaciones inversas Uno a muchos (One-to-many)
 
 Un inverso de un `Many2one` se puede agregar al otro extremo de la relación. Esto no tiene ningún impacto en la estructura de la base de datos real, pero nos permite navegar fácilmente desde **un** lado de los **muchos** registros relacionados. Un caso de uso típico es la relación entre un encabezado de documento y sus líneas.
 
@@ -425,7 +425,7 @@ El `One2many` acepta tres argumentos posicionales: el modelo relacionado, el nom
 
 Los parámetros de palabras clave adicionales disponibles son los mismos que para `Many2one : context`, `domain`, `ondelete` (aquí actúa en el lado **muchos** de la relación) y `auto_join`.
 
-###Relaciones jerárquicas
+### Relaciones jerárquicas
 
 Las relaciones de árbol padre-hijo se representan usando una relación `Many2one` con el mismo modelo, de modo que cada registro hace referencia a su padre. Y la inversa `One2many` hace que sea fácil para un padre mantener el seguimiento de sus hijos.
 
@@ -483,9 +483,9 @@ child_ids = fields.One2many(
     'todo.task.tag', 'parent_id', 'Child Tags')
 ```
 
-###Campos de referencia que utilizan relaciones dinámicas
+## Campos de referencia que utilizan relaciones dinámicas
 
-Los campos relacionales regulares hacen referencia a un comodelo fijo. El tipo de campo de referencia no tiene esta limitación y admite relaciones dinámicas, de modo que el mismo campo puede referirse a más de un modelo.
+Los campos relacionales regulares hacen referencia a un comodelo fijo. El tipo de campo de referencia no tiene esta limitación y admite relaciones dinámicas, de modo que el mismo cam po puede referirse a más de un modelo.
 
 Por ejemplo, podemos usarlo para añadir un campo `Refers to` a las tareas pendientes, que puede referirse a un `User` o a un `Partner`:
 ```
@@ -535,7 +535,7 @@ from openerp.addons.base.res import res_request
             self, self.env.cr, self.env.uid, context=self.env.context)
 ```
 
-##Campos computados
+## Campos computados
 
 Los campos pueden tener valores calculados por una función, en lugar de simplemente leer un valor almacenado en una base de datos. Un campo computado se declara igual que un campo regular, pero tiene el argumento de adicional `compute` que define la función utilizada para calcularlo.
 
@@ -564,7 +564,7 @@ Se espera que la función de computación asigne un valor al campo o a los campo
 
 No vamos a estar trabajando todavía en las vistas de este módulo, pero puede hacer ahora una edición rápida en el formulario de tarea para confirmar si el campo computado está funcionando como se esperaba: usando el **Developer Mode** selecciona la opción **Edit View** y agregua el archivo directamente en el formato XML. No te preocupes: será reemplazado por la vista de módulo limpio en la próxima actualización.
 
-###Búscando y escribiendo en campos computados
+### Búscando y escribiendo en campos computados
 
 El campo computado que acabamos de crear se puede leer, pero no puede ser buscado o escrito. Para habilitar estas operaciones, primero necesitamos implementar funciones especializadas para ellos. Junto con la función `compute`, también podemos configurar una función `search`, implementando la lógica de búsqueda, y la función `inverse`, implementando la lógica de escritura.
 
@@ -605,10 +605,10 @@ La función `search` se llama siempre que una condición (`field, operator, valu
 
 La función `inverse` realiza la lógica inversa del cálculo, para encontrar el valor a escribir en los campos fuente de la computación. En nuestro ejemplo, esto significa escribir de nuevo en el campo `stage_id.fold`.
 
-###Almacenando campos computados
+### Almacenando campos computados
 
 Los valores del campo computado también se pueden almacenar en la base de datos, estableciendo `store = True` en su definición. Serán recomputados cuando cambien cualquiera de sus dependencias. Dado que los valores están ahora almacenados, se pueden buscar como campos regulares y no se necesita una función de búsqueda.
-###Campos relacionados
+### Campos relacionados
 
 El campo computado que implementamos en la sección anterior sólo copia un valor de un registro relacionado en el propio campo del modelo. Sin embargo, este es un uso común que puede ser manejado automáticamente por Odoo.
 
@@ -630,7 +630,7 @@ De forma similar a `stage_fold`, agregaremos un campo computado en el modelo de 
 
 Detrás del escenario, los campos relacionados son sólo campos computados que implementan convenientemente métodos `search` y `inverse`. Esto significa que podemos buscar y escribir en ellos fuera de la caja, sin necesidad de escribir un código adicional.
 
-##Restricciones del modelo
+## Restricciones del modelo
 
 Para reforzar la integridad de los datos, los modelos también admiten dos tipos de restricciones: SQL y Python
 
@@ -660,7 +660,7 @@ rom odoo.exceptions import ValidationError
                 chars!')
 ```
 
-##Resumen
+## Resumen
 Pasamos por una explicación detallada de los modelos y los campos, utilizandolos para ampliar la aplicación de tareas pendientes con etiquetas y etapas en las tareas. Aprendiste cómo definir relaciones entre modelos, incluyendo relaciones jerárquicas entre padres e hijos. Finalmente, vimos ejemplos simples de campos computados y restricciones usando código Python.
 
 En el siguiente capítulo, trabajaremos en la interfaz de usuario para estas características del modelo de backend, haciéndolas disponibles en las vistas utilizadas para interactuar con la aplicación.
