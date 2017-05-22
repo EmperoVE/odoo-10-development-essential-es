@@ -268,6 +268,7 @@ Vamos a añadir un poco de CSS para agregar un efecto de tachado simple para las
 ```
 Luego tenemos que incluirlo en las páginas del sitio web. Esto se hace agregándolos en la plantilla `website.assets_frontend` responsable de cargar los activos específicos del sitio web. Edite el archivo de datos todo_website / views / todo_templates.xml, para ampliar esa plantilla:
 
+```
 <Odoo>
   <Template id = "assets_frontend"
     Name = "todo_website_assets"
@@ -283,24 +284,354 @@ Luego tenemos que incluirlo en las páginas del sitio web. Esto se hace agregán
  
   </ Template>
 </ Odoo>
-Pronto estaremos usando esta nueva clase de estilo todo-app-done. Por supuesto, los activos de JavaScript también se pueden agregar usando un enfoque similar.
+```
 
-El controlador de lista de tareas pendientes
+Pronto estaremos usando esta nueva clase de estilo `todo-app-done`. Por supuesto, los activos de JavaScript también se pueden agregar usando un enfoque similar.
 
-Ahora que hemos pasado por lo básico, vamos a trabajar en nuestra lista de tareas Todo. Tendremos una URL de / todo mostrándonos una página web con una lista de Tareas Todo.
+## El controlador de lista de tareas pendientes
+
+Ahora que hemos pasado por lo básico, vamos a trabajar en nuestra lista de tareas por hacer. Tendremos una URL `/todo` mostrándonos una página web con una lista de Tareas por hacer.
 
 Para ello, necesitamos un método controlador, la preparación de los datos a presentar, y una plantilla QWeb para presentar esa lista al usuario.
 
-Edite el archivo todo_website / controllers / main.py para agregar este método:
+Edita el archivo `todo_website/controllers/main.py` para agregar este método:
 
-#class Main (http.Controller):
+```
+#class Main(http.Controller): 
    
-    @ Http.route ('/ todo', auth = 'usuario', sitio web = Verdadero)
-    Índice def (self, ** kwargs):
-        TodoTask = request.env ['todo.task']
-        Tasks = TodoTask.search ([])
-        Return request.render (
-            'Todo_website.index', {'tareas': tareas})
-El controlador recupera los datos que se van a utilizar y los pone a disposición de la plantilla renderizada. En este caso, el controlador requiere una sesión autenticada, ya que la ruta tiene el atributo auth = 'user'. Incluso si ese es el valor predeterminado, es una buena práctica declarar explícitamente que se requiere una sesión de usuario.
+    @http.route('/todo', auth='user' , website=True) 
+    def index(self, **kwargs): 
+        TodoTask = request.env['todo.task'] 
+        tasks =  TodoTask.search([]) 
+        return request.render( 
+            'todo_website.index', {'tasks': tasks}) 
+            
+```
+El controlador recupera los datos que se van a utilizar y los pone a disposición de la plantilla renderizada. En este caso, el controlador requiere una sesión autenticada, ya que la ruta tiene el atributo ```auth='user'```. Incluso si ese es el valor predeterminado, es una buena práctica declarar explícitamente que se requiere una sesión de usuario.
 
-Con esto, la declaración Todo Task search () se ejecutará con el usuario de la sesión actual.
+Con esto, la declaración Todo Task `search()` se ejecutará con el usuario de la sesión actual.
+
+Los datos accesibles a los usuarios públicos son muy limitados, cuando usamos ese tipo de ruta, a menudo necesitamos usar `sudo()` para elevar el acceso y hacer disponibles los datos de la página que de otro modo no serían accesibles.
+
+Esto también puede ser un riesgo de seguridad, así que tenga cuidado en la validación de los parámetros de entrada y en las acciones realizadas. También mantenga el uso del conjunto de registros `sudo()`  limitado a las operaciones mínimas posibles.
+
+El método `request.render()` espera que el identificador de la plantilla de QWeb se procese y un diccionario con el contexto disponible para la evaluación de la plantilla.
+
+## La plantilla de lista de tareas pendientes
+
+La plantilla de QWeb debe ser agregada por un archivo de datos, y podemos agregarla al archivo de datos `todo_website/views/todo_templates.xml` existente:
+
+```
+<template id="index" name="Todo List"> 
+  <t t-call="website.layout"> 
+    <div id="wrap" class="container"> 
+      <h1>Todo Tasks</h1> 
+ 
+      <!-- List of Tasks --> 
+      <t t-foreach="tasks" t-as="task"> 
+        <div class="row"> 
+          <input type="checkbox" disabled="True" 
+            t-att-checked=" 'checked' if task.is_done else {}" /> 
+          <a t-attf-href="/todo/{{slug(task)}}"> 
+            <span t-field="task.name" 
+              t-att-class="'todo-app-done' if task.is_done  
+                else ''" /> 
+          </a> 
+        </div> 
+      </t> 
+ 
+      <!-- Add a new Task --> 
+      <div class="row"> 
+        <a href="/todo/add" class="btn btn-primary btn-lg"> 
+            Add 
+        </a> 
+      </div> 
+ 
+    </div> 
+  </t> 
+</template> 
+```
+
+El código anterior utiliza la directiva `t-foreach` para mostrar una lista de tareas. La directiva `t-att` usada en la casilla de verificación de entrada nos permite agregar o no el atributo *checked* dependiendo del valor `is_done`.
+
+Tenemos una entrada de casilla de verificación, y queremos que se compruebe si la tarea se realiza. En HTML, se comprueba una casilla de verificación en función de que tenga o no el atributo *checked*. Para ello usamos la directiva `t-att-NAME` para renderizar dinámicamente el atributo checked dependiendo de una expresión. En este caso, la expresión se evalúa como `None`, QWeb omitirá el atributo, lo cual es conveniente para este caso.
+
+Al procesar el nombre de la tarea, se utiliza la directiva `t-attf` para crear dinámicamente la URL para abrir el formulario de detalle para cada tarea específica. Utilizamos la función especial `slug()` para generar una URL legible por humanos para cada registro. El enlace no funcionará por ahora, ya que todavía estamos por crear el controlador correspondiente.
+
+En cada tarea también usamos la directiva `t-att` para establecer el estilo `todo-app-done` solo para las tareas que se realizan.
+
+Finalmente, tenemos un botón Añadir para abrir una página con un formulario para crear una nueva Tarea. Lo usaremos para introducir el manejo de formularios web a continuación.
+
+## La página de detalles de las tareas por hacer
+
+Cada elemento de la lista de tareas es un enlace a una página de detalles. Debemos implementar un controlador para esos enlaces, y una plantilla QWeb para su presentación. En este punto, este debería ser un ejercicio sencillo.
+
+En el archivo `todo_website/controllers/main.py` agregue el método:
+
+```
+#class Main(http.Controller):
+ 
+    @http.route('/todo/<model("todo.task"):task>', website=True) 
+    def index(self, task, **kwargs): 
+        return http.request.render( 
+            'todo_website.detail', 
+            {'task': task}) 
+```
+
+
+Observe que la ruta utiliza un placeholder con el convertidor  `model("todo.task")`, asignando a la variable de tarea. Captura un identificador de tarea desde la URL, ya sea un número de ID simple o una representación de slug, y lo convierte en el objeto de registro de exploración correspondiente.
+
+Y para la plantilla de QWeb añada el siguiente código al archivo de datos `todo_website/views/todo_web.xml`:
+
+```
+<template id="detail" name="Todo Task Detail"> 
+<t t-call="website.layout"> 
+  <div id="wrap" class="container"> 
+    <h1 t-field="task.name" /> 
+    <p>Responsible: <span t-field="task.user_id" /></p> 
+    <p>Deadline: <span t-field="task.date_deadline" /></p> 
+  </div> 
+</t> 
+</template> 
+```
+Cabe destacar aquí el uso del elemento `<t t-field>`. Se encarga de la representación adecuada del valor del campo, al igual que en el backend. Presenta correctamente valores de fecha y valores Many-to-One, por ejemplo.
+
+## Formularios Web
+
+Los formularios son una característica común que se encuentran en los sitios web. Ya tenemos todas las herramientas necesarias para implementar una: una plantilla de QWeb puede proporcionar el HTML para el formulario, la acción de envío correspondiente puede ser una URL, procesada por un controlador que puede ejecutar toda la lógica de validación y finalmente almacenar los datos en el Modelo adecuado.
+
+Pero para formas no triviales esto puede ser una tarea exigente. No es tan simple realizar todas las validaciones necesarias y proporcionar retroalimentación al usuario sobre lo que está mal.
+
+Puesto que esto es una necesidad común, el módulo `website_form` está disponible para ayudarnos con esto. Vamos a ver cómo usarlo.
+
+Mirando hacia atrás en el botón Agregar en la lista Tarea por hacer, podemos ver que abre la URL `/todo/add`. Esto presentará un formulario para enviar una nueva tarea por hacer y los campos disponibles serán el nombre de la tarea, una persona (usuario) responsable de la tarea y un archivo adjunto.
+
+Debemos comenzar agregando la dependencia `website_form` a nuestro módulo. Podemos reemplazar el módulo `website`, ya que mantenerlo explícitamente sería redundante. En el `todo_website/__ manifest__.py` edite la  clave `depends` a:
+
+```
+'Depende': ['todo_kanban',
+'Website_form'
+
+
+
+],
+```
+Ahora vamos a añadir la página con el formulario.
+
+## La página formulario
+
+Podemos comenzar implementando el método del controlador para soportar la renderización del formulario, en el archivo `todo_website/controllers/ main.py`:
+
+```
+@http.route('/todo/add', website=True) 
+def add(self, **kwargs): 
+    users = request.env['res.users'].search([]) 
+    return request.render( 
+        'todo_website.add', {'users': users}) 
+```
+
+Se trata de un controlador sencillo, que muestra la plantilla `todo_website.add` y que le proporciona una lista de usuarios, de modo que pueda utilizarse para crear un cuadro de selección.
+
+Ahora para la plantilla QWeb correspondiente. Podemos añadirlo al archivo de datos `todo_website/views/todo_web.xml`:
+
+```
+<template id="add" name="Add Todo Task"> 
+  <t t-call="website.layout"> 
+    <t t-set="additional_title">Add Todo</t> 
+    <div id="wrap" class="container"> 
+      <div class="row"> 
+        <section id="forms"> 
+          <form method="post"         
+ class="s_website_form
+              container-fluid form-horizontal" 
+            
+action="/website_form/" 
+            data-model_name="todo.task" 
+            data-success_page="/todo"
+            enctype="multipart/form-data" >        
+<!-- Form fields will go here! -->
+            <!-- Submit button --> 
+            <div class="form-group"> 
+              <div class="col-md-offset-3 col-md-7   
+                col-sm-offset-4 col-sm-8"> 
+                <a 
+class="o_website_form_send
+                  btn btn-primary btn-lg"> 
+                  Save 
+                </a> 
+                
+<span id="o_website_form_result"></span>
+              </div> 
+            </div> 
+         
+          </form> 
+        </section> 
+      </div> <!-- rows --> 
+    </div> <!-- container --> 
+  </t> <!-- website.layout --> 
+</template> 
+```
+
+Como es de esperar, podemos encontrar el elemento `<t t-call="website.layout"` específico de Odoo, responsable de insertar la plantilla dentro del diseño del sitio web, y `<t t-set="additional_title">` que establece un titulo adicional, esperado por el layout del sitio web.
+
+Para el contenido, la mayoría de lo que podemos ver en esta plantilla se puede encontrar en un típico formulario Booststrap CSS. Pero también tenemos algunos atributos y clases de CSS que son específicos para los formularios del sitio web. Los marcamos en negrita en el código, por lo que es más fácil identificarlos.
+
+Las clases CSS son necesarias para que el código JavaScript pueda realizar correctamente su lógica de manejo de formularios. Y luego tenemos algunos atributos específicos en el elemento `<form>`:
+
++ `action` es un atributo de formulario estándar, pero debe tener el valor "/website_form/". Se requiere la barra diagonal.
++ `Data-model_name` identifica el modelo al que escribir y se pasará al controlador `/website_form.
++ `Data-success_page` es la URL a redireccionar después de una presentación de formulario correcta. En este caso, se nos enviará de nuevo a la lista de tareas.
+
+No necesitaremos proporcionar nuestro propio método de controlador para manejar el envío de formularios. La ruta `/website_form` lo hará por nosotros. Toma toda la información que necesita del formulario, incluyendo los atributos específicos que acabamos de describir, y luego realiza validaciones esenciales en los datos de entrada, y crea un nuevo registro en el modelo de destino.
+
+Para casos de uso avanzado, podemos forzar que se use un método de controlador personalizado. Para ello debemos añadir un atributo `data-force_action` al elemento `<form>`, con la palabra clave para que el controlador objetivo a utilizar. Por ejemplo, `data-force_action="todo-custom"` tendría la solicitud para llamar a la URL `/website_form/todo-custom`. Entonces deberíamos proporcionar un método de controlador adjunto a esa ruta. Sin embargo, hacer esto quedará fuera de nuestro alcance aquí.
+
+Todavía tenemos que terminar nuestro formulario, agregando los campos para obtener las entradas del usuario. Dentro del elemento `<form>`, añade:
+
+```
+<!-- Description text field, required --> 
+<div class="form-group form-field"> 
+  <div class="col-md-3 col-sm-4 text-right"> 
+    <label class="control-label" for="name">To do*</label> 
+  </div> 
+  <div class="col-md-7 col-sm-8"> 
+    <input name="name" type="text" required="True" 
+      
+class="o_website_from_input
+
+ form-control" /> 
+  </div> 
+</div> 
+ 
+<!-- Add an attachment field --> 
+<div class="form-group form-field"> 
+  <div class="col-md-3 col-sm-4 text-right"> 
+    <label class="control-label" for="file_upload"> 
+      Attach file 
+    </label> 
+  </div> 
+<div class="col-md-7 col-sm-8"> 
+    <input name="file_upload" type="file" 
+      
+class="o_website_from_input
+
+
+
+ form-control" /> 
+  </div> 
+</div> 
+```
+Aquí estamos agregando dos campos, un campo de texto regular para la descripción y un campo de archivo, para cargar un archivo adjunto. Todo el marcado se puede encontrar en los formularios regulares Bootstrap, a excepción de la clase o_website_from_input, necesarios para la lógica de formulario de `website` para preparar los datos para enviar.
+
+La lista de selección de usuario no es muy diferente excepto que necesita usar una directiva t-foreach QWeb para representar la lista de usuarios seleccionables. Podemos hacer esto porque el controlador recupera ese conjunto de registros y lo pone a disposición de la plantilla bajo el nombre users:
+
+```
+<!-- Select User --> 
+<div class="form-group form-field"> 
+  <div class="col-md-3 col-sm-4 text-right"> 
+    <label class="control-label" for="user_id"> 
+      For Person 
+    </label> 
+  </div> 
+  <div class="col-md-7 col-sm-8"> 
+    <select name="user_id" 
+      
+class="o_website_from_input 
+
+form-control" > 
+     
+ <t t-foreach="users" t-as="user">  
+        <option t-att-value="user.id"> 
+          <t t-esc="user.name" /> 
+        </option> 
+      </t>
+
+    </select> 
+  </div> 
+</div> 
+```
+Sin embargo, nuestro formulario todavía no funcionará hasta que hagamos alguna configuración de seguridad de acceso.
+
+## Seguridad de acceso y elemento de menú
+
+Dado que este manejo genérico de formularios está bastante abierto y se basa en datos no confiables enviados por el cliente, por razones de seguridad necesita algún tipo de configuración del servidor en lo que el cliente puede hacer. En particular, los campos de modelo que se pueden escribir basados en datos de formulario deben estar en la lista blanca. 
+
+Para añadir campos a esta lista blanca, se proporciona una función de ayuda y podemos usarla desde un archivo de datos XML. Debemos crear el archivo `todo_website/data/config_data.xml` con:
+
+
+```
+<?xml version="1.0" encoding="utf-8"?> 
+<odoo> 
+  <data> 
+ 
+    <record id="todo_app.model_todo_task" model="ir.model"> 
+      <field name="website_form_access">True</field> 
+    </record> 
+ 
+    <function model="ir.model.fields"  
+      name="formbuilder_whitelist"> 
+      <value>todo.task</value> 
+      <value eval="['name', 'user_id', 'date_deadline']"/> 
+    </function> 
+ 
+  </data> 
+</odoo> 
+```
+
+Para que un modelo pueda ser utilizado por los formularios, debemos hacer dos cosas: activar un indicador en el modelo, y poner en lista blanca el campo que se pueda utilizar. Estas son las dos acciones que se están realizando en el archivo de datos anterior.
+
+No olvide que, para que nuestro módulo conozca este archivo de datos, debe agregarse a la clave `data` en el manifiesto del módulo.
+
+También sería bueno que nuestra página Todo esté disponible en el menú del módulo `website`. Vamos a añadirla usando el mismo archivo de datos. Agrega otro elemento `<data>` como este:
+
+```
+<Data noupdate = "1">
+  <Record id = "menu_todo" model = "website.menu">
+    <Field name = "name"> Todo </ field>
+    <Field name = "url"> / todo </ field>
+    <Field name = "parent_id" ref = "website.main_menu" />
+    <Field name = "sequence" type = "int"> 50 </ field>
+  </ Record>
+</ Data>
+```
+
+Como se puede ver, para agregar un elemento de menú del sitio web solo necesitamos crear un registro en el modelo `web.menu`, con un nombre, una URL y el identificador del elemento de menú principal. El nivel superior de este menú tiene como padre el elemento `website.main_menu`.
+
+## Adición de lógica personalizada
+
+Los formularios web nos permiten conectar nuestras propias validaciones y cálculos al procesamiento de formularios. Esto se realiza mediante la implementación de un método `website_form_input_filter()` con la lógica del modelo de destino. Acepta un diccionario de valores, lo valida y realiza cambios en él y, a continuación, devuelve el diccionario de valores posiblemente modificado.
+
+Lo utilizaremos para implementar dos funciones: eliminar cualquier espacio inicial y final del título de la tarea e imponer que el título de la tarea tenga al menos tres caracteres.
+
+Agregue el archivo `todo_website/models/todo_task.py` que contiene el siguiente código:
+
+```
+# -*- coding: utf-8 -*- 
+from odoo import api, models 
+from odoo.exceptions import ValidationError 
+ 
+class TodoTask(models.Model): 
+    _inherit = 'todo.task' 
+ 
+    @api.model 
+    def website_form_input_filter(self, request, values): 
+        if 'name' in values: 
+            values['name'] = values['name'].strip() 
+            if len(values.['name']) < 3: 
+                raise ValidationError( 
+                    'Text must be at least 3 characters long') 
+        return values 
+```
+
+
+El método `website_form_input_filter` realmente espera dos parámetros: el objeto `request` y el diccionario `values`. Los errores que impiden el envío de formularios deben generar una excepción `ValidationError`.
+
+La mayor parte del tiempo este punto de extensión para los formularios debería permitirnos evitar manipuladores de presentación de formularios personalizados.
+
+Como de costumbre, debemos importar este nuevo achivo de Python, añadiendo `from .import models` en el archivo `todo_website/__ init__.py`, y añadiendo el archivo `todo_website/models/__ init__.py con un `from . Import todo_task line`.
+
+## Sumario
+
+Ahora debes tener un buen entendimiento sobre lo esencial de las características del sitio web. Hemos visto cómo usar controladores web y plantillas QWeb para renderizar páginas web dinámicas. A continuación, aprendimos a utilizar el complemento de sitio web y crear nuestras propias páginas para ello. Por último, hemos introducido el complemento de formularios de sitios web que nos ayudó a crear un formulario web. Estos deben proporcionarnos las habilidades básicas necesarias para crear las características del sitio web.
+
+A continuación, aprenderemos cómo tener aplicaciones externas interactuar con nuestras aplicaciones Odoo.
