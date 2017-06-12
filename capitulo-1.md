@@ -143,7 +143,7 @@ En Odoo 10, el script `odoo.py`, utilizado en versiones previas para iniciar el 
 
 De forma predeterminada, las instancias Odoo escuchan en el puerto 8069, por lo que si apuntamos un navegador a `http: // <dirección-servidor>: 8069`, llegaremos a estas instancias. Cuando lo accedemos por primera vez, nos muestra un asistente para crear una nueva base de datos, como se muestra en la siguiente captura de pantalla:
 
-![Database](file:///home/dticucv/Escritorio/OEBPS/Image00001.jpg)
+![Database](file:img/1-01.jpg)
 
 Como desarrolladores, necesitaremos trabajar con varias bases de datos, así que es más convenientes más conveniente crearlos desde la línea de comandos, así que aprenderemos cómo hacerlo. Ahora presione ***Ctrl + C*** en el terminal para detener el servidor Odoo y volver al prompt de comando.
 
