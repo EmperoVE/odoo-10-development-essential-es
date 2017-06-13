@@ -14,7 +14,7 @@ La simplicidad y el impacto visual de los tableros kanban los hacen excelentes p
 
 Por supuesto, puede ampliarse a cualquier proceso específico que podamos necesitar:
 
-![kanban](file:///home/dticucv/Escritorio/OEBPS/Image00023.jpg)
+![kanban](file:img/9-01.jpg)
 
 Créditos de la foto: "A Scrum board suggesting to use kanban" por Jeff.lasovski. Cortesía de Wikipedia.
 
@@ -32,13 +32,13 @@ Podemos ver dos formas diferentes de usar las vistas de kanban. Una es una lista
 
 Así es como se ve la vista de kanban de **Contactos "Contacts"**:
 
-![kanban](file:///home/dticucv/Escritorio/OEBPS/Image00024.jpg)
+![kanban_contacts](file:img/9-02.jpg)
 
 Pero esto no es un tablero kanban verdadero. Se espera que un tablero kanban tenga las tarjetas organizadas en columnas y, por supuesto, la vista kanban también apoya ese diseño. Podemos ver ejemplos en **Sales | My Pipeline** o en **Tareas de Proyecto "Project Tak"**.
 
 Aquí está como se ve ** Sales | My Pipeline**:
 
-![kanban](file:///home/dticucv/Escritorio/OEBPS/Image00025.jpg)
+![sales_my_pipeline](file:img/9-03.jpg)
 
 La diferencia más llamativa entre los dos es la organización de las tarjetas en columna del tablero de kanban. Esto se logra mediante la función **Agrupar por "Group By"**, similar a lo que proporcionan las vistas de lista. Por lo general, el agrupamiento se realiza en un campo **Etapa "Stage"**. Una característica muy útil de las vistas de kanban es que soporta arrastrar y soltar tarjetas entre columnas, asignando automáticamente el valor correspondiente al campo que agrupa la vista.
 

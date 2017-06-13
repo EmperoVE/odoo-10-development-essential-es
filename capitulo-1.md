@@ -179,7 +179,7 @@ Si estás hospedando Odoo en una máquina virtual, es posible que debas establec
 
 La cuenta de administrador predeterminada es `admin` con su contraseña `admin`. Al iniciar sesión, se le presenta el menú  **Apps**, que muestra las aplicaciones disponibles:
 
-![Apps](file:///home/dticucv/Escritorio/OEBPS/Image00002.jpg)
+![Database](file:img/1-02.jpg)
 
 Siempre que desee detener la instancia del servidor Odoo y volver a la línea de comandos, presione ***Ctrl + C*** en el indicador de bash. Al presionar la tecla de flecha hacia arriba le llevará el comando de shell anterior, por lo que es una forma rápida de iniciar Odoo de nuevo con las mismas opciones. Las teclas ***Ctrl + C*** seguido por la tecla de flecha hacia arriba y ***Enter*** son una combinación utilizada con frecuencia para reiniciar el servidor Odoo durante el desarrollo.
 
@@ -389,12 +389,12 @@ Puedes descargar los archivos de códigos de ejemplo para todos los libros Packt
 Para acceder a los archivos desde Windows, podemos asignar una unidad de red para la ruta `\\ <my-server-name>\odoo`
 utilizando el nombre de usuario y la contraseña específicos definidos con `smbpasswd` Al intentar iniciar sesión con el usuario `odoo`, podría encontrar problemas con Windows agregando el dominio del equipo al nombre de usuario (por ejemplo, `MYPC \ odoo`). Para evitar esto, utilice un dominio vacío añadiendo un caracter`\` al inicio de sesión (por ejemplo, `\ odoo`):
 
-![Directory](file:///home/dticucv/Escritorio/OEBPS/Image00003.jpg)
+![Directory](file:img/1-03.jpg)
 
 
 Si ahora abrimos la unidad asignada con el Explorador de Windows, podremos acceder y editar el contenido del directorio home del usuario `odoo`:
 
-![Home](file:///home/dticucv/Escritorio/OEBPS/Image00004.jpg)
+![Home](file:img/1-04.jpg)
 
 Odoo incluye un par de herramientas que son muy útiles para los desarrolladores, y vamos a hacer uso de ellAs a lo largo del libro. Son características técnicas y el modo de desarrollo. Estos están desactivados por defecto, por lo que este es un buen momento para aprender a habilitarlos.
 
@@ -403,11 +403,11 @@ Las herramientas de desarrollo proporcionan una configuración y funciones avanz
 
 Estas herramientas vienen deshabilitadas de forma predeterminada y, para habilitarlas, debemos iniciar sesión como administrador. En la barra de menú superior, seleccione el menú **Settings**. En la parte inferior derecha, debajo de la versión Odoo, encontrará dos opciones para habilitar el modo de desarrollo; cualquiera de ellas habilitará los menús **Debug** y **Technical**. La segunda opción, **Activate the developer mode (whit assest)**, también deshabilita la minificación de JavaScript y CSS utilizada por el cliente web, facilitando la depuración del comportamiento del cliente:
 
-![Depuracion](file:///home/dticucv/Escritorio/OEBPS/Image00005.jpg)
+![Depuracion](file:img/1-05.jpg)
 
 Después de eso, la página se vuelve a cargar y debería verse un icono de error en la barra de menú superior, justo antes del avatar y nombre de usuario de la sesión que proporciona las opciones de modo de depuración. Y en la opción **Settings** en el menú superior, deberíamos ver una nueva sección del menú **Technical** que da acceso a muchos internos de la instancia de Odoo:
 
-![Cliente](file:///home/dticucv/Escritorio/OEBPS/Image00006.jpg)
+![Cliente](file:img/1-06.jpg)
 
 #### Tip
 La opción **Technical** del menú nos permite inspeccionar y editar todas las configuraciones Odoo almacenadas en la base de datos, desde la interfaz de usuario hasta la seguridad y otros parámetros del sistema. Aprenderás más sobre muchos de estos a lo largo del libro.
@@ -458,7 +458,7 @@ Después de actualizar la lista de módulos, podemos confirmar que los nuevos m�
 
 Ten en cuenta que la segunda opción de menú **App Store** muestra la lista de módulos del almacén de aplicaciones Odoo en lugar de los módulos locales:
 
-![Apps](file:///home/dticucv/Escritorio/OEBPS/Image00007.jpg)
+![Apps](file:img/1-07.jpg)
 
 ## Resumen
 En este capítulo, aprendimos a configurar un sistema Debian para alojar Odoo e instalarlo desde el código fuente de GitHub. También aprendimos a crear bases de datos Odoo y ejecutar instancias de Odoo. Para permitir a los desarrolladores utilizar sus herramientas favoritas en su estación de trabajo personal, explicamos cómo configurar el uso compartido de archivos en el huesped Odoo.

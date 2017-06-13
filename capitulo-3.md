@@ -11,7 +11,7 @@ Nuestra aplicación de To-Do ahora permite a los usuarios gestionar de forma pri
 
 Lo haremos con un nuevo módulo para ampliar la aplicación To-Do previamente creada y agregar estas nuevas características utilizando los mecanismos de herencia. Esto es lo que esperamos lograr al final de este capítulo:
 
-![Mytodo](file:///home/dticucv/Escritorio/OEBPS/Image00012.jpg)
+![Mytodo](file:img/3-01.jpg)
 
 Este será nuestro plan de trabajo para las extensiones de características que se implementarán:
 

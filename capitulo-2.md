@@ -153,7 +153,7 @@ Asegúrate de que tu sesión de cliente web está funcionando con la base de dat
 
 La opción **Aplicaciones** nos muestra la lista de módulos disponibles. De forma predeterminada, muestra sólo los módulos de aplicación. Ya que hemos creado un módulo de aplicación, no necesitamos eliminar ese filtro para verlo. Escribe `todo` en la búsqueda y debes ver nuestro nuevo módulo, listo para ser instalado:
 
-![Installed](file:///home/dticucv/Escritorio/OEBPS/Image00008.jpg)
+![Installed]file:img/2-01.jpg)
 
 Ahora haZ clic en el botón **Instalar** del módulo y ¡estamos listos!
 
@@ -236,7 +236,7 @@ from . Importar todo_modelo
 
 No veremos ninguna opción de menú para acceder a este nuevo modelo ya que no los hemos añadido aún. Sin embargo, podemos inspeccionar el modelo recién creado usando el menú **Technical**. En el menú superior **Settings**, ve a **Technical | Database Structure | Models**, busca el modelo `todo.task` en la lista y haz clic en él para ver su definición:
 
-![Settings](file:///home/dticucv/Escritorio/OEBPS/Image00009.jpg)
+![Settings](file:img/2-02.jpg)
 
 Si todo va bien, se confirma que el modelo y los campos fueron creados. Si no puedes verlos aquí, intenta reiniciar el servidor con una actualización de módulo, como se describió anteriormente.
 
@@ -337,7 +337,7 @@ Nuestro módulo aún no conoce el nuevo archivo de datos XML. Esto se hace agreg
 
 Ahora necesitamos actualizar el módulo de nuevo para que estos cambios surtan efecto. Vaya al menú superior de **Todos** y debe ver nuestra nueva opción de menú disponible:
 
-![Save](file:///home/dticucv/Escritorio/OEBPS/Image00010.jpg)
+![Save](file:img/2-03.jpg)
 
 Aunque no hemos definido nuestra vista de interfaz de usuario, al hacer clic en el menú **Todos** se abrirá un formulario generado automáticamente para nuestro modelo, lo que nos permitirá agregar y editar registros.
 
@@ -696,7 +696,7 @@ Si ejecutamos las pruebas ahora, deberían fallar, así que nos encargamos de es
 
 Para obtener una imagen de qué información se necesita para agregar reglas de acceso a un modelo, utiliza el cliente web y ve a **Settings | Technical | Security | Access Controls List** :
 
-![Create](file:///home/dticucv/Escritorio/OEBPS/Image00011.jpg)
+![Create](file:img/2-04.jpg)
 
 ### Nota
 

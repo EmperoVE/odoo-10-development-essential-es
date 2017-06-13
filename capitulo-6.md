@@ -239,7 +239,7 @@ El primer operador '|' (OR) actúa sobre la condición del seguidor más el resu
 
 El siguiente diagrama ilustra esta resolución de los operadores anidados:
 
-![nestedoperationsresolutions](file:///home/dticucv/Escritorio/OEBPS/Image00020.jpg)
+![nestedoperationsresolutions](file:img/6-01.jpg)
 
 ## Las vistas de formulario
 

@@ -22,7 +22,7 @@ Para seguir los ejemplos de este capítulo, necesitaras poder ejecutar archivos 
 Si estas utilizando Ubuntu o una Mac, Python probablemente ya esté instalado. Abra una consola de terminal, escriba `python`, y debería recibir algo similar a lo siguiente:
 
 ```
-Python 2.7.12 (default, Jul  1 2016, 15:12:24)
+Python 2.7.12 (default, Jul  1 2016, 15:12:24)
 [GCC 5.4.0 20160609] on linux2
 Type "help", "copyright",", "credits" or "license" for more information.
 >>>
@@ -130,6 +130,8 @@ Vale la pena repetir que la API externa de Odoo puede ser utilizada por la mayor
 ## Desarrollando una aplicación de escritorio de Notas
 
 Hagamos algo interesante con la API de RPC. Odoo proporciona una aplicación sencilla para notas. ¿Qué pasa si los usuarios pueden administrar sus notas personales directamente desde el escritorio de su computadora? Vamos a escribir una sencilla aplicación de Python para hacer eso, como se muestra en la siguiente captura de pantalla:
+
+![Notas](file:img/12-01.jpg)
 
 
 Para mayor claridad, lo dividiremos en dos archivos: uno relacionado con las interacciones con el servidor backend, `note_api.py` y otro con la interfaz gráfica de usuario, `note_gui.py`.

@@ -71,7 +71,7 @@ Por lo general, implementaríamos el informe en nuestro módulo de complemento d
 
 Nuestro informe se verá así:
 
-![Report](file:///home/dticucv/Escritorio/OEBPS/Image00027.jpg)
+![Report](file:img/10-01.jpg)
 
 Nombraremos este nuevo módulo addon `todo_report`. Lo primero que debe hacer es crear un archivo `__init__.py` vacío y el archivo de manifiesto `__manifest__.py`: 
 

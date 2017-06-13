@@ -22,7 +22,7 @@ Para inspeccionar los mapeos existentes, ve a la sección **Technical** del men�
 
 Por ejemplo, si visitamos la lista de **External identifiers** y lo filtramos por el módulo `todo_app`, veremos los identificadores externos generados por el módulo creado anteriormente:
 
-![Externalidentifiers](file:///home/dticucv/Escritorio/OEBPS/Image00013.jpg)
+![Externalidentifiers](file:img/4-01.jpg)
 
 Podemos ver que los identificadores externos tienen una etiqueta **ID Completa**. Observa cómo se compone del nombre del módulo y el nombre del identificador unido por un punto, por ejemplo, `todo_app.action_todo_task`.
 
@@ -32,7 +32,7 @@ Cuando se utiliza un identificador externo en un archivo de datos, puedes elegir
 
 En la parte superior de la lista, tenemos el identificador completo `todo_app.action_todo_task`. Esta es la acción de menú que creamos para el módulo, al que también se hace referencia en el ítem de menú correspondiente. Al hacer clic en él, vamos a la vista de formulario con sus detalles; El identificador externo `action_todo_task` en el módulo `todo_app` mapea un ID de registro específico en el modelo `ir.actions.act_window`, `72` en este caso:
 
-![Todo](file:///home/dticucv/Escritorio/OEBPS/Image00014.jpg)
+![Todo](file:img/4-02.jpg)
 
 Además de proporcionar una forma para que los registros hagan referencia fácilmente a otros registros, los identificadores externos también te permiten evitar la duplicación de datos en las importaciones repetidas. Si el identificador externo ya está presente, se actualizará el registro existente; No es necesario crear un nuevo registro. Es por esto que en las actualizaciones de módulos posteriores, los registros cargados previamente se actualizan en vez de duplicarse.
 
@@ -46,7 +46,7 @@ Para encontrar el identificador externo de un registro de datos, en la vista de 
 
 Como ejemplo, para buscar el ID de `demo user`, podemos navegar a la vista de formulario, en **Settings | Users** y seleccione la opción **View Metadata** y esto se mostrará:
 
-![Metadata](file:///home/dticucv/Escritorio/OEBPS/Image00015.jpg)
+![Metadata](file:img/4-03.jpg)
 
 Para hallar el identificador externo para elementos de vista, como formulario, árbol, búsqueda o acción, el menú **Developer** también es una buena fuente de ayuda. Para ello, podemos utilizar la opción **Manage Views** o abrir la información para la vista deseada mediante la opción **Edit <view type>**. A continuación, selecciona la opción **View metadata**.
 
@@ -60,7 +60,7 @@ La exportación de datos es una característica estándar disponible en cualquie
 
 He aquí un ejemplo, usando las tareas de tareas pendientes creadas recientemente:
 
-![Todocreate](file:///home/dticucv/Escritorio/OEBPS/Image00016.jpg)
+![Todocreate]((file:img/4-04.jpg)
 
 También podemos marcar la casilla de verificación en el encabezado de la columna. Comprobará todos los registros a la vez y exportará todos los registros que coincidan con los criterios de búsqueda actuales.
 
@@ -72,7 +72,7 @@ La opción **Export** nos lleva a un formulario de diálogo, donde podemos elegi
 
 El formato de exportación puede ser CSV o Excel. Preferiremos un archivo CSV para obtener una mejor comprensión del formato de exportación. A continuación, seleccionamos las columnas que queremos exportar y hacemos clic en el botón **Export to File**. Esto iniciará la descarga de un archivo con los datos exportados:
 
-![Minion](file:///home/dticucv/Escritorio/OEBPS/Image00016.jpg)
+![Minion](file:img/4-05.jpg)
 
 Si seguimos estas instrucciones y seleccionamos los campos mostrados en la captura de pantalla anterior, deberíamos terminar con un archivo de texto CSV similar a este:
 
@@ -105,7 +105,7 @@ Después de guardar los cambios en el archivo CSV, haz clic en la opción **Impo
 
 Allí, debemos seleccionar la ubicación del archivo CSV en el disco y hacer clic en **Validate** para comprobar su exactitud. Ya que que el archivo a importar se basa en una exportación Odoo, lo más probable es que sea válido:
 
-![Minion](file:///home/dticucv/Escritorio/OEBPS/Image00017.jpg)
+![Minion]((file:img/4-06.jpg)
 
 Ahora podemos hacer clic en **Import**, y ahí lo tienes; Nuestras modificaciones y nuevos registros deberían haber sido cargados en Odoo.
 
